@@ -16,6 +16,7 @@ import {Thumbnail} from 'native-base'
 import  {Constants, Location, Permissions, AppLoading} from 'expo';
 import TouchableItem from "react-navigation/lib-rn/views/TouchableItem";
 
+import _ from 'lodash';
 
 const Images = [
     {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
@@ -37,6 +38,7 @@ export default class HomeScreen extends React.Component {
     state = {
         markers: [
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 45.524548,
                     longitude: -122.6749817,
@@ -48,6 +50,7 @@ export default class HomeScreen extends React.Component {
                 hide: false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 45.524698,
                     longitude: -122.6655507,
@@ -59,6 +62,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 45.5230786,
                     longitude: -122.6701034,
@@ -70,6 +74,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 78.2471400,
                     longitude: -80.0649260,
@@ -81,6 +86,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 45.2471400,
                     longitude: -57.0649260,
@@ -92,6 +98,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 66.2471400,
                     longitude: -85.0649260,
@@ -103,6 +110,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 110.2471400,
                     longitude: -112.0649260,
@@ -114,6 +122,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 30.2471400,
                     longitude: -89.0649260,
@@ -125,6 +134,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 77.2471400,
                     longitude: -112.0649260,
@@ -136,6 +146,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 66.2471400,
                     longitude: -99.0649260,
@@ -147,6 +158,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 33.2471400,
                     longitude: -123.435677,
@@ -158,6 +170,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 56.2471400,
                     longitude: -65.0649260,
@@ -169,6 +182,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 43.2471400,
                     longitude: -178.0649260,
@@ -180,6 +194,7 @@ export default class HomeScreen extends React.Component {
                 hide : false
             },
             {
+                id : _.uniqueId(),
                 coordinate: {
                     latitude: 49.2471630,
                     longitude: -123.06412260,
@@ -198,24 +213,33 @@ export default class HomeScreen extends React.Component {
             longitudeDelta: 0.040142817690068,
         },
         showItems: false,
+        focusedMarker : null
     };
 
     componentWillMount() {
         this.index = 0;
     }
 
-    componentDidMount() {
-    }
-
     _focusListing(marker) {
-        if(!this.state.showItems) {
-            this.state.markers.forEach((m) => { m.hide = m === marker ? false : true })
+        if(this.state.focusedMarker && this.state.focusedMarker === marker) {
+            this.state.showItems = false;
+            this.state.markers.forEach((m) => { m.hide = false });
+            this.state.focusedMarker = null;
         } else {
-            this.state.markers.forEach((m) => { m.hide = false })
+            this.state.showItems = true;
+            this.state.markers.forEach((m) => { m.hide = m !== marker });
+            this.state.focusedMarker = marker;
         }
 
-        this.state.showItems = !this.state.showItems;
-        this.setState(this.state)
+        this.state.region = {
+            latitude : marker.coordinate.latitude,
+            longitude : marker.coordinate.longitude,
+            latitudeDelta: 0.04864195044303443,
+            longitudeDelta: 0.040142817690068,
+        };
+
+        this.setState(this.state);
+        this.map.animateToRegion(this.state.region);
     }
 
     render() {
