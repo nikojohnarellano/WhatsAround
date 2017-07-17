@@ -1,4 +1,5 @@
 import { Notifications } from 'expo';
+import { Root } from "native-base";
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
@@ -34,7 +35,11 @@ export default class RootNavigator extends React.Component {
   }
 
   render() {
-    return <RootStackNavigator />;
+    return (
+        <Root>
+            <RootStackNavigator />
+        </Root>
+    );
   }
 
   _registerForPushNotifications() {

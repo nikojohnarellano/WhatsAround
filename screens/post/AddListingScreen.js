@@ -1,94 +1,124 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Animated, Dimensions, View, Image, Text} from 'react-native';
-import { Container, Content, Form, Item, Input, Label } from 'native-base';
+import {TouchableOpacity, StyleSheet, Animated, Dimensions, View, Image, Text} from 'react-native';
+import {Container, Content, Form, Item, Input, Label, ActionSheet, Header} from 'native-base';
 import Colors from '../../constants/Colors';
-import { FontAwesome } from '@expo/vector-icons';
-import { ExpoConfigView } from '@expo/samples';
+import {FontAwesome} from '@expo/vector-icons';
+import {ImagePicker} from 'expo';
 
 const Images = [
-    { uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ" },
-    { uri: "https://rukminim1.flixcart.com/image/312/312/hand-messenger-bag/g/s/g/fd-handbag-0028-fair-deals-hand-held-bag-texture-original-imaencs3dm3hqmen.jpeg?q=70" },
-    { uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/LGwashingmachine.jpg" },
-    { uri: "http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg" }
+    {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
+    {uri: "https://rukminim1.flixcart.com/image/312/312/hand-messenger-bag/g/s/g/fd-handbag-0028-fair-deals-hand-held-bag-texture-original-imaencs3dm3hqmen.jpeg?q=70"},
+    {uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/LGwashingmachine.jpg"},
+    {uri: "http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg"}
 ]
 
-const { width, height } = Dimensions.get("window");
+const {width, height} = Dimensions.get("window");
 
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export default class SettingsScreen extends React.Component {
+    state = {
+        productImages: [],
+    };
 
-  render() {
-    return (
-        <Container>
-            <Content>
-                <Animated.ScrollView
-                    horizontal
-                    scrollEventThrottle={1}
-                    showsHorizontalScrollIndicator={false}
-                    snapToInterval={CARD_WIDTH}>
+    _pickImage = async (index) => {
+        let options = {
+            aspect: [4, 3],
+        }, result = null;
 
-                    <View style={styles.card} key={1}>
-                        <Image
-                            source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"}}
-                            style={styles.cardImage}
-                            resizeMode="cover"
-                        />
-                        <View style={styles.textContent}>
-                            <Text numberOfLines={1} style={styles.cardtitle}>Hey</Text>
-                            <Text numberOfLines={1} style={styles.cardDescription}>
-                                Wowowee
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={styles.card} key={2}>
-                        <View style={ styles.emptyProduct }>
-                            <FontAwesome
-                                name="camera"
-                                size={32}
-                                color={ Colors.tabIconSelected }
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.card} key={3}>
-                        <View style={ styles.emptyProduct }>
-                            <FontAwesome
-                                name="camera"
-                                size={32}
-                                color={ Colors.tabIconSelected }
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.card} key={4}>
-                        <View style={ styles.emptyProduct }>
-                            <FontAwesome
-                                name="camera"
-                                size={32}
-                                color={ Colors.tabIconSelected }
-                            />
-                        </View>
-                    </View>
+        switch(index) {
+            case 0:
+                result = await ImagePicker.launchCameraAsync(options);
+                break;
+            case 1:
+                result = await ImagePicker.launchImageLibraryAsync(options);
+                break;
+            default:
+                return;
+        }
 
-                </Animated.ScrollView>
-                <Form>
-                    <Item floatingLabel last>
-                        <Label>Title</Label>
-                        <Input />
-                    </Item>
-                    <Item floatingLabel>
-                        <Label>Location</Label>
-                        <Input />
-                    </Item>
-                    <Item floatingLabel last>
-                        <Label>Description</Label>
-                        <Input />
-                    </Item>
-                </Form>
-            </Content>
-        </Container>
-    );
-  }
+        this.state.productImages.push(result);
+
+        if (!result.cancelled) {
+            this.setState(this.state);
+        }
+    };
+
+    _cameraAction = () => {
+        let config = {
+            options: ["Take Photo", "Choose From Library", "Cancel"],
+            cancelButtonIndex: 2
+        };
+
+        ActionSheet.show(config, index => { this._pickImage(index) });
+    };
+
+    render() {
+        const { productImages } = this.state;
+
+        return (
+            <Container>
+                <Header>
+                </Header>
+                <Content>
+                    <Animated.ScrollView
+                        horizontal
+                        scrollEventThrottle={1}
+                        showsHorizontalScrollIndicator={false}
+                        snapToInterval={CARD_WIDTH}>
+
+                        <View style={styles.card} key={2}>
+                            <TouchableOpacity
+                                onPress={ () => this._cameraAction() }
+                                style={ styles.emptyProduct }>
+                                <FontAwesome
+                                    name="camera"
+                                    size={32}
+                                    color={ Colors.tabIconSelected }
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                        {
+                            productImages.map((image, index) => {
+                                return (
+                                    <View style={styles.card} key={index}>
+                                        <Image
+                                            source={ image }
+                                            style={styles.cardImage}
+                                            resizeMode="cover"
+                                        />
+                                        <View style={styles.textContent}>
+                                            <Text numberOfLines={1} style={styles.cardtitle}>Hey</Text>
+                                            <Text numberOfLines={1} style={styles.cardDescription}>
+                                                Wowowee
+                                            </Text>
+                                        </View>
+                                    </View>
+                                );
+                            })
+                        }
+
+                    </Animated.ScrollView>
+                    <Form>
+                        <Item floatingLabel last>
+                            <Label>Title</Label>
+                            <Input />
+                        </Item>
+                        <Item floatingLabel>
+                            <Label>Location</Label>
+                            <Input />
+                        </Item>
+                        <Item floatingLabel last>
+                            <Label>Description</Label>
+                            <Input />
+                        </Item>
+                    </Form>
+                </Content>
+            </Container>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -113,16 +143,16 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowRadius: 5,
         shadowOpacity: 0.3,
-        shadowOffset: { x: 2, y: -2 },
+        shadowOffset: {x: 2, y: -2},
         height: CARD_HEIGHT,
         width: CARD_WIDTH,
         overflow: "hidden",
     },
-    emptyProduct : {
+    emptyProduct: {
         flex: 1,
         justifyContent: "center",
-        alignItems : "center",
-        backgroundColor : "lightgray"
+        alignItems: "center",
+        backgroundColor: "lightgray"
     },
     cardImage: {
         flex: 3,
