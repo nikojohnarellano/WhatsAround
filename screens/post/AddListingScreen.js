@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Animated, Dimensions, View, Image, Text} from 'react-native';
 import { Container, Content, Form, Item, Input, Label } from 'native-base';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 import { FontAwesome } from '@expo/vector-icons';
 import { ExpoConfigView } from '@expo/samples';
 
@@ -18,9 +18,6 @@ const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export default class SettingsScreen extends React.Component {
-  static navigationOptions = {
-    title: "Add Listing"
-  };
 
   render() {
     return (

@@ -9,10 +9,10 @@ import {TabNavigator, TabBarBottom} from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
-import HomeScreen from '../screens/HomeScreen';
-import BrowseScreen from '../screens/BrowseScreen';
-import AddListingScreen from '../screens/AddListingScreen';
-import ProductScreen from '../screens/ProductScreen'
+import HomeScreen from '../screens/home/HomeScreen';
+import BrowseScreen from '../screens/browse/BrowseScreen';
+import AddListingScreen from '../screens/post/AddListingScreen';
+import ProductScreen from '../screens/product/ProductScreen'
 
 export default TabNavigator(
     {
@@ -76,7 +76,8 @@ export default TabNavigator(
                     case 'Profile':
                         return routeName;
                 }
-            }
+            },
+            header: null
         }),
         // Put tab bar on bottom of screen on both platforms
         tabBarComponent: TabBarBottom,
@@ -86,6 +87,7 @@ export default TabNavigator(
         // Don't show the labels
         tabBarOptions: {
             showLabel: true,
-        }
+        },
+
     }
 );

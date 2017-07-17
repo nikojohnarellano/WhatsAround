@@ -26,9 +26,6 @@ const Images = [
 ]
 
 export default class LinksScreen extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
 
   render() {
     var chunkSize = 2;
