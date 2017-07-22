@@ -6,7 +6,7 @@ import {
     TouchableHighlight,
     View,
     Dimensions,
-    Animated
+    Animated,
 } from 'react-native';
 import {
     Thumbnail,
@@ -15,14 +15,17 @@ import {
     Header,
     Left,
     Right,
-    Body,
     Title,
     Subtitle,
-    Button
+    Button,
+    Body
 } from 'native-base';
-import MapHeader from './MapHeader';
 import {FontAwesome} from '@expo/vector-icons';
 import {Location, Permissions} from 'expo';
+
+
+import MapHeader from './MapHeader';
+import WutzAroundHeader from '../../components/WutzAroundHeader'
 
 import _ from 'lodash';
 
@@ -274,8 +277,8 @@ export default class HomeScreen extends React.Component {
         region: {
             latitude: 49.247140,
             longitude: -123.064926,
-            latitudeDelta: 0.04864195044303443,
-            longitudeDelta: 0.040142817690068,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
         },
         showItems: false,
         focusedMarker: null
@@ -286,23 +289,27 @@ export default class HomeScreen extends React.Component {
     }
 
     _focusListing(marker) {
-        if (this.state.focusedMarker && this.state.focusedMarker === marker) {
-            this.state.showItems     = false;
-            this.state.focusedMarker = null;
-        } else {
-            this.state.showItems     = true;
-            this.state.focusedMarker = marker;
-        }
-
-        this.state.region = {
-            latitude: marker.listing.latitude,
-            longitude: marker.listing.longitude,
-            latitudeDelta: 0.04,
-            longitudeDelta: 0.03,
-        };
+        this.state.showItems     = true;
+        this.state.focusedMarker = marker;
 
         this.setState(this.state);
-        this.map.animateToRegion(this.state.region);
+        this._recenterCurrent();
+    }
+
+    _closeListing() {
+        this.state.showItems     = false;
+        this.state.focusedMarker = null;
+
+        this.setState(this.state);
+    }
+
+    _recenterCurrent() {
+        this.map.animateToRegion(this.state.focusedMarker ? {
+            latitude  : this.state.focusedMarker.listing.latitude,
+            longitude : this.state.focusedMarker.listing.longitude,
+            latitudeDelta:  0.005,
+            longitudeDelta: 0.005,
+        } : this.state.region);
     }
 
     render() {
@@ -310,73 +317,95 @@ export default class HomeScreen extends React.Component {
         return (
             <Container style={styles.container}>
                 {
-                    this.state.showItems &&
-                    <MapHeader focusedMarker={ this.state.focusedMarker } />
+                    this.state.showItems ?
+                    <MapHeader focusedMarker={ this.state.focusedMarker } /> :
+                    <WutzAroundHeader title="WutzAround" />
                 }
                 <View style={{flex: 1}}>
-                    <Button style={{
-                        position:"absolute",
-                        top: 700,
-                        left: 0,
-                        right: 0,
-                    }}>
-                        <Text>Re-center</Text>
-                    </Button>
                     <MapView
                         ref={map => this.map = map}
                         initialRegion={this.state.region}
-                        style={styles.container}>
+                        style={styles.mapContainer}>
                         {this.state.markers.map((marker, index) => {
                             return marker.hide ? null : (
-                                <MapView.Marker onPress={() => { this._focusListing(marker) }}
+                                <MapView.Marker onPress={() => {
+                                                !this.state.focusedMarker   ?
+                                                this._focusListing(marker) :
+                                                this._closeListing() }}
                                                 key={ index }
                                                 coordinate={{
                                                     latitude : marker.listing.latitude,
                                                     longitude : marker.listing.longitude
                                                 }}>
                                     <View>
-                                        <Image style={ styles.pinImage} source={ require('../../assets/icons/marker.png') }/>
-                                            <Thumbnail small style={ styles.pinThumbnail }
+                                        <Image style={{
+                                                width: this.state.showItems  ? 70 : 50,
+                                                height: this.state.showItems ? 70 : 50,
+                                                }}
+                                               source={ require('../../assets/icons/marker.png') }/>
+                                            <Thumbnail
+                                                small={ !this.state.showItems }
+                                                style={{
+                                                    position: "absolute",
+                                                    left: 7,
+                                                    top: this.state.showItems ? 0.7 : 2.5,
+                                                }}
                                                 source={ marker.image } />
-                                        <Text style={ styles.pinText }> {marker.title} </Text>
                                     </View>
                                 </MapView.Marker>
                             );
                         })}
                     </MapView>
                     { this.state.showItems &&
-                    <Animated.ScrollView
-                        horizontal
-                        scrollEventThrottle={1}
-                        showsHorizontalScrollIndicator={false}
-                        snapToInterval={CARD_WIDTH}
-                        style={styles.scrollView}
-                        contentContainerStyle={styles.endPadding}>
-                        {this.state.markers.map((marker, index) => (
+                        <View>
+                            <View style={ styles.headerButtons }>
 
-                            <TouchableHighlight
-                                key={index}
-                                underlayColor={ "white" }
-                                onPress={() => {
-                                    navigation.navigate('Product')
-                                }}>
-                                <View style={styles.card}>
-                                    <Image
-                                        source={marker.image}
-                                        style={styles.cardImage}
-                                        resizeMode="cover"
+                                <Button rounded success
+                                    onPress={() => { this._recenterCurrent() }}>
+                                    <Text style={ styles.recenterText }>Re-center</Text>
+                                </Button>
+                                <Button rounded danger
+                                        onPress={() => { this._closeListing() }}>
+                                    <FontAwesome
+                                        name="close"
+                                        size={25}
+                                        color="white"
                                     />
-                                    <View style={styles.textContent}>
-                                        <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
-                                        <Text numberOfLines={1} style={styles.cardDescription}>
-                                            {marker.description}
-                                        </Text>
-                                    </View>
-                                </View>
+                                </Button>
+                            </View>
+                            <Animated.ScrollView
+                                horizontal
+                                scrollEventThrottle={1}
+                                showsHorizontalScrollIndicator={false}
+                                snapToInterval={CARD_WIDTH}
+                                style={styles.scrollView}
+                                contentContainerStyle={styles.endPadding}>
+                                {this.state.markers.map((marker, index) => (
 
-                            </TouchableHighlight>
-                        ))}
-                    </Animated.ScrollView>
+                                    <TouchableHighlight
+                                        key={index}
+                                        underlayColor={ "white" }
+                                        onPress={() => {
+                                            navigation.navigate('Product')
+                                        }}>
+                                        <View style={styles.card}>
+                                            <Image
+                                                source={marker.image}
+                                                style={styles.cardImage}
+                                                resizeMode="cover"
+                                            />
+                                            <View style={styles.textContent}>
+                                                <Text numberOfLines={1} style={styles.cardtitle}>{marker.listing.title}</Text>
+                                                <Text numberOfLines={1} style={styles.cardDescription}>
+                                                    $50
+                                                </Text>
+                                            </View>
+                                        </View>
+
+                                    </TouchableHighlight>
+                                ))}
+                            </Animated.ScrollView>
+                        </View>
                     }
                 </View>
             </Container>
@@ -384,7 +413,7 @@ export default class HomeScreen extends React.Component {
     }
 
     _getLocationAsync = async () => {
-        var options = {
+        let options = {
             enableHighAccuracy: true,
             timeInterval: 3000
         };
@@ -409,6 +438,9 @@ const styles = {
     container: {
         flex: 1,
     },
+    mapContainer: {
+        flex: 1
+    },
     scrollView: {
         position: "absolute",
         bottom: 30,
@@ -416,7 +448,6 @@ const styles = {
         right: 0,
         paddingVertical: 10,
     },
-    endPadding: {},
     card: {
         padding: 10,
         elevation: 2,
@@ -486,11 +517,25 @@ const styles = {
     pinThumbnail : {
         position: "absolute",
         left: 7,
-        top:2.5
+        top:2.5,
     },
 
     pinText: {
         fontSize: 10,
         textAlign: "center"
+    },
+
+    recenterText : {
+        fontSize: 20,
+        fontFamily : "webly-sleek",
+        color: "white"
+    },
+
+    headerButtons : {
+        width: width,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        position:"absolute",
+        bottom: height - 180,
     }
 };

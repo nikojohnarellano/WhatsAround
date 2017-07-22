@@ -10,24 +10,29 @@ import {TabNavigator, TabBarBottom} from 'react-navigation';
 import Colors from '../constants/Colors';
 
 import HomeScreen from '../screens/home/HomeScreen';
-import BrowseScreen from '../screens/browse/BrowseScreen';
+import BrowseScreen from '../screens/listing/BrowseScreen';
 import AddListingScreen from '../screens/post/AddListingScreen';
 import ProductScreen from '../screens/product/ProductScreen'
+import AddProductScreen from '../screens/post/AddProductScreen';
+import SearchProductScreen from '../screens/product/SearchProductScreen'
 
 export default TabNavigator(
     {
 
         Home: {
-            screen: HomeScreen,
-        },
-        Add: {
-            screen: AddListingScreen,
+            screen: HomeScreen
         },
         Browse: {
-            screen: BrowseScreen,
+            screen: BrowseScreen
+        },
+        Add: {
+            screen: AddListingScreen
+        },
+        Search : {
+            screen: SearchProductScreen
         },
         Profile: {
-            screen: BrowseScreen,
+            screen: AddListingScreen
         }
     },
     {
@@ -39,19 +44,18 @@ export default TabNavigator(
                 switch (routeName) {
                     case 'Home':
                         iconName = 'map-marker';
-                        screenName = 'Near Me';
                         break;
                     case 'Browse':
                         iconName = 'navicon';
-                        screenName = routeName;
                         break;
                     case 'Add':
-                        iconName = 'edit';
-                        screenName = 'Post';
+                        iconName = 'plus-circle';
+                        break;
+                    case 'Search':
+                        iconName = 'search';
                         break;
                     case 'Profile':
                         iconName = 'user';
-                        screenName = routeName;
                         break;
 
                 }
@@ -59,7 +63,7 @@ export default TabNavigator(
                     <FontAwesome
                         name={iconName}
                         size={32}
-                        color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+                        color="white"
                     />
                 );
             },
@@ -70,14 +74,17 @@ export default TabNavigator(
                     case 'Home':
                         return 'Near Me';
                     case 'Browse':
-                        return routeName;
+                        return 'Browse';
                     case 'Add':
                         return 'Post';
                     case 'Profile':
                         return routeName;
+                    case 'Search':
+                        return 'Search';
                 }
             },
-            header: null
+            header: null,
+
         }),
         // Put tab bar on bottom of screen on both platforms
         tabBarComponent: TabBarBottom,
@@ -87,6 +94,12 @@ export default TabNavigator(
         // Don't show the labels
         tabBarOptions: {
             showLabel: true,
+            style : {
+                backgroundColor : "skyblue",
+            },
+            labelStyle : {
+                color: "white"
+            }
         },
 
     }

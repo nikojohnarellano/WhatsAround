@@ -4,6 +4,7 @@ import {Container, Content, Form, Item, Input, Label, ActionSheet, Header} from 
 import Colors from '../../constants/Colors';
 import {FontAwesome} from '@expo/vector-icons';
 import {ImagePicker} from 'expo';
+import WutzAroundHeader from "../../components/WutzAroundHeader";
 
 const Images = [
     {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
@@ -17,7 +18,7 @@ const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
-export default class SettingsScreen extends React.Component {
+export default class AddListingScreen extends React.Component {
     state = {
         productImages: [],
     };
@@ -59,8 +60,7 @@ export default class SettingsScreen extends React.Component {
 
         return (
             <Container>
-                <Header>
-                </Header>
+                <WutzAroundHeader title="Add Listing"/>
                 <Content>
                     <Animated.ScrollView
                         horizontal

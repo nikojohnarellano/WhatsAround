@@ -1,6 +1,4 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
-
 import {FontAwesome} from '@expo/vector-icons';
 import {
     Header,
@@ -19,28 +17,44 @@ export default class MapHeader extends React.Component {
         const { focusedMarker } = this.props;
 
         return (
-            <Header style={{ height:100, backgroundColor: "blue" }}>
-                <Body style={{ justifyContent: "flex-start", alignItems:"flex-start" }}>
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{ "Moving sale! Everything must go" }</Text>
-                    <Text  style={{ fontSize: 12 }}>{ focusedMarker.listing.location }</Text>
+            <Header style={ styles.header }>
+                <Body style={ styles.body }>
+                    <Title style={ styles.title }>{ "Moving sale! Everything must go" }</Title>
+                    <Subtitle  style={ styles.subtitle }>{ focusedMarker.listing.location }</Subtitle>
                 </Body>
-                <Right>
-                    <Button transparent>
-                        <FontAwesome
-                            name="close"
-                            size={24}
-                        />
-                    </Button>
-                </Right>
             </Header>
         );
     }
 }
 
-const styles = StyleSheet.create({
+const styles = {
+    header: {
+        backgroundColor: "skyblue",
+    },
+
     container: {
         flex: 1,
         paddingTop: 15,
         backgroundColor: '#fff',
+        color: "white"
     },
-});
+
+    body: {
+        flex : 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
+    title : {
+        fontSize: 25,
+        fontWeight: "bold",
+        color:"white",
+        fontFamily : "webly-sleek",
+    },
+
+    subtitle : {
+        fontSize: 12,
+        fontFamily : "webly-sleek",
+        color: "white"
+    }
+};
