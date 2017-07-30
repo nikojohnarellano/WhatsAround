@@ -21,6 +21,7 @@ import {
     Body
 } from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
+
 import {Location, Permissions} from 'expo';
 
 
@@ -359,7 +360,6 @@ export default class HomeScreen extends React.Component {
                     { this.state.showItems &&
                         <View>
                             <View style={ styles.headerButtons }>
-
                                 <Button rounded success
                                     onPress={() => { this._recenterCurrent() }}>
                                     <Text style={ styles.recenterText }>Re-center</Text>

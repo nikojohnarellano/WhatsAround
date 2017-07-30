@@ -1,10 +1,13 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Animated, Dimensions, View, Image, Text} from 'react-native';
-import {Container, Content, Form, Item, Input, Label, ActionSheet, Header} from 'native-base';
+import {TouchableOpacity, Animated, Dimensions, View, Image, Text, Alert} from 'react-native';
+import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Button} from 'native-base';
 import Colors from '../../constants/Colors';
 import {FontAwesome} from '@expo/vector-icons';
 import {ImagePicker} from 'expo';
+import DatePicker from "react-native-datepicker";
 import WutzAroundHeader from "../../components/WutzAroundHeader";
+import AddProductModal from "./AddProductModal"
+
 
 const Images = [
     {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
@@ -21,6 +24,7 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 export default class AddListingScreen extends React.Component {
     state = {
         productImages: [],
+        modalVisible : false
     };
 
     _pickImage = async (index) => {
@@ -28,7 +32,9 @@ export default class AddListingScreen extends React.Component {
             aspect: [4, 3],
         }, result = null;
 
-        switch(index) {
+        const { navigate } = this.props.navigation;
+
+        switch (index) {
             case 0:
                 result = await ImagePicker.launchCameraAsync(options);
                 break;
@@ -39,11 +45,25 @@ export default class AddListingScreen extends React.Component {
                 return;
         }
 
-        this.state.productImages.push(result);
-
-        if (!result.cancelled) {
-            this.setState(this.state);
+        if(!result.cancelled) {
+            Alert.alert(
+                'Add Details',
+                'Do you want to add name, price, description to this photo?',
+                [
+                    {text: 'No', onPress: () => {
+                        this.state.productImages.push(result);
+                        this.setState(this.state)
+                    }},
+                    {text: 'Yes', onPress: () => {
+                        this.setState({
+                            modalVisible : true,
+                            productImage : result
+                        })
+                    }},
+                ],
+            )
         }
+
     };
 
     _cameraAction = () => {
@@ -52,34 +72,41 @@ export default class AddListingScreen extends React.Component {
             cancelButtonIndex: 2
         };
 
-        ActionSheet.show(config, index => { this._pickImage(index) });
+        ActionSheet.show(config, index => {
+            this._pickImage(index)
+        });
+    };
+
+    _closeModal = () => {
+        this.setState({ modalVisible : false })
     };
 
     render() {
-        const { productImages } = this.state;
+        const {productImages} = this.state;
 
         return (
             <Container>
                 <WutzAroundHeader title="Add Listing"/>
-                <Content>
+                <Content contentContainerStyle={ styles.container }>
                     <Animated.ScrollView
                         horizontal
                         scrollEventThrottle={1}
                         showsHorizontalScrollIndicator={false}
-                        snapToInterval={CARD_WIDTH}>
+                        snapToInterval={CARD_WIDTH}
+                        style={ styles.productsContainer }
+                        contentContainerStyle={ styles.productsContentContainer }>
 
-                        <View style={styles.card} key={2}>
+                        <View style={styles.card}>
                             <TouchableOpacity
                                 onPress={ () => this._cameraAction() }
                                 style={ styles.emptyProduct }>
                                 <FontAwesome
-                                    name="camera"
+                                    name="plus-circle"
                                     size={32}
                                     color={ Colors.tabIconSelected }
                                 />
                             </TouchableOpacity>
                         </View>
-
                         {
                             productImages.map((image, index) => {
                                 return (
@@ -99,41 +126,98 @@ export default class AddListingScreen extends React.Component {
                                 );
                             })
                         }
-
                     </Animated.ScrollView>
-                    <Form>
-                        <Item floatingLabel last>
-                            <Label>Title</Label>
-                            <Input />
+                    <Form style={{ marginTop : 20 }}>
+                        <Item style={ styles.field } regular>
+                            <Input placeholder="Title"/>
                         </Item>
-                        <Item floatingLabel>
-                            <Label>Location</Label>
-                            <Input />
+                        <Item style={ styles.field } regular>
+                            <Label style={ styles.fieldIcon }>
+                                <FontAwesome
+                                    name="map-marker"
+                                    size={30}
+                                    color={Colors.tabIconSelected}
+                                />
+                            </Label>
+                            <Input placeholder="Location"/>
                         </Item>
-                        <Item floatingLabel last>
-                            <Label>Description</Label>
-                            <Input />
+                        <Item style={ styles.field } regular>
+                            <DatePicker
+                                style={{width: 150}}
+                                mode="date"
+                                placeholder={"Start Date"}
+                                format="YYYY-MM-DD"
+                                confirmBtnText={"Confirm"}
+                                cancelBtnText={"Cancel"}
+                                customStyles={{
+                                    placeHolderText : {
+                                        color: "black",
+                                        fontSize: 20
+                                    },
+                                    dateInput: {
+                                        borderWidth: 0
+                                    },
+                                    dateText: {
+                                        fontSize: 20
+                                    }
+                                }}
+                                onDateChange={() => {}}
+                            />
+                            <DatePicker
+                                style={{width: 150}}
+                                mode="date"
+                                placeholder={"End Date"}
+                                format="YYYY-MM-DD"
+                                confirmBtnText={"Confirm"}
+                                cancelBtnText={"Cancel"}
+                                customStyles={{
+                                    placeHolderText : {
+                                        color: "black",
+                                        fontSize: 20
+                                    },
+                                    dateInput: {
+                                        borderWidth: 0
+                                    },
+                                    dateText: {
+                                        fontSize: 20
+                                    }
+                                }}
+                                onDateChange={() => {}}
+                            />
+                        </Item>
+                        <Item style={ styles.field } regular>
+                            <Input placeholder="Description (Optional)"/>
                         </Item>
                     </Form>
+                    <View style={{ flex: 1, justifyContent: "center", alignItems:"center" }}>
+                        <Button rounded success onPress={() => {}}>
+                            <Text style={ styles.recenterText }>Post</Text>
+                        </Button>
+                    </View>
+                    <AddProductModal closeModal={ this._closeModal.bind(this) }
+                                     modalVisible={this.state.modalVisible}
+                                     productImage={this.state.productImage} />
                 </Content>
             </Container>
         );
     }
 }
 
-const styles = StyleSheet.create({
+const styles = {
     container: {
-        flex: 1,
+        flex : 1,
     },
-    scrollView: {
-        position: "absolute",
-        bottom: 30,
-        left: 0,
-        right: 0,
-        paddingVertical: 10,
+    bottom :{
+        flex : 1,
+        alignItems: "center"
     },
-    endPadding: {
-        paddingRight: width - CARD_WIDTH,
+    productsContainer: {
+        height: 70,
+        backgroundColor: "gray"
+    },
+    productsContentContainer: {
+        justifyContent: "center",
+        alignItems: "center"
     },
     card: {
         padding: 10,
@@ -172,25 +256,20 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "#444",
     },
-    markerWrap: {
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    marker: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: "rgba(130,4,150, 0.9)",
-    },
-    ring: {
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        backgroundColor: "rgba(130,4,150, 0.3)",
-        position: "absolute",
-        borderWidth: 1,
-        borderColor: "rgba(130,4,150, 0.5)",
-    },
-});
 
+    recenterText: {
+        fontSize: 20,
+        fontFamily: "webly-sleek",
+        color: "white"
+    },
+
+    field : {
+        margin: 5,
+        marginLeft : 8
+    },
+
+    fieldIcon : {
+        margin: 10
+    }
+};
 

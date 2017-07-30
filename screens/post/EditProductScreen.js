@@ -27,7 +27,7 @@ export default class AddProductScreen extends React.Component {
     };
 
     render() {
-        const { result } = this.props;
+        const { result } = this.props.navigation.state.params;
 
         return (
             <Container>
@@ -36,7 +36,7 @@ export default class AddProductScreen extends React.Component {
                 <Content contentContainerStyle={{ flex : 1 }}>
                         <Image
                             style= { styles.productImage }
-                            source={{ uri : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ" }}
+                            source={ result }
                         />
                     <Form >
                         <Item rounded last style={ styles.productField }>

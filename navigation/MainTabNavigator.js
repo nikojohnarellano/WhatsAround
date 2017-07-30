@@ -5,7 +5,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons';
-import {TabNavigator, TabBarBottom} from 'react-navigation';
+import {TabNavigator, TabBarBottom, StackNavigator} from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
@@ -13,27 +13,39 @@ import HomeScreen from '../screens/home/HomeScreen';
 import BrowseScreen from '../screens/listing/BrowseScreen';
 import AddListingScreen from '../screens/post/AddListingScreen';
 import ProductScreen from '../screens/product/ProductScreen'
-import AddProductScreen from '../screens/post/AddProductScreen';
+import EditProductScreen from '../screens/post/EditProductScreen';
 import SearchProductScreen from '../screens/product/SearchProductScreen'
+
+const ListingStackNavigator = StackNavigator({
+    AddListing : {
+        screen : AddListingScreen
+    },
+    AddProduct: {
+        screen : EditProductScreen
+    }
+}, {
+    navigationOptions : {
+        header : null
+    }
+});
 
 export default TabNavigator(
     {
-
         Home: {
             screen: HomeScreen
         },
         Browse: {
             screen: BrowseScreen
         },
-        Add: {
-            screen: AddListingScreen
+        AddListing: {
+            screen: ListingStackNavigator,
         },
         Search : {
             screen: SearchProductScreen
         },
         Profile: {
             screen: AddListingScreen
-        }
+        },
     },
     {
         navigationOptions: ({navigation}) => ({
@@ -48,7 +60,7 @@ export default TabNavigator(
                     case 'Browse':
                         iconName = 'navicon';
                         break;
-                    case 'Add':
+                    case 'AddListing':
                         iconName = 'plus-circle';
                         break;
                     case 'Search':
@@ -75,7 +87,7 @@ export default TabNavigator(
                         return 'Near Me';
                     case 'Browse':
                         return 'Browse';
-                    case 'Add':
+                    case 'AddListing':
                         return 'Post';
                     case 'Profile':
                         return routeName;
