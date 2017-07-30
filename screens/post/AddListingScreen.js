@@ -24,7 +24,9 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 export default class AddListingScreen extends React.Component {
     state = {
         productImages: [],
-        modalVisible : false
+        modalVisible : false,
+        modalImage : null
+
     };
 
     _pickImage = async (index) => {
@@ -51,13 +53,16 @@ export default class AddListingScreen extends React.Component {
                 'Do you want to add name, price, description to this photo?',
                 [
                     {text: 'No', onPress: () => {
-                        this.state.productImages.push(result);
+                        this.state.productImages.push({
+                            image: result
+                        });
+
                         this.setState(this.state)
                     }},
                     {text: 'Yes', onPress: () => {
                         this.setState({
                             modalVisible : true,
-                            productImage : result
+                            modalImage : result
                         })
                     }},
                 ],
@@ -79,6 +84,14 @@ export default class AddListingScreen extends React.Component {
 
     _closeModal = () => {
         this.setState({ modalVisible : false })
+    };
+
+    _addProductDetails = (details) => {
+        this.state.productImages.push({
+            image : this.state.modalImage,
+            name  : details.name,
+            price : details.price,
+        })
     };
 
     render() {
@@ -108,20 +121,24 @@ export default class AddListingScreen extends React.Component {
                             </TouchableOpacity>
                         </View>
                         {
-                            productImages.map((image, index) => {
+                            productImages.map((product, index) => {
                                 return (
                                     <View style={styles.card} key={index}>
                                         <Image
-                                            source={ image }
+                                            source={ product.image }
                                             style={styles.cardImage}
                                             resizeMode="cover"
                                         />
-                                        <View style={styles.textContent}>
-                                            <Text numberOfLines={1} style={styles.cardtitle}>Hey</Text>
-                                            <Text numberOfLines={1} style={styles.cardDescription}>
-                                                Wowowee
-                                            </Text>
-                                        </View>
+
+                                        {
+                                            (product.name && product.price) &&
+                                            <View style={styles.textContent}>
+                                                <Text numberOfLines={1} style={styles.cardtitle}>{ product.name }</Text>
+                                                <Text numberOfLines={1} style={styles.cardDescription}>
+                                                    { product.price }
+                                                </Text>
+                                            </View>
+                                        }
                                     </View>
                                 );
                             })
@@ -196,7 +213,8 @@ export default class AddListingScreen extends React.Component {
                     </View>
                     <AddProductModal closeModal={ this._closeModal.bind(this) }
                                      modalVisible={this.state.modalVisible}
-                                     productImage={this.state.productImage} />
+                                     productImage={this.state.modalImage}
+                                     addProductDetails={this._addProductDetails.bind(this)} />
                 </Content>
             </Container>
         );

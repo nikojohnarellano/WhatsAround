@@ -19,7 +19,18 @@ export default class AddProductModal extends React.Component {
     state = {
         title : "",
         price : ""
-    }
+    };
+
+    _addProduct = () => {
+        if(this._validate()) {
+            this.props.addProductDetails({
+                name  : this.state.title,
+                price : this.state.price,
+            })
+
+            this.props.closeModal()
+        }
+    };
 
     _validate = () => {
         if(this.state.title.length === 0 || this.state.price.length ===0) {
@@ -28,7 +39,11 @@ export default class AddProductModal extends React.Component {
                 'Item name and Price fields are required.',
                 [ { text: "OK" } ]
             )
+
+            return false;
         }
+
+        return true;
     };
 
     render() {
@@ -46,7 +61,7 @@ export default class AddProductModal extends React.Component {
                                 <FontAwesome
                                     name="close"
                                     size={25}
-                                    color="red"
+                                    color="skyblue"
                                 />
                             </TouchableOpacity>
                         </Right>
@@ -66,7 +81,7 @@ export default class AddProductModal extends React.Component {
                                        placeholder="Price"
                                        onChangeText={ (text) => { this.setState({ price: text }) }}
                                        onFocus={ (text) => { this.setState({ price: this.state.price.substr(1) })} }
-                                       onBlur={ (text) => { this.setState({price: this.state.price && "$" + this.state.price}) } }
+                                       onBlur={ (text) => { this.setState( { price: this.state.price && "$" + this.state.price}) } }
                                        value={ this.state.price }
                                 />
                             </Item>
@@ -75,7 +90,7 @@ export default class AddProductModal extends React.Component {
                             </Item>
                         </Form>
                         <View style={ styles.buttonWrapper }>
-                            <Button style={ styles.addButton } title="Add" onPress={() => { this._validate() }}>
+                            <Button style={ styles.addButton } title="Add" onPress={() => { this._addProduct() }}>
                                 <Text style={ styles.buttonText }>Add</Text>
                             </Button>
                         </View>
