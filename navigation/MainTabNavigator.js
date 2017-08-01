@@ -16,19 +16,6 @@ import ProductScreen from '../screens/product/ProductScreen'
 import EditProductScreen from '../screens/post/EditProductScreen';
 import SearchProductScreen from '../screens/product/SearchProductScreen'
 
-const ListingStackNavigator = StackNavigator({
-    AddListing : {
-        screen : AddListingScreen
-    },
-    AddProduct: {
-        screen : EditProductScreen
-    }
-}, {
-    navigationOptions : {
-        header : null
-    }
-});
-
 export default TabNavigator(
     {
         Home: {
@@ -38,7 +25,7 @@ export default TabNavigator(
             screen: BrowseScreen
         },
         AddListing: {
-            screen: ListingStackNavigator,
+            screen: AddListingScreen,
         },
         Search : {
             screen: SearchProductScreen

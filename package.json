@@ -16,6 +16,7 @@
     "native-base": "^2.2.0",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-18.0.1.tar.gz",
+    "react-native-autocomplete-input": "^3.3.1",
     "react-native-datepicker": "^1.6.0",
     "react-native-masonry": "^0.2.1",
     "react-navigation": "^1.0.0-beta.11"

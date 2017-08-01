@@ -394,7 +394,7 @@ export default class HomeScreen extends React.Component {
                                                 style={styles.cardImage}
                                                 resizeMode="cover"
                                             />
-                                            <View style={styles.textContent}>
+                                            <View style={styles.locationAutocomplete}>
                                                 <Text numberOfLines={1} style={styles.cardtitle}>{marker.listing.title}</Text>
                                                 <Text numberOfLines={1} style={styles.cardDescription}>
                                                     $50
@@ -467,7 +467,7 @@ const styles = {
         height: "100%",
         alignSelf: "center",
     },
-    textContent: {
+    locationAutocomplete: {
         flex: 1,
     },
     cardtitle: {
