@@ -1,4 +1,5 @@
 import React from 'react';
+import {MapView} from 'expo';
 import {
     Image,
     Text,
@@ -20,98 +21,73 @@ import {
     Body
 } from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
+
 import {Location, Permissions} from 'expo';
 
-import MapHeader from './components/MapHeader';
-import WhatsAroundMap from './components/WhatsAroundMap'
-import ZoomedListing from './components/ZoomedListing'
-import WutzAroundHeader from '../../components/WutzAroundHeader'
-import Listings from './Listings.json'
+
+import MapHeader from './MapHeader';
+import WutzAroundHeader from '../../../components/WutzAroundHeader'
+
+import _ from 'lodash';
+
+const Images = [
+    {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
+    {uri: "https://rukminim1.flixcart.com/image/312/312/hand-messenger-bag/g/s/g/fd-handbag-0028-fair-deals-hand-held-bag-texture-original-imaencs3dm3hqmen.jpeg?q=70"},
+    {uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/LGwashingmachine.jpg"},
+    {uri: "http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg"}
+]
 
 const {width, height} = Dimensions.get("window");
 
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
-const listings = Listings;
-
 export default class HomeScreen extends React.Component {
-    state = {
-        region: {
-            latitude: 49.247140,
-            longitude: -123.064926,
-            latitudeDelta: 0.05,
-            longitudeDelta: 0.05,
-        },
-        showItems: false,
-        focusedListing: null
-    };
-
-    _refMap(map) {
-        this.map = map
-    }
-
-    _focusListing(listing) {
-        this.state.showItems = true;
-        this.state.focusedListing = listing;
-
-        this.setState(this.state);
-        this._recenterCurrent();
-    }
-
-    _closeListing() {
-        this.state.showItems = false;
-        this.state.focusedListing = null;
-
-        this.setState(this.state);
-    }
-
-    _recenterCurrent() {
-        this.map.animateToRegion(this.state.focusedListing ? {
-            latitude: this.state.focusedListing.latitude,
-            longitude: this.state.focusedListing.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
-        } : this.state.region);
-    }
 
     render() {
-        const {navigate} = this.props.navigation;
-
-        let selectListingFacade = {
-            refMap : this._refMap.bind(this),
-            focusedListing : this.state.focusedListing,
-            showItems : this.state.showItems,
-            focusListing : this._focusListing.bind(this),
-            closeListing : this._closeListing.bind(this),
-            recenterCurrent : this._recenterCurrent.bind(this)
-        };
+        const {
+            selectListingFacade,
+            listings,
+            region
+        } = this.props;
 
         return (
-            <Container style={styles.container}>
-                {
-                    this.state.showItems ?
-                        <MapHeader focusedListing={ this.state.focusedListing }/> :
-                        <WutzAroundHeader title="WhatsAround"/>
-                }
-                <View style={{flex: 1}}>
-                    <WhatsAroundMap
-                        listings={listings}
-                        region={this.state.region}
-                        selectListingFacade={selectListingFacade}
-                    />
-                    {
-                        /* TODO change products */
-                        this.state.showItems &&
-                        <ZoomedListing
-                            products={listings}
-                            navigate={navigate}
-                            selectListingFacade={selectListingFacade}
-                        />
-                    }
-                </View>
-            </Container>
-        )
+            <MapView
+                ref={selectListingFacade.refMap}
+                initialRegion={region}
+                style={styles.mapContainer}>
+                {listings.map((listing, index) => {
+                    return (
+                        <MapView.Marker onPress={() => {
+                            !selectListingFacade.focusedListing ?
+                                selectListingFacade.focusListing(listing) :
+                                selectListingFacade.closeListing()
+                        }}
+                                        key={ index }
+                                        coordinate={{
+                                            latitude: listing.latitude,
+                                            longitude: listing.longitude
+                                        }}>
+                            <View>
+                                <Image style={{
+                                    width: selectListingFacade.showItems ? 70 : 50,
+                                    height: selectListingFacade.showItems ? 70 : 50,
+                                }}
+                                       source={ require('../../../assets/icons/marker.png') }/>
+                                <Thumbnail
+                                    small={ !selectListingFacade.showItems }
+                                    style={{
+                                        position: "absolute",
+                                        left: 7,
+                                        top: selectListingFacade.showItems ? 0.7 : 2.5,
+                                    }}
+                                    source={{uri: listing.primary_pic}}/>
+                            </View>
+                        </MapView.Marker>
+                    );
+                })}
+            </MapView>
+        );
     }
 
     _getLocationAsync = async () => {
@@ -216,10 +192,10 @@ const styles = {
         height: 50
     },
 
-    pinThumbnail : {
+    pinThumbnail: {
         position: "absolute",
         left: 7,
-        top:2.5,
+        top: 2.5,
     },
 
     pinText: {
@@ -227,17 +203,17 @@ const styles = {
         textAlign: "center"
     },
 
-    recenterText : {
+    recenterText: {
         fontSize: 20,
-        fontFamily : "webly-sleek",
+        fontFamily: "webly-sleek",
         color: "white"
     },
 
-    headerButtons : {
+    headerButtons: {
         width: width,
         flexDirection: "row",
         justifyContent: "space-between",
-        position:"absolute",
+        position: "absolute",
         bottom: height - 180,
     }
 };

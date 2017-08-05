@@ -14,13 +14,13 @@ import {
 export default class MapHeader extends React.Component {
 
     render() {
-        const { focusedMarker } = this.props;
+        const { focusedListing } = this.props;
 
         return (
             <Header style={ styles.header }>
                 <Body style={ styles.body }>
                     <Title style={ styles.title }>{ "Moving sale! Everything must go" }</Title>
-                    <Subtitle  style={ styles.subtitle }>{ focusedMarker.listing.location }</Subtitle>
+                    <Subtitle  style={ styles.subtitle }>{ focusedListing.location }</Subtitle>
                 </Body>
             </Header>
         );
