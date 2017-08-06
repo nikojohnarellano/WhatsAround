@@ -14,7 +14,6 @@ const {width, height} = Dimensions.get("window");
 
 export default class AddListingScreen extends React.Component {
     render() {
-
         return (
             <Container>
                 <WutzAroundHeader title="Add Listing"/>

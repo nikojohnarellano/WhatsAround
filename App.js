@@ -6,6 +6,8 @@ import RootNavigation from './navigation/RootNavigation';
 
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 
+import listings from './screens/home/Listings.json'
+
 export default class AppContainer extends React.Component {
   state = {
     appIsReady: false,

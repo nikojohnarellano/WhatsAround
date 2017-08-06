@@ -25,7 +25,7 @@ const Images = [
     { uri: "https://rukminim1.flixcart.com/image/312/312/hand-messenger-bag/g/s/g/fd-handbag-0028-fair-deals-hand-held-bag-texture-original-imaencs3dm3hqmen.jpeg?q=70" },
     { uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/LGwashingmachine.jpg" },
     { uri: "http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg" }
-]
+];
 
 export default class SearchProductScreen extends React.Component {
 
@@ -33,12 +33,13 @@ export default class SearchProductScreen extends React.Component {
         var chunkSize = 2;
         var groups    = Images.map((item, index) =>
             {
-                return index%chunkSize===0 ? Images.slice(index,index+chunkSize) : null;
+                return index%chunkSize === 0 ? Images.slice(index,index+chunkSize) : null;
             })
             .filter(function(e)
             {
                 return e;
             });
+
         return (
             <Container>
                 <Header style={ styles.searchProductHeader } searchBar rounded>

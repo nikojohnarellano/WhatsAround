@@ -97,6 +97,12 @@ export default class ListingProducts extends React.Component {
         })
     };
 
+    _removeProduct = (index) => {
+        let array = this.state.productImages;
+        array.splice(index, 1);
+        this.setState({ productImages : array });
+    };
+
     render() {
         const {productImages} = this.state;
 
@@ -125,6 +131,14 @@ export default class ListingProducts extends React.Component {
                     productImages.map((product, index) => {
                         return (
                             <View style={styles.card} key={index}>
+                                <TouchableOpacity
+                                    style={ styles.removeButton }
+                                    onPress={() => { this._removeProduct(index) }}>
+                                    <FontAwesome
+                                        style={ styles.removeIcon }
+                                        name="times-circle"
+                                    />
+                                </TouchableOpacity>
                                 <Image
                                     source={ product.image }
                                     style={styles.cardImage}
@@ -205,5 +219,29 @@ const styles = {
         fontSize: 12,
         color: "#444",
     },
+
+    removeButton : {
+        borderWidth:1,
+        borderColor:'white',
+        alignItems:'center',
+        justifyContent:'center',
+        width:20,
+        height:20,
+        backgroundColor:'#fff',
+        borderRadius:200,
+        position : "absolute",
+        top : 0,
+        right : 0,
+        zIndex : 2,
+    },
+
+    removeIcon : {
+        backgroundColor: "transparent",
+        borderWidth : 1,
+        borderRadius :64,
+        color: "red",
+        fontSize:20,
+        textAlign: "center",
+    }
 };
 

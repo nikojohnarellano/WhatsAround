@@ -19,7 +19,7 @@ export default class WutzAroundHeader extends React.Component {
         return (
             <Header style={ styles.homeScreenHeader }>
                 <Body>
-                <Title style={ styles.homeScreenHeaderText }> { title } </Title>
+                    <Title style={ styles.homeScreenHeaderText }> { title } </Title>
                 </Body>
             </Header>
         );

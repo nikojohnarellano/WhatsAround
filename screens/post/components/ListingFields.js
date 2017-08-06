@@ -25,7 +25,6 @@ export default class ListingFields extends React.Component {
         }
     };
 
-
     _getLocationAsync = async () => {
         let {status} = await Permissions.askAsync(Permissions.LOCATION);
 
@@ -44,88 +43,88 @@ export default class ListingFields extends React.Component {
         const {places} = this.state;
 
         return (
-                    <Form style={{marginTop: 20}}>
-                        <Item style={ styles.field } regular>
-                            <Input placeholder="Title"/>
-                        </Item>
-                        { /* Added z-index for automplete places field */ }
-                        <Item style={ {...styles.field, ...{ zIndex : 1 } }} regular>
-                            <Label style={ styles.fieldIcon }>
-                                <FontAwesome
-                                    name="map-marker"
-                                    size={30}
-                                    color={Colors.tabIconSelected}
-                                />
-                            </Label>
-                            <Autocomplete
-                                autoCorrect={false}
-                                data={ places }
-                                onChangeText={text => {
-                                    this._autoCompletePlaces(text, this.state.location)
-                                }}
-                                placeholder="Location"
-                                containerStyle={ styles.locationAutocomplete }
-                                inputContainerStyle={{ borderWidth : 0 }}
-                                renderItem={(place) => (
-                                    <TouchableOpacity onPress={() => {
-                                    }}>
-                                        <Text style={styles.itemText}>
-                                            { place }
-                                        </Text>
-                                    </TouchableOpacity>
-                                )}
-                            />
-                        </Item>
-                        <Item style={ styles.field } regular>
-                            <DatePicker
-                                style={{width: 150}}
-                                mode="date"
-                                placeholder={"Start Date"}
-                                format="YYYY-MM-DD"
-                                confirmBtnText={"Confirm"}
-                                cancelBtnText={"Cancel"}
-                                customStyles={{
-                                    placeHolderText: {
-                                        color: "black",
-                                        fontSize: 20
-                                    },
-                                    dateInput: {
-                                        borderWidth: 0
-                                    },
-                                    dateText: {
-                                        fontSize: 20
-                                    }
-                                }}
-                                onDateChange={() => {
-                                }}
-                            />
-                            <DatePicker
-                                style={{width: 150}}
-                                mode="date"
-                                placeholder={"End Date"}
-                                format="YYYY-MM-DD"
-                                confirmBtnText={"Confirm"}
-                                cancelBtnText={"Cancel"}
-                                customStyles={{
-                                    placeHolderText: {
-                                        color: "black",
-                                        fontSize: 20
-                                    },
-                                    dateInput: {
-                                        borderWidth: 0
-                                    },
-                                    dateText: {
-                                        fontSize: 20
-                                    }
-                                }}
-                                onDateChange={() => {
-                                }}
-                            />
-                        </Item>
-                        <Item style={ styles.field } regular>
-                            <Input placeholder="Description (Optional)"/>
-                        </Item>
-                    </Form>
+            <Form style={{marginTop: 20}}>
+                <Item style={ styles.field } regular>
+                    <Input placeholder="Title"/>
+                </Item>
+                { /* Added z-index for automplete places field */ }
+                <Item style={ {...styles.field, ...{zIndex: 1}}} regular>
+                    <Label style={ styles.fieldIcon }>
+                        <FontAwesome
+                            name="map-marker"
+                            size={30}
+                            color={Colors.tabIconSelected}
+                        />
+                    </Label>
+                    <Autocomplete
+                        autoCorrect={false}
+                        data={ places }
+                        onChangeText={text => {
+                            this._autoCompletePlaces(text, this.state.location)
+                        }}
+                        placeholder="Location"
+                        containerStyle={ styles.locationAutocomplete }
+                        inputContainerStyle={{borderWidth: 0}}
+                        renderItem={(place) => (
+                            <TouchableOpacity onPress={() => {
+                            }}>
+                                <Text style={styles.itemText}>
+                                    { place }
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+                    />
+                </Item>
+                <Item style={ styles.field } regular>
+                    <DatePicker
+                        style={{width: 150}}
+                        mode="date"
+                        placeholder={"Start Date"}
+                        format="YYYY-MM-DD"
+                        confirmBtnText={"Confirm"}
+                        cancelBtnText={"Cancel"}
+                        customStyles={{
+                            placeHolderText: {
+                                color: "black",
+                                fontSize: 20
+                            },
+                            dateInput: {
+                                borderWidth: 0
+                            },
+                            dateText: {
+                                fontSize: 20
+                            }
+                        }}
+                        onDateChange={() => {
+                        }}
+                    />
+                    <DatePicker
+                        style={{width: 150}}
+                        mode="date"
+                        placeholder={"End Date"}
+                        format="YYYY-MM-DD"
+                        confirmBtnText={"Confirm"}
+                        cancelBtnText={"Cancel"}
+                        customStyles={{
+                            placeHolderText: {
+                                color: "black",
+                                fontSize: 20
+                            },
+                            dateInput: {
+                                borderWidth: 0
+                            },
+                            dateText: {
+                                fontSize: 20
+                            }
+                        }}
+                        onDateChange={() => {
+                        }}
+                    />
+                </Item>
+                <Item style={ styles.field } regular>
+                    <Input placeholder="Description (Optional)"/>
+                </Item>
+            </Form>
         );
     }
 }
@@ -142,7 +141,7 @@ const styles = {
 
     locationAutocomplete: {
         flex: 1,
-        borderWidth:0
+        borderWidth: 0
     },
 
     recenterText: {
