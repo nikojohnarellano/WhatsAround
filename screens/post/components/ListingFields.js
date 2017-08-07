@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Animated, Dimensions, View, Image, Text, Alert} from 'react-native';
+import {TouchableOpacity, Picker, Text,} from 'react-native';
 import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Button} from 'native-base';
 import Colors from '../../../constants/Colors';
 import {FontAwesome} from '@expo/vector-icons';
@@ -11,7 +11,14 @@ import fetchPlaces from '../../../utilities/autoCompletePlaces'
 
 export default class ListingFields extends React.Component {
     state = {
-        location: {}
+        title : "",
+        location: "",
+        startDate: "",
+        startTime: "",
+        endTime: "",
+        description: "",
+        currentLocation : {},
+        hideResults : false,
     };
 
     _autoCompletePlaces = async (query, location) => {
@@ -29,9 +36,9 @@ export default class ListingFields extends React.Component {
         let {status} = await Permissions.askAsync(Permissions.LOCATION);
 
         if (status === 'granted') {
-            let location = await Location.getCurrentPositionAsync({});
+            let currentLocation = await Location.getCurrentPositionAsync({});
 
-            this.setState({location: location})
+            this.setState({ currentLocation })
         }
     };
 
@@ -45,7 +52,11 @@ export default class ListingFields extends React.Component {
         return (
             <Form style={{marginTop: 20}}>
                 <Item style={ styles.field } regular>
-                    <Input placeholder="Title"/>
+                    <Input
+                        placeholderTextColor="#c9c9c9"
+                        value={ this.state.title }
+                        placeholder="Title"
+                        onChangeText={title =>  this.setState({ title })}/>
                 </Item>
                 { /* Added z-index for automplete places field */ }
                 <Item style={ {...styles.field, ...{zIndex: 1}}} regular>
@@ -59,70 +70,119 @@ export default class ListingFields extends React.Component {
                     <Autocomplete
                         autoCorrect={false}
                         data={ places }
-                        onChangeText={text => {
-                            this._autoCompletePlaces(text, this.state.location)
+                        onChangeText={location => {
+                            this._autoCompletePlaces(location, this.state.currentLocation)
+                            this.setState({ location, hideResults : false})
                         }}
                         placeholder="Location"
+                        value={ this.state.location }
+                        hideResults={ this.state.hideResults }
                         containerStyle={ styles.locationAutocomplete }
                         inputContainerStyle={{borderWidth: 0}}
-                        renderItem={(place) => (
-                            <TouchableOpacity onPress={() => {
-                            }}>
+                        renderItem={(location) => (
+                            <TouchableOpacity onPress={() => { this.setState({ location, hideResults : true }) }}>
                                 <Text style={styles.itemText}>
-                                    { place }
+                                    { location }
                                 </Text>
                             </TouchableOpacity>
                         )}
                     />
                 </Item>
                 <Item style={ styles.field } regular>
+                    <Label style={ styles.fieldIcon }>
+                        <FontAwesome
+                            name="calendar"
+                            size={30}
+                            color={Colors.tabIconSelected}
+                        />
+                    </Label>
                     <DatePicker
-                        style={{width: 150}}
+                        showIcon={false}
                         mode="date"
-                        placeholder={"Start Date"}
-                        format="YYYY-MM-DD"
+                        format="MMM Do YYYY"
+                        style={{ flex : 1  }}
+                        date={ this.state.startDate }
+                        placeholder={"Start Date (Optional)"}
                         confirmBtnText={"Confirm"}
                         cancelBtnText={"Cancel"}
                         customStyles={{
-                            placeHolderText: {
-                                color: "black",
-                                fontSize: 20
+                            placeholderText: {
+                                fontSize: 17
                             },
                             dateInput: {
-                                borderWidth: 0
+                                borderWidth: 0,
+                                alignItems: "flex-start"
                             },
                             dateText: {
-                                fontSize: 20
+                                fontSize: 17,
                             }
                         }}
-                        onDateChange={() => {
-                        }}
-                    />
-                    <DatePicker
-                        style={{width: 150}}
-                        mode="date"
-                        placeholder={"End Date"}
-                        format="YYYY-MM-DD"
-                        confirmBtnText={"Confirm"}
-                        cancelBtnText={"Cancel"}
-                        customStyles={{
-                            placeHolderText: {
-                                color: "black",
-                                fontSize: 20
-                            },
-                            dateInput: {
-                                borderWidth: 0
-                            },
-                            dateText: {
-                                fontSize: 20
-                            }
-                        }}
-                        onDateChange={() => {
-                        }}
+                        onDateChange={startDate => this.setState({ startDate })}
                     />
                 </Item>
+                {
+                    this.state.startDate !== "" &&
+                    <Item style={ styles.field } regular>
+                        <Label style={ styles.fieldIcon }>
+                            <FontAwesome
+                                name="clock-o"
+                                size={30}
+                                color={Colors.tabIconSelected}
+                            />
+                        </Label>
+                        <DatePicker
+                            showIcon={false}
+                            style={{ flex : 1 }}
+                            date
+                            mode="time"
+                            placeholder={"Start Time"}
+                            confirmBtnText={"Confirm"}
+                            cancelBtnText={"Cancel"}
+                            customStyles={{
+                                placeholderText: {
+                                    fontSize: 17
+                                },
+                                dateInput: {
+                                    borderWidth: 0,
+                                    alignItems: "flex-start"
+                                },
+                                dateText: {
+                                    fontSize: 17
+                                }
+                            }}
+                            onDateChange={startTime => this.setState({ startTime }) }
+                        />
+                        <DatePicker
+                            showIcon={false}
+                            style={{flex: 1}}
+                            mode="time"
+                            placeholder={"End Time"}
+                            confirmBtnText={"Confirm"}
+                            cancelBtnText={"Cancel"}
+                            customStyles={{
+                                placeholderText: {
+                                    fontSize: 17
+                                },
+                                dateInput: {
+                                    borderWidth: 0,
+                                    alignItems: "flex-start"
+                                },
+                                dateText: {
+                                    fontSize: 17
+                                }
+                            }}
+                            onDateChange={endTime => this.setState({ endTime }) }
+                        />
+                    </Item>
+                }
                 <Item style={ styles.field } regular>
-                    <Input placeholder="Description (Optional)"/>
+                    <Input
+                        placeholderTextColor="#c9c9c9"
+                        multiline
+                        style={{ height: 100, justifyContent: "flex-start" }}
+                        value={ this.state.description }
+                        placeholder="Description (Optional)"
+                        onChangeText={description => this.setState({ description }) }/>
                 </Item>
             </Form>
         );
@@ -154,7 +214,7 @@ const styles = {
         borderWidth: 1,
         backgroundColor: "white",
         margin: 5,
-        marginLeft: 8
+        marginLeft : 5
     },
 
     fieldIcon: {

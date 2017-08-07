@@ -35,7 +35,6 @@ export default class AddListingScreen extends React.Component {
 
 const styles = {
     container: {
-        flex: 1,
     },
 
     recenterText: {
@@ -46,8 +45,8 @@ const styles = {
 
     postButtonContainer: {
         flex: 1,
-        flexDirection: "row",
         justifyContent: "center",
+        alignItems: "center"
     },
 
     postButton : {

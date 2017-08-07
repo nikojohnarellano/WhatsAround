@@ -26,7 +26,7 @@ export default class AddProductModal extends React.Component {
             this.props.addProductDetails({
                 name  : this.state.title,
                 price : this.state.price,
-            })
+            });
 
             this.props.closeModal()
         }
@@ -66,7 +66,7 @@ export default class AddProductModal extends React.Component {
                             </TouchableOpacity>
                         </Right>
                     </Header>
-                    <Content contentContainerStyle={{ flex : 1 }}>
+                    <Content>
                         <Image
                             resizeMode="stretch"
                             style= { styles.productImage }

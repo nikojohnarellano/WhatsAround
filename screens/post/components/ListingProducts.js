@@ -54,20 +54,20 @@ export default class ListingProducts extends React.Component {
                 [
                     {
                         text: 'No', onPress: () => {
-                        this.state.productImages.push({
-                            image: result
-                        });
+                            this.state.productImages.push({
+                                image: result
+                            });
 
-                        this.setState(this.state)
-                    }
+                            this.setState(this.state)
+                        }
                     },
                     {
                         text: 'Yes', onPress: () => {
-                        this.setState({
-                            modalVisible: true,
-                            modalImage: result
-                        })
-                    }
+                            this.setState({
+                                modalVisible: true,
+                                modalImage: result
+                            })
+                        }
                     },
                 ],
             )
@@ -107,7 +107,7 @@ export default class ListingProducts extends React.Component {
         const {productImages} = this.state;
 
         return (
-        <View style={{ height : 200 }}>
+        <View style={{ height : 180 }}>
             <Animated.ScrollView
                 horizontal
                 scrollEventThrottle={1}
