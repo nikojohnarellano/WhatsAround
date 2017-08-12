@@ -1,8 +1,8 @@
 {
-  "name": "project-near",
-  "version": "0.0.0",
-  "description": "Hello Expo!",
-  "author": null,
+  "name": "WhatsAround",
+  "version": "0.0.1",
+  "description": "Get updated with the nearby Garage, Moving or Yard Sales",
+  "author": "Niko Arellano",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "test": "jest"
@@ -17,6 +17,7 @@
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-18.0.1.tar.gz",
     "react-native-autocomplete-input": "^3.3.1",
+    "react-native-collapsible": "^0.9.0",
     "react-native-datepicker": "^1.6.0",
     "react-native-masonry": "^0.2.1",
     "react-navigation": "^1.0.0-beta.11"
