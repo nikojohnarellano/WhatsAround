@@ -27,11 +27,11 @@ const RootStackNavigator = StackNavigator(
 
 export default class RootNavigator extends React.Component {
   componentDidMount() {
-    this._notificationSubscription = this._registerForPushNotifications();
+    //this._notificationSubscription = this._registerForPushNotifications();
   }
 
   componentWillUnmount() {
-    this._notificationSubscription && this._notificationSubscription.remove();
+    //this._notificationSubscription && this._notificationSubscription.remove();
   }
 
   render() {

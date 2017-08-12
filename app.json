@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "project-near",
-    "description": "No description",
+    "name": "WhatsAround",
+    "description": "Moving, yard or garage sale around your area!",
     "slug": "project-near",
-    "privacy": "public",
+    "privacy": "unlisted",
     "sdkVersion": "18.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,6 +13,10 @@
       "icon": "./assets/icons/notification-icon.png",
       "color": "#000000"
     },
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff"
+    },
+    "androidStatusBarColor": "#ffffff",
     "loading": {
       "icon": "./assets/icons/loading-icon.png",
       "hideExponentText": false

@@ -54,7 +54,7 @@ export default class AddProductModal extends React.Component {
                 visible={this.props.modalVisible}
                 onRequestClose={() => {alert("Modal has been closed.")}}>
                 <Container>
-                    <Header>
+                    <Header style={{ backgroundColor: "skyblue" }}>
                         <Right>
                             <TouchableOpacity
                                     onPress={() => { this.props.closeModal() }}>
@@ -73,19 +73,19 @@ export default class AddProductModal extends React.Component {
                             source={ this.props.productImage }
                         />
                         <Form >
-                            <Item rounded last style={ styles.productField }>
+                            <Item last style={ styles.productField }>
                                 <Input placeholder="Item Name" onChangeText={ (text) => { this.setState({ title:text }) }}/>
                             </Item>
-                            <Item rounded last style={ styles.productField }>
+                            <Item last style={ styles.productField }>
                                 <Input keyboardType="numeric"
                                        placeholder="Price"
                                        onChangeText={ (text) => { this.setState({ price: text }) }}
                                        onFocus={ (text) => { this.setState({ price: this.state.price.substr(1) })} }
-                                       onBlur={ (text) => { this.setState( { price: this.state.price && "$" + this.state.price}) } }
+                                       onBlur={  (text) => { this.setState({ price: this.state.price && "$" + this.state.price}) } }
                                        value={ this.state.price }
                                 />
                             </Item>
-                            <Item rounded last style={ styles.productField }>
+                            <Item last style={ styles.productField }>
                                 <Input style={{ height: 100 }} placeholder="Description (Optional)" multiline/>
                             </Item>
                         </Form>

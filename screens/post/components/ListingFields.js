@@ -42,8 +42,8 @@ export default class ListingFields extends React.Component {
         }
     };
 
-    componentWillMount() {
-        this._getLocationAsync()
+    async componentWillMount() {
+        await this._getLocationAsync()
     }
 
     render() {

@@ -95,7 +95,7 @@ export default class AccountScreen extends Component {
         return (
             <Container>
                 <WhatsAroundHeader/>
-                <Header>
+                <Header style={{ backgroundColor: "white"}} >
                     <Left style={{flex: 1}}>
                         <FontAwesome
                             name="user-circle"
@@ -103,8 +103,8 @@ export default class AccountScreen extends Component {
                         />
                     </Left>
                     <Body style={{flex: 2, alignItems: "flex-start"}}>
-                    <Title>Niko Arellano</Title>
-                    <Subtitle>nikootine123@gmail.com</Subtitle>
+                        <Title style={{ color: "black" }}>Niko Arellano</Title>
+                        <Subtitle style={{ color: "black" }}>nikootine123@gmail.com</Subtitle>
                     </Body>
                     <Right/>
                 </Header>
@@ -155,7 +155,7 @@ export default class AccountScreen extends Component {
                         </ListItem>
                     </List>
                 </Content>
-                <Footer >
+                <Footer style={{ backgroundColor: "white" }}>
                     <TouchableOpacity style={{justifyContent: "center"}}>
                         <Text style={{color: "red", fontSize: 20}}>Log-out</Text>
                     </TouchableOpacity>
