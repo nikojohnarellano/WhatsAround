@@ -44,7 +44,7 @@ export default TabNavigator(
                         iconName = 'map-marker';
                         break;
                     case 'Browse':
-                        iconName = 'navicon';
+                        iconName = 'th-large';
                         break;
                     case 'AddListing':
                         iconName = 'plus-circle';
@@ -53,7 +53,7 @@ export default TabNavigator(
                         iconName = 'search';
                         break;
                     case 'Profile':
-                        iconName = 'user';
+                        iconName = 'navicon';
                         break;
 
                 }

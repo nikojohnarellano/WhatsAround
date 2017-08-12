@@ -133,8 +133,9 @@ export default class ListingFields extends React.Component {
                         <DatePicker
                             showIcon={false}
                             style={{ flex : 1 }}
-                            date
+                            date={ this.state.startTime }
                             mode="time"
+                            format="hh:mm a"
                             placeholder={"Start Time"}
                             confirmBtnText={"Confirm"}
                             cancelBtnText={"Cancel"}
@@ -155,6 +156,8 @@ export default class ListingFields extends React.Component {
                         <DatePicker
                             showIcon={false}
                             style={{flex: 1}}
+                            date={ this.state.endTime }
+                            format="hh:mm a"
                             mode="time"
                             placeholder={"End Time"}
                             confirmBtnText={"Confirm"}
