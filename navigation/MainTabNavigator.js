@@ -12,9 +12,8 @@ import Colors from '../constants/Colors';
 import HomeScreen from '../screens/home/HomeScreen';
 import BrowseScreen from '../screens/listing/BrowseScreen';
 import AddListingScreen from '../screens/post/AddListingScreen';
-import ProductScreen from '../screens/product/ProductScreen'
-import EditProductScreen from '../screens/post/EditProductScreen';
 import SearchProductScreen from '../screens/product/SearchProductScreen'
+import AccountScreen from '../screens/account/AccountScreen'
 
 export default TabNavigator(
     {
@@ -31,7 +30,7 @@ export default TabNavigator(
             screen: SearchProductScreen
         },
         Profile: {
-            screen: AddListingScreen
+            screen: AccountScreen
         },
     },
     {
@@ -77,7 +76,7 @@ export default TabNavigator(
                     case 'AddListing':
                         return 'Post';
                     case 'Profile':
-                        return routeName;
+                        return 'Account';
                     case 'Search':
                         return 'Search';
                 }
