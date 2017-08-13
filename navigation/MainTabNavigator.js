@@ -14,11 +14,12 @@ import BrowseScreen from '../screens/listing/BrowseScreen';
 import AddListingScreen from '../screens/post/AddListingScreen';
 import SearchProductScreen from '../screens/product/SearchProductScreen'
 import AccountScreen from '../screens/account/AccountScreen'
+import ListingScreen from '../screens/listing/ListingScreen'
 
 export default TabNavigator(
     {
         Home: {
-            screen: HomeScreen
+            screen: ListingScreen
         },
         Browse: {
             screen: BrowseScreen

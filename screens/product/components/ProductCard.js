@@ -13,16 +13,18 @@ export default class ProductCard extends React.Component {
 
         return (
             <Card>
+                {/* TODO hide header when no title */}
                 <CardItem header>
-                        <Title>iPhone 7 2017 Bought last year</Title>
+                    <Title style={ styles.textStyle }>iPhone 7 2017 Bought last year</Title>
                 </CardItem>
                 <CardItem cardBody>
-                    <Image source={ image } style={{height: 200, width: null, flex: 1}}/>
+                    <Image source={ image } resizeMode="contain" style={{height: 100, width: null, flex: 1}}/>
                 </CardItem>
+                {/* TODO hide */}
                 <CardItem footer>
                     <Left/>
                     <Body>
-                        <Title>$50</Title>
+                        <Title style={ styles.textStyle }>$50</Title>
                     </Body>
                     <Right/>
                 </CardItem>
@@ -31,13 +33,17 @@ export default class ProductCard extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
+const styles = {
     container: {
         flex: 1,
         paddingTop: 15,
         backgroundColor: '#fff',
     },
-});
+
+    textStyle : {
+        fontFamily: "webly-sleek"
+    }
+};
 /**
  * Created by nikoarellano on 2017-07-21.
  */

@@ -38,7 +38,7 @@ export default class AddProductModal extends React.Component {
                 'Fields Required',
                 'Item name and Price fields are required.',
                 [ { text: "OK" } ]
-            )
+            );
 
             return false;
         }

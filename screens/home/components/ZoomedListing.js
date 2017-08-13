@@ -95,9 +95,6 @@ const styles = {
     container: {
         flex: 1,
     },
-    mapContainer: {
-        flex: 1
-    },
     scrollView: {
         position: "absolute",
         bottom: 30,
@@ -135,51 +132,6 @@ const styles = {
     cardDescription: {
         fontSize: 12,
         color: "#444",
-    },
-    markerWrap: {
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    marker: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: "rgba(130,4,150, 0.9)",
-    },
-    ring: {
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        backgroundColor: "rgba(130,4,150, 0.3)",
-        position: "absolute",
-        borderWidth: 1,
-        borderColor: "rgba(130,4,150, 0.5)",
-    },
-
-    pin: {
-        backgroundColor: "white",
-        alignItems: "center",
-        justifyContent: "center",
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: "gray",
-        width: 55
-    },
-
-    pinImage: {
-        width: 50,
-        height: 50
-    },
-
-    pinThumbnail: {
-        position: "absolute",
-        left: 7,
-        top: 2.5,
-    },
-
-    pinText: {
-        fontSize: 10,
-        textAlign: "center"
     },
 
     recenterText: {
