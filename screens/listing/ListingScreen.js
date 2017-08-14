@@ -17,7 +17,6 @@ export default class ListingScreen extends Component {
             <Container>
                 <WutzAroundHeader/>
                 <Content>
-                    {/* Render first picture */}
 
                     <View style={{
                         alignItems: "center",
@@ -45,7 +44,6 @@ export default class ListingScreen extends Component {
                         <Text style={ {...styles.fieldTitle, ...{alignSelf: "center"}}}>Products:</Text>
                         <ListingProducts/>
                     </View>
-
                 </Content>
             </Container>
         )

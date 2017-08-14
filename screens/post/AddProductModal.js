@@ -1,7 +1,8 @@
 import React from 'react';
 import { Dimensions, View, Image, Text, Alert, Modal, TouchableOpacity } from 'react-native';
-import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Right, Button} from 'native-base';
+import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Right, Button, Body, Title} from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
+import WutzAroundHeader from '../../components/WutzAroundHeader'
 
 const Images = [
     {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
@@ -54,18 +55,19 @@ export default class AddProductModal extends React.Component {
                 visible={this.props.modalVisible}
                 onRequestClose={() => {alert("Modal has been closed.")}}>
                 <Container>
-                    <Header style={{ backgroundColor: "skyblue" }}>
-                        <Right>
-                            <TouchableOpacity
-                                    onPress={() => { this.props.closeModal() }}>
+
+                     <WutzAroundHeader
+                        title="Add Product"
+                        renderRight={
+                            () => { return (<TouchableOpacity
+                                onPress={() => { this.props.closeModal() }}>
                                 <FontAwesome
                                     name="close"
                                     size={25}
-                                    color="skyblue"
+                                    color="white"
                                 />
-                            </TouchableOpacity>
-                        </Right>
-                    </Header>
+                            </TouchableOpacity>) }
+                        }/>
                     <Content>
                         <Image
                             resizeMode="stretch"
@@ -89,9 +91,9 @@ export default class AddProductModal extends React.Component {
                                 <Input style={{ height: 100 }} placeholder="Description (Optional)" multiline/>
                             </Item>
                         </Form>
-                        <View style={ styles.buttonWrapper }>
-                            <Button style={ styles.addButton } title="Add" onPress={() => { this._addProduct() }}>
-                                <Text style={ styles.buttonText }>Add</Text>
+                        <View style={ styles.postButtonContainer }>
+                            <Button style={ styles.postButton } rounded success onPress={() => {}}>
+                                <Text style={ styles.recenterText }>Add</Text>
                             </Button>
                         </View>
                     </Content>
@@ -113,20 +115,21 @@ const styles = {
         marginTop: 20
     },
 
-    buttonWrapper : {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent:"center",
-    },
-
-    addButton : {
-        width: 100,
-        marginTop : 20,
-        justifyContent: "center"
-    },
-
-    buttonText : {
+    recenterText: {
+        fontSize: 20,
+        fontFamily: "webly-sleek",
         color: "white"
+    },
+
+    postButtonContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 20
+    },
+
+    postButton : {
+        alignSelf : "center"
     }
 
 };
