@@ -70,16 +70,16 @@ export default class HomeScreen extends React.Component {
                                         }}>
                             <View>
                                 <Image style={{
-                                    width: selectListingFacade.showItems ? 70 : 50,
-                                    height: selectListingFacade.showItems ? 70 : 50,
+                                    width: selectListingFacade.focusedListing  === listing ? 70 : 50,
+                                    height: selectListingFacade.focusedListing === listing ? 70 : 50,
                                 }}
                                        source={ require('../../../assets/icons/marker.png') }/>
                                 <Thumbnail
-                                    small={ !selectListingFacade.showItems }
+                                    small={ !(selectListingFacade.focusedListing  === listing) }
                                     style={{
                                         position: "absolute",
                                         left: 7,
-                                        top: selectListingFacade.showItems ? 0.7 : 2.5,
+                                        top: selectListingFacade.focusedListing  === listing ? 0.7 : 2.5,
                                     }}
                                     source={{uri: listing.primary_pic}}/>
                             </View>

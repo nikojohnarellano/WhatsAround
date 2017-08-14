@@ -19,7 +19,7 @@ import ListingScreen from '../screens/listing/ListingScreen'
 export default TabNavigator(
     {
         Home: {
-            screen: ListingScreen
+            screen: HomeScreen
         },
         Browse: {
             screen: BrowseScreen
