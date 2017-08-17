@@ -11,7 +11,7 @@ export default async function fetchPlaces(query, location) {
     try {
 
         let response = await fetch(uri.replace("xQueryx", query.replace(" ", "+"))
-                                      .replace("xGoogleApiKeyx", GoogleApiKey.key)
+                                      .replace("xGoogleApiKeyx", GoogleApiKey.autocompleteKey)
                                       .replace("xlatitudex", location.coords.latitude)
                                       .replace("xlongitudex", location.coords.longitude));
 

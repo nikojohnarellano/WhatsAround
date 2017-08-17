@@ -11,12 +11,6 @@ import fetchPlaces from '../../../utilities/autoCompletePlaces'
 
 export default class ListingFields extends React.Component {
     state = {
-        title : "",
-        location: "",
-        startDate: "",
-        startTime: "",
-        endTime: "",
-        description: "",
         currentLocation : {},
         hideResults : false,
     };
@@ -42,28 +36,30 @@ export default class ListingFields extends React.Component {
         }
     };
 
+
     async componentWillMount() {
         await this._getLocationAsync()
     }
 
     render() {
-        const {places} = this.state;
+        const {places}           = this.state;
+        const { setFieldFacade } = this.props;
 
         return (
             <Form style={{marginTop: 20}}>
                 <Item style={ styles.field } regular>
                     <Input
                         placeholderTextColor="#c9c9c9"
-                        value={ this.state.title }
+                        value={ setFieldFacade.fields.title }
                         placeholder="Title"
-                        onChangeText={title =>  this.setState({ title })}/>
+                        onChangeText={title =>  setFieldFacade.setField('title', title)}/>
                 </Item>
                 { /* Added z-index for automplete places field */ }
                 <Item style={ {...styles.field, ...{zIndex: 1}}} regular>
                     <Label style={ styles.fieldIcon }>
                         <FontAwesome
                             name="map-marker"
-                            size={30}
+                            size={30}ic
                             color={Colors.tabIconSelected}
                         />
                     </Label>
@@ -71,16 +67,21 @@ export default class ListingFields extends React.Component {
                         autoCorrect={false}
                         data={ places }
                         onChangeText={location => {
-                            this._autoCompletePlaces(location, this.state.currentLocation)
-                            this.setState({ location, hideResults : false})
+                            this._autoCompletePlaces(location, this.state.currentLocation);
+                            setFieldFacade.setField('location', location);
+                            this.setState({hideResults : false})
                         }}
+                        onBlur={() => { this.setState({hideResults : true}) }}
                         placeholder="Location"
-                        value={ this.state.location }
+                        value={ setFieldFacade.fields.location }
                         hideResults={ this.state.hideResults }
                         containerStyle={ styles.locationAutocomplete }
                         inputContainerStyle={{borderWidth: 0}}
                         renderItem={(location) => (
-                            <TouchableOpacity onPress={() => { this.setState({ location, hideResults : true }) }}>
+                            <TouchableOpacity onPress={() => {
+                                setFieldFacade.setField('location', location);
+                                this.setState({ hideResults : true })
+                            }}>
                                 <Text style={styles.itemText}>
                                     { location }
                                 </Text>
@@ -101,7 +102,7 @@ export default class ListingFields extends React.Component {
                         mode="date"
                         format="MMM Do YYYY"
                         style={{ flex : 1  }}
-                        date={ this.state.startDate }
+                        date={  setFieldFacade.fields.startDate }
                         placeholder={"Start Date (Optional)"}
                         confirmBtnText={"Confirm"}
                         cancelBtnText={"Cancel"}
@@ -117,11 +118,11 @@ export default class ListingFields extends React.Component {
                                 fontSize: 17,
                             }
                         }}
-                        onDateChange={startDate => this.setState({ startDate })}
+                        onDateChange={startDate => setFieldFacade.setField('startDate', startDate)}
                     />
                 </Item>
                 {
-                    this.state.startDate !== "" &&
+                    setFieldFacade.fields.startDate !== "" &&
                     <Item style={ styles.field } regular>
                         <Label style={ styles.fieldIcon }>
                             <FontAwesome
@@ -133,7 +134,7 @@ export default class ListingFields extends React.Component {
                         <DatePicker
                             showIcon={false}
                             style={{ flex : 1 }}
-                            date={ this.state.startTime }
+                            date={  setFieldFacade.fields.startTime }
                             mode="time"
                             format="hh:mm a"
                             placeholder={"Start Time"}
@@ -151,12 +152,12 @@ export default class ListingFields extends React.Component {
                                     fontSize: 17
                                 }
                             }}
-                            onDateChange={startTime => this.setState({ startTime }) }
+                            onDateChange={startTime => setFieldFacade.setField('startTime', startTime) }
                         />
                         <DatePicker
                             showIcon={false}
                             style={{flex: 1}}
-                            date={ this.state.endTime }
+                            date={  setFieldFacade.fields.endTime }
                             format="hh:mm a"
                             mode="time"
                             placeholder={"End Time"}
@@ -174,7 +175,7 @@ export default class ListingFields extends React.Component {
                                     fontSize: 17
                                 }
                             }}
-                            onDateChange={endTime => this.setState({ endTime }) }
+                            onDateChange={endTime => setFieldFacade.setField('endTime', endTime) }
                         />
                     </Item>
                 }
@@ -183,9 +184,9 @@ export default class ListingFields extends React.Component {
                         placeholderTextColor="#c9c9c9"
                         multiline
                         style={{ height: 100, justifyContent: "flex-start" }}
-                        value={ this.state.description }
+                        value={  setFieldFacade.fields.description }
                         placeholder="Description (Optional)"
-                        onChangeText={description => this.setState({ description }) }/>
+                        onChangeText={description => setFieldFacade.setField('description', description) }/>
                 </Item>
             </Form>
         );
