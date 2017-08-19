@@ -24,7 +24,6 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export default class ListingProducts extends React.Component {
     state = {
-        productImages: [],
         modalVisible: false,
         modalImage: null,
         places: []
@@ -54,11 +53,7 @@ export default class ListingProducts extends React.Component {
                 [
                     {
                         text: 'No', onPress: () => {
-                            this.state.productImages.push({
-                                image: result
-                            });
-
-                            this.setState(this.state)
+                            this.props.setProductFacade.addProduct({ image : result });
                         }
                     },
                     {
@@ -89,22 +84,9 @@ export default class ListingProducts extends React.Component {
         this.setState({modalVisible: false})
     };
 
-    _addProductDetails = (details) => {
-        this.state.productImages.push({
-            image: this.state.modalImage,
-            name: details.name,
-            price: details.price,
-        })
-    };
-
-    _removeProduct = (index) => {
-        let array = this.state.productImages;
-        array.splice(index, 1);
-        this.setState({ productImages : array });
-    };
 
     render() {
-        const {productImages} = this.state;
+        const {products} = this.props.setProductFacade;
 
         return (
         <View style={{ height : 180 }}>
@@ -128,12 +110,12 @@ export default class ListingProducts extends React.Component {
                     </TouchableOpacity>
                 </View>
                 {
-                    productImages.map((product, index) => {
+                    products.map((product, index) => {
                         return (
                             <View style={styles.card} key={index}>
                                 <TouchableOpacity
                                     style={ styles.removeButton }
-                                    onPress={() => { this._removeProduct(index) }}>
+                                    onPress={() => { this.props.setProductFacade.removeProduct(index) }}>
                                     <FontAwesome
                                         style={ styles.removeIcon }
                                         name="times-circle"
@@ -158,10 +140,10 @@ export default class ListingProducts extends React.Component {
                     })
                 }
             </Animated.ScrollView>
-            <AddProductModal closeModal={this._closeModal.bind(this)}
+            <AddProductModal  closeModal={this._closeModal.bind(this)}
                               modalVisible={this.state.modalVisible}
                               productImage={this.state.modalImage}
-                              addProductDetails={this._addProductDetails.bind(this)}/>
+                              addProduct={this.props.setProductFacade.addProduct}/>
         </View>
     )
 

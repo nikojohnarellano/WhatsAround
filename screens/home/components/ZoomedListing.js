@@ -70,7 +70,7 @@ export default class HomeScreen extends React.Component {
                             }}>
                             <View style={styles.card}>
                                 <Image
-                                    source={{uri: listing.primary_pic}}
+                                    source={{uri: listing.thumbnail}}
                                     style={styles.cardImage}
                                     resizeMode="cover"
                                 />

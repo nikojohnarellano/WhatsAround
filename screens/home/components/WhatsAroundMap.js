@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
                                         left: 7,
                                         top: selectListingFacade.focusedListing  === listing ? 0.7 : 2.5,
                                     }}
-                                    source={{uri: listing.primary_pic}}/>
+                                    source={{uri: listing.thumbnail}}/>
                             </View>
                         </MapView.Marker>
                     );

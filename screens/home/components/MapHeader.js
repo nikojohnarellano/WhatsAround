@@ -30,19 +30,13 @@ export default class MapHeader extends React.Component {
 const styles = {
     header: {
         backgroundColor: "skyblue",
-    },
-
-    container: {
-        flex: 1,
-        paddingTop: 15,
-        backgroundColor: '#fff',
-        color: "white"
+        height : 80
     },
 
     body: {
         flex : 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
 
     title : {

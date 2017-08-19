@@ -19,8 +19,9 @@ import {
     Button,
     Body
 } from 'native-base';
+import ApiHelper from '../../api/ApiHelper'
 import {FontAwesome} from '@expo/vector-icons';
-import {Location, Permissions} from 'expo';
+import {Location, Permissions, AppLoading} from 'expo';
 
 import MapHeader from './components/MapHeader';
 import WhatsAroundMap from './components/WhatsAroundMap'
@@ -32,48 +33,96 @@ const {width, height} = Dimensions.get("window");
 
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
+const delta = { latitudeDelta: 0.01, longitudeDelta: 0.001,};
 
-const listings = Listings;
+//const listings = Listings;
 
 export default class HomeScreen extends React.Component {
     state = {
         region: {
-            latitude: 49.247140,
-            longitude: -123.064926,
-            latitudeDelta: 0.05,
-            longitudeDelta: 0.05,
+            latitude: -17.689142,
+            longitude: 137.658463,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.001,
         },
+        listings : [],
         showItems: false,
-        focusedListing: null
+        focusedListing: null,
+        showMap : false
     };
 
-    _refMap(map) {
+    _refMap = (map) => {
         this.map = map
-    }
+    };
 
-    _focusListing(listing) {
+    _focusListing = (listing) => {
+        const { latitude, longitude } = listing;
+
         this.state.showItems = true;
         this.state.focusedListing = listing;
 
         this.setState(this.state);
-        this._recenterCurrent();
-    }
 
-    _closeListing() {
+        let currentRegion = Object.assign({}, { latitude, longitude }, { delta });
+        this._recenterCurrent(currentRegion);
+    };
+
+    _closeListing = () => {
         this.state.showItems = false;
         this.state.focusedListing = null;
 
         this.setState(this.state);
+    };
+
+    _recenterCurrent = (region) => {
+        this.map.animateToRegion(region);
+    };
+
+    _loadListings = async () => {
+        let listingResults = await ApiHelper.get('listing');
+        console.log(listingResults)
+        this.setState({ listings : listingResults })
+    };
+
+    async componentWillMount() {
+        await this._loadListings()
     }
 
-    _recenterCurrent() {
-        this.map.animateToRegion(this.state.focusedListing ? {
-            latitude: this.state.focusedListing.latitude,
-            longitude: this.state.focusedListing.longitude,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
-        } : this.state.region);
+    async componentDidMount() {
+        //let currentRegion = await this._getCurrentLocationAsync();
+        let currentRegion = null;
+
+        if(currentRegion === null) {
+            currentRegion = {
+                latitude: -17.689142,
+                longitude: 137.658463,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.001,
+            }
+        }
+
+        this._recenterCurrent(currentRegion);
     }
+
+    /*
+    componentWillUpdate() {
+        const {params} = this.props.navigation.state;
+
+        console.log('im here')
+
+        console.log(this.props.navigation)
+
+        if(params) {
+            const { latitude, longitude } = params.focusedListing;
+
+            currentRegion = Object.assign({}, { latitude, longitude }, { delta });
+
+            console.log('hey update');
+            this._recenterCurrent(currentRegion)
+        }
+    }
+    */
+
 
     render() {
         const {navigate} = this.props.navigation;
@@ -87,6 +136,7 @@ export default class HomeScreen extends React.Component {
             recenterCurrent : this._recenterCurrent.bind(this)
         };
 
+
         return (
             <Container style={styles.container}>
                 {
@@ -96,7 +146,7 @@ export default class HomeScreen extends React.Component {
                 }
                 <View style={{flex: 1}}>
                     <WhatsAroundMap
-                        listings={listings}
+                        listings={this.state.listings}
                         region={this.state.region}
                         selectListingFacade={selectListingFacade}
                     />
@@ -104,7 +154,7 @@ export default class HomeScreen extends React.Component {
                         /* TODO change products */
                         this.state.showItems &&
                         <ZoomedListing
-                            products={listings}
+                            products={this.state.focusedListing.products}
                             navigate={navigate}
                             selectListingFacade={selectListingFacade}
                         />
@@ -114,23 +164,24 @@ export default class HomeScreen extends React.Component {
         )
     }
 
-    _getLocationAsync = async () => {
-        let options = {
-            enableHighAccuracy: true,
-            timeInterval: 3000
-        };
-
-        let {status} = await Permissions.askAsync(Permissions.LOCATION);
+    _getCurrentLocationAsync = async () => {
+        let {status} = await Permissions.askAsync(Permissions.LOCATION),
+            options  = { enableHighAccuracy: true, timeInterval: 3000 };
 
         if (status !== 'granted') {
             this.setState({
                 errorMessage: 'Permission to access location was denied'
             })
+
+            return null;
         }
 
         let location = await Location.getCurrentPositionAsync(options);
+        const { latitude, longitude } = location.coords;
 
-        this.setState({location})
+
+        return Object.assign({}, { latitude, longitude },  { delta });
+
     }
 
 }
@@ -204,7 +255,7 @@ const styles = {
     pin: {
         backgroundColor: "white",
         alignItems: "center",
-        justifyContent: "center",
+            justifyContent: "center",
         borderWidth: 1,
         borderRadius: 5,
         borderColor: "gray",

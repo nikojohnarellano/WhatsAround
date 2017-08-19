@@ -4,13 +4,6 @@ import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Right
 import {FontAwesome} from '@expo/vector-icons';
 import WutzAroundHeader from '../../components/WutzAroundHeader'
 
-const Images = [
-    {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
-    {uri: "https://rukminim1.flixcart.com/image/312/312/hand-messenger-bag/g/s/g/fd-handbag-0028-fair-deals-hand-held-bag-texture-original-imaencs3dm3hqmen.jpeg?q=70"},
-    {uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/LGwashingmachine.jpg"},
-    {uri: "http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg"}
-]
-
 const {width, height} = Dimensions.get("window");
 
 const CARD_HEIGHT = height / 4;
@@ -19,14 +12,17 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 export default class AddProductModal extends React.Component {
     state = {
         title : "",
-        price : ""
+        price : "",
+        description : "",
     };
 
     _addProduct = () => {
         if(this._validate()) {
-            this.props.addProductDetails({
-                name  : this.state.title,
-                price : this.state.price,
+            this.props.addProduct({
+                image       : this.props.productImage,
+                name        : this.state.title,
+                price       : this.state.price,
+                description : this.state.description
             });
 
             this.props.closeModal()
@@ -53,7 +49,7 @@ export default class AddProductModal extends React.Component {
                 animationType={"slide"}
                 transparent={false}
                 visible={this.props.modalVisible}
-                onRequestClose={() => {alert("Modal has been closed.")}}>
+                onRequestClose={() => { this.setState({ title: "", price: "", description: "" })}}>
                 <Container>
 
                      <WutzAroundHeader
@@ -84,15 +80,17 @@ export default class AddProductModal extends React.Component {
                                        onChangeText={ (text) => { this.setState({ price: text }) }}
                                        onFocus={ (text) => { this.setState({ price: this.state.price.substr(1) })} }
                                        onBlur={  (text) => { this.setState({ price: this.state.price && "$" + this.state.price}) } }
-                                       value={ this.state.price }
                                 />
                             </Item>
                             <Item last style={ styles.productField }>
-                                <Input style={{ height: 100 }} placeholder="Description (Optional)" multiline/>
+                                <Input style={{ height: 100 }}
+                                       onChangeText={(text) => this.setState({ description: text })}
+                                       placeholder="Description (Optional)"
+                                       multiline/>
                             </Item>
                         </Form>
                         <View style={ styles.postButtonContainer }>
-                            <Button style={ styles.postButton } rounded success onPress={() => {}}>
+                            <Button style={ styles.postButton } rounded success onPress={() => { this._addProduct() }}>
                                 <Text style={ styles.recenterText }>Add</Text>
                             </Button>
                         </View>
