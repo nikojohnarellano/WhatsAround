@@ -5,7 +5,7 @@ import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Butto
 import {FontAwesome} from '@expo/vector-icons';
 import {Location, Permissions} from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
-import WutzAroundHeader from "../../components/WutzAroundHeader";
+import WhatsAroundHeader from "../../components/WhatsAroundHeader";
 import fetchPlaces from '../../utilities/autoCompletePlaces'
 import ListingProducts from './components/ListingProducts'
 import ListingFields from "./components/ListingFields";
@@ -98,7 +98,10 @@ export default class AddListingScreen extends React.Component {
                         [
                             {
                                 text: "OK",
-                                onPress : () => {this.props.navigation.navigate('Home', { focusedListing : listingToBePosted })}
+                                onPress : () => {
+                                    this.setState({ fields : {}, products : [] }),
+                                    this.props.navigation.navigate('Home')
+                                }
                             }
                         ]
                     )
@@ -168,7 +171,7 @@ export default class AddListingScreen extends React.Component {
 
         return (
             <Container>
-                <WutzAroundHeader title="Add Listing"/>
+                <WhatsAroundHeader title="Add Listing"/>
                 <Content
                     keyboardShouldPersistTaps='always'
                     contentContainerStyle={ styles.container }>

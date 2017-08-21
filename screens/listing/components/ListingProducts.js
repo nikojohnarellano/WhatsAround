@@ -16,20 +16,16 @@ const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
-const productImages = [
-    {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
-    {uri: "https://rukminim1.flixcart.com/image/312/312/hand-messenger-bag/g/s/g/fd-handbag-0028-fair-deals-hand-held-bag-texture-original-imaencs3dm3hqmen.jpeg?q=70"},
-    {uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/LGwashingmachine.jpg"},
-    {uri: "http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg"}
-];
 
 export default class ListingProducts extends Component {
 
     render() {
+        const { listing, productModalFacade } = this.props;
+
 
         let chunkSize = 2;
-        let groups = productImages.map((item, index) => {
-            return index % chunkSize === 0 ? productImages.slice(index, index + chunkSize) : null;
+        let groups = listing.products.map((item, index) => {
+            return index % chunkSize === 0 ? listing.products.slice(index, index + chunkSize) : null;
         }).filter(function (e) {
             return e;
         });
@@ -43,7 +39,7 @@ export default class ListingProducts extends Component {
                                 {item.map((i, indexCol) => {
                                     return (
                                         <Col key={indexCol}>
-                                            <ProductCard image={i}/>
+                                            <ProductCard productModalFacade={productModalFacade} item={i}/>
                                         </Col>
                                     );
                                 })}
@@ -52,6 +48,7 @@ export default class ListingProducts extends Component {
                     })
                 }
             </View>
+
         );
     }
 }

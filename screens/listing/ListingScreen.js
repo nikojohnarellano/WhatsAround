@@ -2,49 +2,85 @@
  * Created by nikoarellano on 2017-07-21.
  */
 import React, {Component} from 'react'
-import {Text, View} from 'react-native'
-import {Container, Content, Thumbnail, Left, Right, Body, Title, Subtitle, List, ListItem, Header} from 'native-base'
-import WutzAroundHeader from '../../components/WutzAroundHeader'
-import Listings from '../home/Listings.json'
+import { View, Image} from 'react-native'
+import {Container, Content, Thumbnail, Left, Text, Right, Body, Title, Subtitle, List, ListItem, Header, Button, Icon, Card, CardItem} from 'native-base'
+import WhatsAroundHeader from '../../components/WhatsAroundHeader'
+import ProductModal from '../product/ProductModal'
 import ListingProducts from './components/ListingProducts'
-
-
-const listing = Listings[0];
+import moment from 'moment'
 
 export default class ListingScreen extends Component {
+    state = {
+        focusedProduct : {},
+        showModal : false,
+    };
+
+    _renderBackButton = () => {
+        return (
+            <Button transparent onPress={() => { this.props.navigation.goBack() }}>
+                <Icon name='arrow-back' style={{color: "white"}}/>
+            </Button>
+        )
+    };
+
+    _showProductModal = (focusedProduct) => {
+        this.setState({ showModal : true, focusedProduct })
+    };
+
+    _hideProductModal = () => {
+        this.setState({ showModal : false })
+    };
+
     render() {
+        const { listing } = this.props.navigation.state.params;
+
+        let productModalFacade = {
+            focusedProduct   : this.state.focusedProduct,
+            showModal        : this.state.showModal,
+            showProductModal : this._showProductModal.bind(this),
+            hideProductModal : this._hideProductModal.bind(this)
+        };
         return (
             <Container>
-                <WutzAroundHeader/>
+                <WhatsAroundHeader title={ listing.title } renderLeft={this._renderBackButton.bind(this)} />
                 <Content>
+                    <Card>
+                        <CardItem cardBody>
+                            <Image source={{uri: listing.thumbnail }}
+                                   style={{
+                                       height: 200,
+                                       width: null,
+                                       flex: 1 }}/>
+                        </CardItem>
+                        <CardItem footer>
+                            <Body style={{ flex : 1}}>
+                                <Title style={ styles.headingTitle}>{ listing.title }</Title>
+                                <Text note style={ styles.fieldContent }>{ listing.location }</Text>
+                                    {
+                                        listing.start_date &&
+                                        <Text note style={ styles.fieldContent }>{ moment(listing.start_date).format('MMMM Do YYYY') + ", " + listing.start_time + " - " + listing.end_time }</Text>
+                                    }
+                            </Body>
+                        </CardItem>
+                    </Card>
+                    {
+                        listing.description &&
+                        <Card>
+                            <CardItem>
+                                <Body style={{ flex : 1}}>
+                                <Text style={ styles.fieldContent }>{ listing.description }</Text>
+                                </Body>
+                            </CardItem>
+                        </Card>
+                    }
 
-                    <View style={{
-                        alignItems: "center",
-                    }}>
-                        <View style={{alignItems: "center",}}>
-                            <Title style={ styles.headingTitle }>
-                                Moving Sale oct 25
-                            </Title>
-                        </View>
-                        <List style={{marginTop: 20, backgroundColor: "white",}}>
-                            <ListItem first style={{flexDirection: "column", alignItems: "center"}}>
-                                <Text style={ styles.fieldContent }>4268 Victoria Drive Vancouver BC</Text>
-                            </ListItem><
-                            ListItem style={{flexDirection: "column", alignItems: "center"}}>
-                                <Text style={ styles.fieldContent }>Aug 7th, 2017 08:00 AM - 5:00 PM</Text>
-                            </ListItem>
-                            <ListItem style={{flexDirection: "column", alignItems: "center"}}>
-                                <Text style={ styles.fieldContent }>On sale happening today! Moving to California
-                                    tomorrow so need everything gone!</Text>
-                            </ListItem>
 
-                        </List>
-                    </View>
                     <View style={{marginTop: 12}}>
-                        <Text style={ {...styles.fieldTitle, ...{alignSelf: "center"}}}>Products:</Text>
-                        <ListingProducts/>
+                        <Text style={ {...styles.fieldTitle, ...{ marginLeft : 15} }}>On Sale:</Text>
+                        <ListingProducts productModalFacade={productModalFacade} listing={ listing }/>
                     </View>
                 </Content>
+                <ProductModal productModalFacade={productModalFacade} />
             </Container>
         )
     }
@@ -52,9 +88,9 @@ export default class ListingScreen extends Component {
 
 const styles = {
     headingTitle: {
-        fontSize: 30,
+        fontSize: 25,
+        fontWeight: 'bold',
         fontFamily: "webly-sleek",
-        textAlign: "center"
     },
 
     fieldTitle: {
@@ -63,7 +99,9 @@ const styles = {
     },
 
     fieldContent: {
-        textAlign: "center",
+        fontSize : 13,
         fontFamily: "webly-sleek"
-    }
+    },
+
+
 }

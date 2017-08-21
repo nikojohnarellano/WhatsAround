@@ -5,7 +5,7 @@ import React, {Component} from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
 import Accordion from 'react-native-collapsible/Accordion';
 import {Container, Content, Header, Footer, List, ListItem, Left, Right, Body, Title, Subtitle} from 'native-base'
-import WhatsAroundHeader from '../../components/WutzAroundHeader'
+import WhatsAroundHeader from '../../components/WhatsAroundHeader'
 import {FontAwesome} from '@expo/vector-icons';
 import Collapsible from "react-native-collapsible";
 
@@ -70,7 +70,7 @@ export default class AccountScreen extends Component {
                         />
                     </Left>
                     <Body style={{flex: 2}}>
-                        <Text>{ section.heading }</Text>
+                        <Text style={ styles.textStyle }>{ section.heading }</Text>
                     </Body>
                     <Right/>
                 </ListItem>
@@ -80,7 +80,7 @@ export default class AccountScreen extends Component {
                             return (
                                 <ListItem key={index}>
                                     <Body style={{flex: 1}}>
-                                        <Text>{ listing.title }</Text>
+                                        <Text style={ styles.textStyle }>{ listing.title }</Text>
                                     </Body>
                                 </ListItem>
                             );
@@ -103,8 +103,8 @@ export default class AccountScreen extends Component {
                         />
                     </Left>
                     <Body style={{flex: 2, alignItems: "flex-start"}}>
-                        <Title style={{ color: "black" }}>Niko Arellano</Title>
-                        <Subtitle style={{ color: "black" }}>nikootine123@gmail.com</Subtitle>
+                        <Title style={{ color: "black", fontFamily: 'webly-sleek' }}>Niko Arellano</Title>
+                        <Subtitle style={{ color: "black", fontFamily: 'webly-sleek' }}>nikootine123@gmail.com</Subtitle>
                     </Body>
                     <Right/>
                 </Header>
@@ -137,7 +137,7 @@ export default class AccountScreen extends Component {
                                 />
                             </Left>
                             <Body style={{flex: 2}}>
-                            <Text>Settings</Text>
+                            <Text style={ styles.textStyle }>Settings</Text>
                             </Body>
                             <Right/>
                         </ListItem>
@@ -149,7 +149,7 @@ export default class AccountScreen extends Component {
                                 />
                             </Left>
                             <Body style={{flex: 2}}>
-                            <Text>Feedback</Text>
+                            <Text style={ styles.textStyle }>Feedback</Text>
                             </Body>
                             <Right/>
                         </ListItem>
@@ -157,7 +157,7 @@ export default class AccountScreen extends Component {
                 </Content>
                 <Footer style={{ backgroundColor: "white" }}>
                     <TouchableOpacity style={{justifyContent: "center"}}>
-                        <Text style={{color: "red", fontSize: 20}}>Log-out</Text>
+                        <Text style={{color: "red", fontSize: 20, fontFamily: "webly-sleek"}}>Log-out</Text>
                     </TouchableOpacity>
                 </Footer>
             </Container>
@@ -173,4 +173,7 @@ const styles = {
     inactive: {
         backgroundColor: 'rgba(245,252,255,1)',
     },
+    textStyle : {
+        fontFamily: "webly-sleek"
+    }
 };

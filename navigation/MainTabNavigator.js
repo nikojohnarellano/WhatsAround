@@ -15,6 +15,34 @@ import AddListingScreen from '../screens/post/AddListingScreen';
 import SearchProductScreen from '../screens/product/SearchProductScreen'
 import AccountScreen from '../screens/account/AccountScreen'
 import ListingScreen from '../screens/listing/ListingScreen'
+import ProductScreen from '../screens/product/ProductScreen'
+
+
+const ListingTab = StackNavigator({
+    BrowseListing: {
+        screen : BrowseScreen
+    },
+    Listing : {
+        screen : ListingScreen
+    }
+}, {
+    navigationOptions : {
+        header : null
+    }
+});
+
+const SearchProductTab = StackNavigator({
+    SearchProduct: {
+        screen : SearchProductScreen
+    },
+    Product : {
+        screen : ProductScreen
+    }
+}, {
+    navigationOptions : {
+        header : null
+    }
+});
 
 export default TabNavigator(
     {
@@ -22,13 +50,13 @@ export default TabNavigator(
             screen: HomeScreen
         },
         Browse: {
-            screen: BrowseScreen
+            screen: ListingTab
         },
         AddListing: {
             screen: AddListingScreen,
         },
         Search : {
-            screen: SearchProductScreen
+            screen: SearchProductTab
         },
         Profile: {
             screen: AccountScreen

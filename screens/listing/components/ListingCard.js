@@ -15,6 +15,7 @@ import {
     Title,
     Subtitle
 } from 'native-base';
+import moment from 'moment';
 
 const {width} = Dimensions.get("window");
 
@@ -27,8 +28,8 @@ export default class ListingCard extends React.Component {
             <Card>
                 <CardItem cardBody>
                     <Image
-                        resizeMode="contain"
-                        source={{uri: listing.primary_pic}}
+                        resizeMode="stretch"
+                        source={{uri: listing.thumbnail}}
                         style={{
                             height: 200,
                             width: width,
@@ -37,8 +38,12 @@ export default class ListingCard extends React.Component {
                 </CardItem>
                 <CardItem footer>
                     <Body>
-                    <Text style={{fontWeight: "bold", fontSize: 15}}>{ listing.title }</Text>
-                    <Text note>{ listing.location}</Text>
+                        <Text style={{fontWeight: "bold", fontSize: 15}}>{ listing.title }</Text>
+                        <Text style={ styles.infoStyles} note>{ listing.location}</Text>
+                        {
+                            listing.start_date &&
+                            <Text style={ styles.infoStyles} note>{ moment(listing.start_date).format('MMMM Do YYYY') + ", " + listing.start_time + " - " + listing.end_time }</Text>
+                        }
                     </Body>
                 </CardItem>
             </Card>
@@ -46,13 +51,18 @@ export default class ListingCard extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
+const styles = {
     container: {
         flex: 1,
-        paddingTop: 15,
+        paddingTop: 18,
         backgroundColor: '#fff',
     },
-});
+
+    infoStyles : {
+        fontSize : 12
+    }
+
+};
 /**
  * Created by nikoarellano on 2017-07-21.
  */

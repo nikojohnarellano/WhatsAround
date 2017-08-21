@@ -11,9 +11,6 @@ const RootStackNavigator = StackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
-    },
-    Product: {
-      screen: ProductScreen
     }
   },
   {

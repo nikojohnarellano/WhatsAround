@@ -19,7 +19,7 @@ export default class MapHeader extends React.Component {
         return (
             <Header style={ styles.header }>
                 <Body style={ styles.body }>
-                    <Title style={ styles.title }>{ "Moving sale! Everything must go" }</Title>
+                    <Title style={ styles.title }>{ focusedListing.title }</Title>
                     <Subtitle  style={ styles.subtitle }>{ focusedListing.location }</Subtitle>
                 </Body>
             </Header>

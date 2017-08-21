@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 
 
-export default class WutzAroundHeader extends React.Component {
+export default class WhatsAroundHeader extends React.Component {
 
     render() {
         const { title, renderRight, renderLeft } = this.props;
@@ -34,7 +34,7 @@ export default class WutzAroundHeader extends React.Component {
 
 const styles = {
     bodyStyle: {
-        flex : 2,
+        flex : 3,
     },
 
     leftStyle: {

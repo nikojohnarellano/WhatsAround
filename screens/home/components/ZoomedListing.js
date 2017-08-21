@@ -32,7 +32,6 @@ export default class HomeScreen extends React.Component {
 
     render() {
         const {selectListingFacade, navigate, products} = this.props;
-
         return (
             <View>
                 <View style={ styles.headerButtons }>
@@ -65,12 +64,10 @@ export default class HomeScreen extends React.Component {
                         <TouchableHighlight
                             key={index}
                             underlayColor={ "white" }
-                            onPress={() => {
-                                navigate('Product')
-                            }}>
+                            onPress={() => {}}>
                             <View style={styles.card}>
                                 <Image
-                                    source={{uri: listing.thumbnail}}
+                                    source={{uri: listing.image}}
                                     style={styles.cardImage}
                                     resizeMode="cover"
                                 />

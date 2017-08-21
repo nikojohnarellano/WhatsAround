@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, View, Image, Text, Alert, Modal, TouchableOpacity } from 'react-native';
 import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Right, Button, Body, Title} from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
-import WutzAroundHeader from '../../components/WutzAroundHeader'
+import WhatsAroundHeader from '../../components/WhatsAroundHeader'
 
 const {width, height} = Dimensions.get("window");
 
@@ -36,10 +36,8 @@ export default class AddProductModal extends React.Component {
                 'Item name and Price fields are required.',
                 [ { text: "OK" } ]
             );
-
             return false;
         }
-
         return true;
     };
 
@@ -52,7 +50,7 @@ export default class AddProductModal extends React.Component {
                 onRequestClose={() => { this.setState({ title: "", price: "", description: "" })}}>
                 <Container>
 
-                     <WutzAroundHeader
+                     <WhatsAroundHeader
                         title="Add Product"
                         renderRight={
                             () => { return (<TouchableOpacity

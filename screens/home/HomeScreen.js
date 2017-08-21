@@ -26,8 +26,7 @@ import {Location, Permissions, AppLoading} from 'expo';
 import MapHeader from './components/MapHeader';
 import WhatsAroundMap from './components/WhatsAroundMap'
 import ZoomedListing from './components/ZoomedListing'
-import WutzAroundHeader from '../../components/WutzAroundHeader'
-import Listings from './Listings.json'
+import WhatsAroundHeader from '../../components/WhatsAroundHeader'
 
 const {width, height} = Dimensions.get("window");
 
@@ -80,7 +79,6 @@ export default class HomeScreen extends React.Component {
 
     _loadListings = async () => {
         let listingResults = await ApiHelper.get('listing');
-        console.log(listingResults)
         this.setState({ listings : listingResults })
     };
 
@@ -142,7 +140,7 @@ export default class HomeScreen extends React.Component {
                 {
                     this.state.showItems ?
                         <MapHeader focusedListing={ this.state.focusedListing }/> :
-                        <WutzAroundHeader title="WhatsAround"/>
+                        <WhatsAroundHeader title="WhatsAround"/>
                 }
                 <View style={{flex: 1}}>
                     <WhatsAroundMap

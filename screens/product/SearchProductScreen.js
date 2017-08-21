@@ -7,6 +7,7 @@ import { ExpoLinksView } from '@expo/samples';
 import ProductCard from "./components/ProductCard";
 
 const { width }  = Dimensions.get("window");
+import ApiHelper from '../../api/ApiHelper'
 const imageWidth = width /2 ;
 
 const Images = [
@@ -28,12 +29,22 @@ const Images = [
 ];
 
 export default class SearchProductScreen extends React.Component {
+    state = {
+        products : []
+    };
+
+    async componentWillMount() {
+        let products = await ApiHelper.get('products');
+
+        this.setState({ products })
+    }
 
     render() {
-        var chunkSize = 2;
-        var groups    = Images.map((item, index) =>
+        const { navigation } = this.props;
+        let chunkSize = 2,
+            groups    = this.state.products.map((item, index) =>
             {
-                return index%chunkSize === 0 ? Images.slice(index,index+chunkSize) : null;
+                return index%chunkSize === 0 ? this.state.products.slice(index,index+chunkSize) : null;
             })
             .filter(function(e)
             {
@@ -56,13 +67,16 @@ export default class SearchProductScreen extends React.Component {
                     { groups.map((item, indexRow) => {
                         return (
                             <Row key={indexRow}>
-                                {item.map((i, indexCol) => {
-                                    return(
-                                        <Col key={indexCol}>
-                                            <ProductCard image={i} />
-                                        </Col>
-                                    );
-                                })}
+                                { item.length > 1 ?
+                                    item.map((i, indexCol) => {
+                                        return (
+                                            <Col key={indexCol}>
+                                                <ProductCard navigation={navigation} item={i}/>
+                                            </Col>
+                                        );
+                                    }) :
+                                    <ProductCard item={i}/>
+                                }
                             </Row>
                         )
                     }) }
