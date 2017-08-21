@@ -87,8 +87,8 @@ export default class HomeScreen extends React.Component {
     }
 
     async componentDidMount() {
-        //let currentRegion = await this._getCurrentLocationAsync();
-        let currentRegion = null;
+        let currentRegion = await this._getCurrentLocationAsync();
+        //let currentRegion = null;
 
         if(currentRegion === null) {
             currentRegion = {

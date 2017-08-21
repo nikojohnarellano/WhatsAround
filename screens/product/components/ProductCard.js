@@ -1,10 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Image, Dimensions, } from 'react-native';
 import { Container, Content, Card, CardItem, Thumbnail, Button, Icon, Left, Body, Right, Title, Text } from 'native-base';
-import { Row, Col } from 'react-native-easy-grid'
 
 const { width }  = Dimensions.get("window");
-const imageWidth = width /2 ;
 
 export default class ProductCard extends React.Component {
 

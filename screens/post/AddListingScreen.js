@@ -64,7 +64,7 @@ export default class AddListingScreen extends React.Component {
             geocodeResult = await geocodeLocation(this.state.fields.location);
 
             listingToBePosted = {
-                seller      : 8,
+                seller      : 1,
                 title       : this.state.fields.title,
                 location    : this.state.fields.location,
                 latitude    : geocodeResult.results[0].geometry.location.lat,
