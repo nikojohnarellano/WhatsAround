@@ -77,7 +77,7 @@ export default class AddListingScreen extends React.Component {
                 products    : this.state.products.map((prod) => {
                     return {
                         image      : prod.image.uri,
-                        title      : prod.title || "",
+                        name       : prod.title || "",
                         description: prod.description || "",
                         price      : prod.price !== "" ? parseFloat(prod.price) : 0,
                         sold       : false
@@ -88,6 +88,8 @@ export default class AddListingScreen extends React.Component {
             this.setState({ loading : true });
             response = await ApiHelper.post('listing', listingToBePosted);
             this.setState({ loading : false });
+
+            console.log(response);
 
             if(response) {
                 // Redirect to home screen and show listing
@@ -179,7 +181,7 @@ export default class AddListingScreen extends React.Component {
                     <ListingProducts setProductFacade={ setProductFacade }/>
                     <ListingFields   setFieldFacade={ setFieldFacade } />
                     <View style={ styles.postButtonContainer }>
-                        <Button style={ styles.postButton } rounded success onPress={async () => { await this._addListing() }}>
+                        <Button style={ styles.postButton } full success onPress={async () => { await this._addListing() }}>
                             <Text style={ styles.recenterText }>Post</Text>
                         </Button>
                     </View>

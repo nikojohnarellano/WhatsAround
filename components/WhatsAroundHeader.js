@@ -19,13 +19,13 @@ export default class WhatsAroundHeader extends React.Component {
         return (
             <Header style={ styles.homeScreenHeader }>
                 {
-                    renderLeft ? (<Left style={ styles.leftStyle }>{ renderLeft() }</Left>) : <Left style={ styles.leftStyle }/>
+                    renderLeft ? (<Left style={ styles.leftStyle }>{ renderLeft() }</Left>) : null
                 }
                 <Body style={ styles.bodyStyle }>
                     <Title style={ styles.homeScreenHeaderText }> { title } </Title>
                 </Body>
                 {
-                    renderRight ? (<Right style={ styles.rightStyle }>{ renderRight() }</Right>): <Right style={ styles.rightStyle }/>
+                    renderRight ? (<Right style={ styles.rightStyle }>{ renderRight() }</Right>): (renderLeft ?  (<Right style={ styles.rightStyle }/>): null)
                 }
             </Header>
         );

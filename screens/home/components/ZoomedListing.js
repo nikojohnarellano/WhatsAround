@@ -60,24 +60,27 @@ export default class HomeScreen extends React.Component {
                     style={styles.scrollView}
                     contentContainerStyle={styles.endPadding}>
                     { /* TODO remove and change with products*/}
-                    {products.map((listing, index) => (
+                    {products.map((product, index) => (
                         <TouchableHighlight
                             key={index}
                             underlayColor={ "white" }
                             onPress={() => {}}>
                             <View style={styles.card}>
                                 <Image
-                                    source={{uri: listing.image}}
+                                    source={{uri: product.image}}
                                     style={styles.cardImage}
                                     resizeMode="cover"
                                 />
-                                <View style={styles.locationAutocomplete}>
-                                    <Text numberOfLines={1}
-                                          style={styles.cardtitle}>{listing.title}</Text>
-                                    <Text numberOfLines={1} style={styles.cardDescription}>
-                                        $50
-                                    </Text>
-                                </View>
+                                {
+                                    (product.name && product.price) &&
+                                    <View style={styles.locationAutocomplete}>
+                                        <Text numberOfLines={1}
+                                              style={styles.cardtitle}>{product.name}</Text>
+                                        <Text numberOfLines={1} style={styles.cardDescription}>
+                                            {product.price}
+                                        </Text>
+                                    </View>
+                                }
                             </View>
                         </TouchableHighlight>
                     ))}

@@ -55,15 +55,17 @@ export default class HomeScreen extends React.Component {
     };
 
     _focusListing = (listing) => {
-        const { latitude, longitude } = listing;
-
         this.state.showItems = true;
         this.state.focusedListing = listing;
 
         this.setState(this.state);
 
-        let currentRegion = Object.assign({}, { latitude, longitude }, { delta });
-        this._recenterCurrent(currentRegion);
+        this._recenterCurrent({
+            latitude : listing.latitude,
+            longitude : listing.longitude,
+            latitudeDelta : delta.latitudeDelta,
+            longitudeDelta : delta.longitudeDelta
+        });
     };
 
     _closeListing = () => {
@@ -87,8 +89,8 @@ export default class HomeScreen extends React.Component {
     }
 
     async componentDidMount() {
+
         let currentRegion = await this._getCurrentLocationAsync();
-        //let currentRegion = null;
 
         if(currentRegion === null) {
             currentRegion = {
@@ -169,17 +171,25 @@ export default class HomeScreen extends React.Component {
         if (status !== 'granted') {
             this.setState({
                 errorMessage: 'Permission to access location was denied'
-            })
+            });
 
             return null;
         }
 
         let location = await Location.getCurrentPositionAsync(options);
+
         const { latitude, longitude } = location.coords;
 
+        /*
+        return Object.assign({}, { latitude, longitude },  { longitudeDelta : delta.longitudeDelta, latitudeDelta : delta.latitudeDelta });
+        */
 
-        return Object.assign({}, { latitude, longitude },  { delta });
-
+        return {
+            latitude : location.coords.latitude,
+            longitude : location.coords.longitude,
+            latitudeDelta : delta.latitudeDelta,
+            longitudeDelta : delta.longitudeDelta
+        }
     }
 
 }

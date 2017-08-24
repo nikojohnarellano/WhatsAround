@@ -28,7 +28,7 @@ const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
-export default class HomeScreen extends React.Component {
+export default class WhatsAroundMap extends React.Component {
 
     render() {
         const {

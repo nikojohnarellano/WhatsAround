@@ -52,7 +52,9 @@ export default class ListingFields extends React.Component {
                         placeholderTextColor="#c9c9c9"
                         value={ setFieldFacade.fields.title }
                         placeholder="Title"
-                        onChangeText={title =>  setFieldFacade.setField('title', title)}/>
+                        onChangeText={title =>  setFieldFacade.setField('title', title)}
+                        onEndEditing={() => setFieldFacade.setField('title', setFieldFacade.fields.title)}
+                        onSubmitEditing={() => setFieldFacade.setField('title', setFieldFacade.fields.title)}/>
                 </Item>
                 { /* Added z-index for automplete places field */ }
                 <Item style={ {...styles.field, ...{zIndex: 1}}} regular>

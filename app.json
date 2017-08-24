@@ -4,7 +4,7 @@
     "description": "Moving, yard or garage sale around your area!",
     "slug": "project-near",
     "privacy": "unlisted",
-    "sdkVersion": "18.0.0",
+    "sdkVersion": "20.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",

@@ -13,8 +13,8 @@ export default class AppContainer extends React.Component {
         appIsReady: false,
     };
 
-    componentWillMount() {
-        this._loadAssetsAsync();
+    async componentWillMount() {
+        await this._loadAssetsAsync();
     }
 
     async _loadAssetsAsync() {
@@ -23,10 +23,10 @@ export default class AppContainer extends React.Component {
                 images: [require('./assets/images/expo-wordmark.png')],
                 fonts: [
                     FontAwesome.font,
+                    {'webly-sleek': require('./assets/fonts/weblysleekuisl.ttf')},
                     {'Roboto': require('native-base/Fonts/Roboto.ttf')},
                     {'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf')},
                     {'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf')},
-                    {'webly-sleek': require('./assets/fonts/weblysleekuisl.ttf')}
                 ],
             });
         } catch (e) {
@@ -45,8 +45,7 @@ export default class AppContainer extends React.Component {
             return (
                 <View style={styles.container}>
                     {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
-                    {Platform.OS === 'android' &&
-                    <View style={styles.statusBarUnderlay}/>}
+
                     <RootNavigation />
                 </View>
             );

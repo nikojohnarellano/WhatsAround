@@ -16,6 +16,7 @@ import SearchProductScreen from '../screens/product/SearchProductScreen'
 import AccountScreen from '../screens/account/AccountScreen'
 import ListingScreen from '../screens/listing/ListingScreen'
 import ProductScreen from '../screens/product/ProductScreen'
+import LoginScreen from '../screens/login/LoginScreen'
 
 
 const ListingTab = StackNavigator({
@@ -44,6 +45,19 @@ const SearchProductTab = StackNavigator({
     }
 });
 
+const AccountTab = StackNavigator({
+    Account : {
+        screen : AccountScreen
+    },
+    Login : {
+        screen : LoginScreen
+    }
+}, {
+    navigationOptions : {
+        header : null
+    }
+});
+
 export default TabNavigator(
     {
         Home: {
@@ -59,7 +73,7 @@ export default TabNavigator(
             screen: SearchProductTab
         },
         Profile: {
-            screen: AccountScreen
+            screen: AccountTab
         },
     },
     {
