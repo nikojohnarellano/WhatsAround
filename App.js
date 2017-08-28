@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View, AsyncStorage} from 'react-native';
 import {AppLoading} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
@@ -14,6 +14,7 @@ export default class AppContainer extends React.Component {
     };
 
     async componentWillMount() {
+        //await AsyncStorage.clear();
         await this._loadAssetsAsync();
     }
 

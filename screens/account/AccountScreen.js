@@ -3,13 +3,25 @@
  */
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, AsyncStorage} from 'react-native'
-import { SocialIcon } from 'react-native-elements'
+import {SocialIcon} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
-import {Container, Content, Header, Footer, Button, List, ListItem, Left, Right, Body, Title, Subtitle} from 'native-base'
+import {
+    Container,
+    Content,
+    Header,
+    Footer,
+    Button,
+    List,
+    ListItem,
+    Left,
+    Right,
+    Body,
+    Title,
+    Subtitle
+} from 'native-base'
 import WhatsAroundHeader from '../../components/WhatsAroundHeader'
 import {FontAwesome} from '@expo/vector-icons';
 import Collapsible from "react-native-collapsible";
-
 
 
 const ACTIVE_LISTNG = {
@@ -47,15 +59,22 @@ const PAST_LISTINGS = {
 }
 
 
-
 export default class AccountScreen extends Component {
 
     state = {
-        collapse: {
-            active : true,
-            past   : true
+        listings: {
+            active: [],
+            past: []
         },
-        user : null
+        collapse: {
+            active: true,
+            past: true
+        },
+        user: null
+    };
+
+    _setUser = (user) => {
+        this.setState({user})
     };
 
     _renderListing = (section) => {
@@ -72,7 +91,7 @@ export default class AccountScreen extends Component {
                         />
                     </Left>
                     <Body style={{flex: 2}}>
-                        <Text style={ styles.textStyle }>{ section.heading }</Text>
+                    <Text style={ styles.textStyle }>{ section.heading }</Text>
                     </Body>
                     <Right/>
                 </ListItem>
@@ -82,7 +101,7 @@ export default class AccountScreen extends Component {
                             return (
                                 <ListItem key={index}>
                                     <Body style={{flex: 1}}>
-                                        <Text style={ styles.textStyle }>{ listing.title }</Text>
+                                    <Text style={ styles.textStyle }>{ listing.title }</Text>
                                     </Body>
                                 </ListItem>
                             );
@@ -94,9 +113,12 @@ export default class AccountScreen extends Component {
     };
 
     async componentWillMount() {
-        let user = await AsyncStorage.getItem('whatsAroundUser');
+        this.setState({loading: true});
 
-        this.setState({ user });
+        let user = await AsyncStorage.getItem('UserInfo')
+        this._setUser(JSON.parse(user));
+
+        this.setState({loading: false})
     }
 
     render() {
@@ -105,7 +127,7 @@ export default class AccountScreen extends Component {
                 <WhatsAroundHeader/>
                 {
                     (this.state.user !== null) &&
-                    <Header style={{ backgroundColor: "white"}} >
+                    <Header style={{backgroundColor: "white"}}>
                         <Left style={{flex: 1}}>
                             <FontAwesome
                                 name="user-circle"
@@ -113,8 +135,9 @@ export default class AccountScreen extends Component {
                             />
                         </Left>
                         <Body style={{flex: 2, alignItems: "flex-start"}}>
-                        <Title style={{ color: "black", fontFamily: 'webly-sleek' }}>{ user.name }</Title>
-                        <Subtitle style={{ color: "black", fontFamily: 'webly-sleek' }}>{ user.email }</Subtitle>
+                        <Title style={{color: "black", fontFamily: 'webly-sleek'}}>{ this.state.user.name }</Title>
+                        <Subtitle
+                            style={{color: "black", fontFamily: 'webly-sleek'}}>{ this.state.user.email }</Subtitle>
                         </Body>
                         <Right/>
                     </Header>
@@ -122,94 +145,110 @@ export default class AccountScreen extends Component {
 
                 <Content
                     contentContainerStyle={{
-                        flex : 1,
-                        justifyContent: "space-between"
+                        flex: 1,
+                        justifyContent: 'space-between'
                     }}>
                     {
-                        (this.state.user !== null) &&
-                        <View style={{ justifyContent: 'flex-start', alignItems: 'center', flex : 1}}>
-                            <List style={{
-                                borderTopWidth: 0.5,
-                                borderBottomWidth: 0.5,
-                                borderColor: "gray",
-                                marginTop: 25,
-                                backgroundColor: "white"
-                            }}>
-                                { this._renderListing(ACTIVE_LISTNG) }
-                                { this._renderListing(PAST_LISTINGS) }
-                            </List>
-                        </View>
+                        /*
+                         (this.state.user !== null) &&
+                         <View style={{ justifyContent: 'flex-start', flex : 1}}>
+                         <List style={{
+                         borderTopWidth: 0.5,
+                         borderBottomWidth: 0.5,
+                         borderColor: "gray",
+                         marginTop: 25,
+                         backgroundColor: "white"
+                         }}>
+                         { this._renderListing(ACTIVE_LISTNG) }
+                         { this._renderListing(PAST_LISTINGS) }
+                         </List>
+                         </View>*/
                     }
                     {
                         this.state.user === null &&
-                        <View style={{ justifyContent: 'center', alignItems: 'center', flex : 1}}>
-                            <Title style={{...styles.textStyle, ...{ fontSize: 22 }}} >
+                        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+                            <Title style={{...styles.textStyle, ...{fontSize: 22}}}>
                                 Sign in to WhatsAround
                             </Title>
-                            <View style={{ marginTop : 15 }}>
+                            <View style={{marginTop: 15}}>
                                 <Button full success onPress={() => {
-                                        this.props.navigation.navigate('Login')
-                                    }}>
+                                    this.props.navigation.navigate('Login', {setUser: this._setUser.bind(this)})
+                                }}>
                                     <Text style={
-                                        {...styles.textStyle,
-                                        ...{fontSize: 18, fontFamily: 'webly-sleek', color:'white'}}}>
+                                        {
+                                            ...styles.textStyle,
+                                            ...{fontSize: 18, fontFamily: 'webly-sleek', color: 'white'}
+                                        }}>
                                         Sign In
                                     </Text>
                                 </Button>
                             </View>
                         </View>
                         /*
-                        this.state.user === null &&
-                        <View>
-                            <Title style={{...styles.textStyle, ...{ fontSize: 22 }}} >
-                                Sign in to WhatsAround
-                            </Title>
-                            <SocialIcon
-                                title='Sign In With Facebook'
-                                button
-                                style={{ borderRadius : 0 }}
-                                type='facebook'
-                            />
-                            <SocialIcon
-                                title='Sign In With Google'
-                                button
-                                type='google-plus-official'
-                            />
-                        </View>*/
+                         this.state.user === null &&
+                         <View>
+                         <Title style={{...styles.textStyle, ...{ fontSize: 22 }}} >
+                         Sign in to WhatsAround
+                         </Title>
+                         <SocialIcon
+                         title='Sign In With Facebook'
+                         button
+                         style={{ borderRadius : 0 }}
+                         type='facebook'
+                         />
+                         <SocialIcon
+                         title='Sign In With Google'
+                         button
+                         type='google-plus-official'
+                         />
+                         </View>*/
                     }
-                    <View style={{ flex : 1, justifyContent: "center" }}>
+                    {
+                        (this.state.user !== null) &&
                         <List style={{
                             borderTopWidth: 0.5,
                             borderBottomWidth: 0.5,
                             borderColor: "gray",
+                            marginTop: 25,
                             backgroundColor: "white"
                         }}>
-                            <ListItem>
-                                <Left style={{flex: 1}}>
-                                    <FontAwesome
-                                        name="cog"
-                                        size={32}
-                                    />
-                                </Left>
-                                <Body style={{flex: 2}}>
-                                <Text style={ styles.textStyle }>Settings</Text>
-                                </Body>
-                                <Right/>
-                            </ListItem>
-                            <ListItem>
-                                <Left style={{flex: 1}}>
-                                    <FontAwesome
-                                        name="exclamation-circle"
-                                        size={32}
-                                    />
-                                </Left>
-                                <Body style={{flex: 2}}>
-                                <Text style={ styles.textStyle }>Feedback</Text>
-                                </Body>
-                                <Right/>
-                            </ListItem>
+                            { this._renderListing(ACTIVE_LISTNG) }
+                            { this._renderListing(PAST_LISTINGS) }
                         </List>
-                    </View>
+                    }
+                    <List style={{
+                        marginBottom: 40,
+                        borderTopWidth: 0.5,
+                        borderBottomWidth: 0.5,
+                        borderColor: "gray",
+                        backgroundColor: "white"
+                    }}>
+
+                        <ListItem>
+                            <Left style={{flex: 1}}>
+                                <FontAwesome
+                                    name="cog"
+                                    size={32}
+                                />
+                            </Left>
+                            <Body style={{flex: 2}}>
+                            <Text style={ styles.textStyle }>Settings</Text>
+                            </Body>
+                            <Right/>
+                        </ListItem>
+                        <ListItem>
+                            <Left style={{flex: 1}}>
+                                <FontAwesome
+                                    name="exclamation-circle"
+                                    size={32}
+                                />
+                            </Left>
+                            <Body style={{flex: 2}}>
+                            <Text style={ styles.textStyle }>Feedback</Text>
+                            </Body>
+                            <Right/>
+                        </ListItem>
+                    </List>
                 </Content>
                 {
                     (this.state.user !== null) &&
@@ -232,7 +271,7 @@ const styles = {
     inactive: {
         backgroundColor: 'rgba(245,252,255,1)',
     },
-    textStyle : {
+    textStyle: {
         fontFamily: "webly-sleek"
     }
 };

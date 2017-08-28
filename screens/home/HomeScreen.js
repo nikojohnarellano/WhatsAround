@@ -39,8 +39,8 @@ const delta = { latitudeDelta: 0.01, longitudeDelta: 0.001,};
 export default class HomeScreen extends React.Component {
     state = {
         region: {
-            latitude: -17.689142,
-            longitude: 137.658463,
+            latitude: 49.247140,
+            longitude: -123.064926,
             latitudeDelta: 0.01,
             longitudeDelta: 0.001,
         },
@@ -90,12 +90,13 @@ export default class HomeScreen extends React.Component {
 
     async componentDidMount() {
 
-        let currentRegion = await this._getCurrentLocationAsync();
+        //let currentRegion = await this._getCurrentLocationAsync();
+        let currentRegion = null;
 
         if(currentRegion === null) {
             currentRegion = {
-                latitude: -17.689142,
-                longitude: 137.658463,
+                latitude: 49.247140,
+                longitude: -123.064926,
                 latitudeDelta: 0.01,
                 longitudeDelta: 0.001,
             }

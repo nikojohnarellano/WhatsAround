@@ -12,7 +12,6 @@ import ListingFields from "./components/ListingFields";
 import ApiHelper from '../../api/ApiHelper'
 import geocodeLocation from '../../utilities/geocodeApi'
 
-
 const {width, height} = Dimensions.get("window");
 
 

@@ -28,6 +28,8 @@ const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
+const delta = { latitudeDelta: 0.01, longitudeDelta: 0.001,};
+
 export default class HomeScreen extends React.Component {
 
     render() {
@@ -37,7 +39,14 @@ export default class HomeScreen extends React.Component {
                 <View style={ styles.headerButtons }>
                     <Button rounded success
                             onPress={() => {
-                                selectListingFacade.recenterCurrent()
+                                selectListingFacade.recenterCurrent(
+                                    {
+                                        latitude       : selectListingFacade.focusedListing.latitude,
+                                        longitude      : selectListingFacade.focusedListing.longitude,
+                                        latitudeDelta  : delta.latitudeDelta,
+                                        longitudeDelta : delta.longitudeDelta
+                                    }
+                                )
                             }}>
                         <Text style={ styles.recenterText }>Re-center</Text>
                     </Button>
