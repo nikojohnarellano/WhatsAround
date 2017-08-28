@@ -15,7 +15,7 @@ export default class SearchProductScreen extends React.Component {
     };
 
     async componentWillMount() {
-        let products = await ApiHelper.get('products');
+        let products = await ApiHelper.get('api/products');
 
         this.setState({ products })
     }

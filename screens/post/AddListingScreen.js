@@ -85,7 +85,7 @@ export default class AddListingScreen extends React.Component {
             };
 
             this.setState({ loading : true });
-            response = await ApiHelper.post('listing', listingToBePosted);
+            response = await ApiHelper.post('api/listing', listingToBePosted);
             this.setState({ loading : false });
 
             console.log(response);

@@ -6,6 +6,7 @@ import {View, Text, Alert, AsyncStorage} from 'react-native'
 import {Container, Content, Body, Left, Right, Title, Form, Input, Item, Button} from 'native-base'
 import {SocialIcon} from 'react-native-elements'
 import {Facebook, Google} from 'expo'
+import ApiHelper from '../../api/ApiHelper'
 import axios from 'axios';
 import Spinner from 'react-native-loading-spinner-overlay';
 import WhatsAroundHeader from '../../components/WhatsAroundHeader'
@@ -17,9 +18,6 @@ export default class LoginScreen extends Component {
     };
 
     _loginWithFacebook = async () => {
-        const { setUser } = this.props.navigation.state.params;
-        const { goBack }  = this.props.navigation;
-
         try{
             const { type, token } = await Facebook.logInWithReadPermissionsAsync('265626027286007',
             {
@@ -32,7 +30,7 @@ export default class LoginScreen extends Component {
                 // Get the user's name using Facebook's Graph API
                 const response = await axios.get(`https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${token}`);
 
-                let user = {
+                return {
                     token,
                     id      : response.data.id,
                     email   : response.data.email,
@@ -40,35 +38,16 @@ export default class LoginScreen extends Component {
                     picture : response.data.picture.url
                 };
 
-                this.setState({ loading : true });
-
-                await AsyncStorage.setItem(
-                    'UserInfo',
-                    JSON.stringify(user)
-                );
-
-                this.setState({ loading : false });
-
-                setUser(user);
-                goBack();
             } else if (type === 'cancel') {
-                Alert.alert(
-                    'Log in Cancelled',
-                    `You have cancelled Facebook log-in.`,
-                );
+                return { cancelled: true, method : 'facebook' }
             }
         }
         catch(error) {
-            Alert.alert(
-                'Log in Failed',
-                `An error occurred when logging in with Facebook.`,
-            );
+            return { failed : true, method: 'facebook' }
         }
     };
 
     _loginWithGoogle = async () => {
-        const { setUser } = this.props.navigation.state.params;
-        const { goBack }  = this.props.navigation;
 
         try {
             const response = await Google.logInAsync({
@@ -77,38 +56,97 @@ export default class LoginScreen extends Component {
                 scopes: ['profile', 'email'],
             });
 
-            let user = {
-                token   : response.accessToken,
-                id      : response.user.id,
-                email   : response.user.email,
-                name    : response.user.name,
-                picture : response.user.photoUrl
-            };
 
             if (response.type === 'success') {
-                this.setState({ loading : true });
+                return {
+                    token   : response.accessToken,
+                    id      : response.user.id,
+                    email   : response.user.email,
+                    name    : response.user.name,
+                    picture : response.user.photoUrl
+                };
 
-                await AsyncStorage.setItem(
-                    'UserInfo',
-                    JSON.stringify(user)
-                );
-
-                this.setState({ loading : false });
-
-                setUser(user);
-                goBack();
             } else {
-                Alert.alert(
-                    'Log in Cancelled',
-                    `You have cancelled Google log-in.`,
-                );
+                return { cancelled : true, method: 'google' }
             }
         } catch(e) {
+            return { failed : true, method: 'google' }
+        }
+    };
+
+    _login = async (method) => {
+        let result;
+
+        this.setState({ loading : true });
+
+        switch(method) {
+            case 'facebook':
+                result = await this._loginWithFacebook();
+                break;
+
+            case 'google' :
+                result = await this._loginWithGoogle();
+                break;
+
+            default:
+                break;
+        }
+
+        // Exit the method when login method has been failed or cancelled
+        if(result.cancelled) {
+            Alert.alert(
+                'Log in Cancelled',
+                `You have cancelled ${ result.method } log-in.`,
+            );
+
+            return;
+        } else if (result.failed) {
             Alert.alert(
                 'Log in Failed',
-                `An error occurred when logging in with Google.`,
+                `An error occurred when logging in with ${ result.method }.`,
             );
+
+            return;
         }
+
+        // Register user in WhatsAround Back end if not yet registered
+        await this._registerUserIfNotExist(result);
+
+        // Save the info in the AsyncStorage for future use.
+        await AsyncStorage.setItem('UserInfo', JSON.stringify(result));
+
+        this.setState({ loading : false });
+
+        this.props.navigation.state.params.setUser(result);
+        this.props.navigation.goBack();
+    };
+
+    /**
+     *
+     */
+    _registerUserIfNotExist = async (user) => {
+        let check = await this._checkIfUserExistsInDb(user)
+
+        // Set the id as the password into WhatsAround server
+        if(!check) {
+
+            await ApiHelper.post('register', {
+                name     : user.name,
+                email    : user.email,
+                password : user.id
+            });
+
+        }
+    };
+
+    /**
+     *
+     * @private
+     */
+     _checkIfUserExistsInDb = async (user) => {
+        let result = await ApiHelper.get(`api/user?email=${ user.email }`);
+
+        return (result !== null && result.email === user.email);
     };
 
     render() {
@@ -119,11 +157,11 @@ export default class LoginScreen extends Component {
                         flex : 1,
                         justifyContent: 'space-between'
                     }}>
-                    <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}}/>
                     <View style={{
                             flex : 1,
                             margin : 7
                         }}>
+                        <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}}/>
                         <Item regular style={{ marginTop : 10 }}>
                             <Input placeholder='Username'/>
                         </Item>
@@ -151,7 +189,7 @@ export default class LoginScreen extends Component {
                             fontFamily='webly-sleek'
                             style={{borderRadius: 0 }}
                             type='facebook'
-                            onPress={async () => await this._loginWithFacebook()}
+                            onPress={async () => await this._login('facebook')}
                         />
                         <SocialIcon
                             title='Sign In With Google'
@@ -159,7 +197,7 @@ export default class LoginScreen extends Component {
                             fontFamily='webly-sleek'
                             style={{borderRadius: 0 }}
                             type='google-plus-official'
-                            onPress={async () => await this._loginWithGoogle() }
+                            onPress={async () => await this._login('google') }
                         />
                     </View>
 

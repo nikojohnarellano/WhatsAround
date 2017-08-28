@@ -17,7 +17,7 @@ export default class BrowseScreen extends React.Component {
     };
 
     _loadListings = async () => {
-        let listingResults = await ApiHelper.get('listing');
+        let listingResults = await ApiHelper.get('api/listing');
         this.setState({ listings : listingResults })
     };
 

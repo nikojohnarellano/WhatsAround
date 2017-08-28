@@ -19,6 +19,7 @@ import {
     Title,
     Subtitle
 } from 'native-base'
+import ApiHelper from '../../api/ApiHelper'
 import WhatsAroundHeader from '../../components/WhatsAroundHeader'
 import {FontAwesome} from '@expo/vector-icons';
 import Collapsible from "react-native-collapsible";
@@ -77,6 +78,18 @@ export default class AccountScreen extends Component {
         this.setState({user})
     };
 
+    _logoutUser = async () => {
+        await AsyncStorage.clear();
+
+        this.setState({
+            user : null,
+            listings : {
+                active : [],
+                past   : []
+            }
+        })
+    };
+
     _renderListing = (section) => {
         return (
             <View>
@@ -115,7 +128,7 @@ export default class AccountScreen extends Component {
     async componentWillMount() {
         this.setState({loading: true});
 
-        let user = await AsyncStorage.getItem('UserInfo')
+        let user = await AsyncStorage.getItem('UserInfo');
         this._setUser(JSON.parse(user));
 
         this.setState({loading: false})
@@ -134,7 +147,7 @@ export default class AccountScreen extends Component {
                                 size={40}
                             />
                         </Left>
-                        <Body style={{flex: 2, alignItems: "flex-start"}}>
+                        <Body  style={{flex: 2, alignItems: "flex-start"}}>
                         <Title style={{color: "black", fontFamily: 'webly-sleek'}}>{ this.state.user.name }</Title>
                         <Subtitle
                             style={{color: "black", fontFamily: 'webly-sleek'}}>{ this.state.user.email }</Subtitle>
@@ -148,22 +161,6 @@ export default class AccountScreen extends Component {
                         flex: 1,
                         justifyContent: 'space-between'
                     }}>
-                    {
-                        /*
-                         (this.state.user !== null) &&
-                         <View style={{ justifyContent: 'flex-start', flex : 1}}>
-                         <List style={{
-                         borderTopWidth: 0.5,
-                         borderBottomWidth: 0.5,
-                         borderColor: "gray",
-                         marginTop: 25,
-                         backgroundColor: "white"
-                         }}>
-                         { this._renderListing(ACTIVE_LISTNG) }
-                         { this._renderListing(PAST_LISTINGS) }
-                         </List>
-                         </View>*/
-                    }
                     {
                         this.state.user === null &&
                         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
@@ -184,39 +181,22 @@ export default class AccountScreen extends Component {
                                 </Button>
                             </View>
                         </View>
-                        /*
-                         this.state.user === null &&
-                         <View>
-                         <Title style={{...styles.textStyle, ...{ fontSize: 22 }}} >
-                         Sign in to WhatsAround
-                         </Title>
-                         <SocialIcon
-                         title='Sign In With Facebook'
-                         button
-                         style={{ borderRadius : 0 }}
-                         type='facebook'
-                         />
-                         <SocialIcon
-                         title='Sign In With Google'
-                         button
-                         type='google-plus-official'
-                         />
-                         </View>*/
                     }
                     {
                         (this.state.user !== null) &&
-                        <List style={{
-                            borderTopWidth: 0.5,
-                            borderBottomWidth: 0.5,
-                            borderColor: "gray",
-                            marginTop: 25,
-                            backgroundColor: "white"
-                        }}>
-                            { this._renderListing(ACTIVE_LISTNG) }
-                            { this._renderListing(PAST_LISTINGS) }
-                        </List>
+                            <List style={{
+                                borderTopWidth: 0.5,
+                                borderBottomWidth: 0.5,
+                                borderColor: "gray",
+                                marginTop: 25,
+                                backgroundColor: "white"
+                            }}>
+                                { this._renderListing(ACTIVE_LISTNG) }
+                                { this._renderListing(PAST_LISTINGS) }
+                            </List>
                     }
                     <List style={{
+                        marginTop : 20,
                         marginBottom: 40,
                         borderTopWidth: 0.5,
                         borderBottomWidth: 0.5,
@@ -253,7 +233,8 @@ export default class AccountScreen extends Component {
                 {
                     (this.state.user !== null) &&
                     <Footer style={{backgroundColor: "white"}}>
-                        <TouchableOpacity style={{justifyContent: "center"}}>
+                        <TouchableOpacity onPress={async () => { await this._logoutUser() } }
+                                style={{justifyContent: "center"}}>
                             <Text style={{color: "red", fontSize: 20, fontFamily: "webly-sleek"}}>Log-out</Text>
                         </TouchableOpacity>
                     </Footer>
