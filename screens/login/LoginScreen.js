@@ -2,7 +2,7 @@
  * Created by nikoarellano on 2017-08-21.
  */
 import React, {Component} from 'react'
-import {View, Text, Alert, AsyncStorage} from 'react-native'
+import {View, Text, Alert, AsyncStorage, TouchableOpacity} from 'react-native'
 import {Container, Content, Body, Left, Right, Title, Form, Input, Item, Button} from 'native-base'
 import {SocialIcon} from 'react-native-elements'
 import {Facebook, Google} from 'expo'
@@ -14,7 +14,13 @@ import WhatsAroundHeader from '../../components/WhatsAroundHeader'
 export default class LoginScreen extends Component {
 
     state = {
-        loading : false
+        loading  : false,
+        register : false
+    };
+
+    _loginWithWhatsAround = async () => {
+
+
     };
 
     _loginWithFacebook = async () => {
@@ -162,8 +168,14 @@ export default class LoginScreen extends Component {
                             margin : 7
                         }}>
                         <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}}/>
+                        {
+                            this.state.register &&
+                            <Item regular style={{ marginTop : 10 }}>
+                                <Input placeholder='Name'/>
+                            </Item>
+                        }
                         <Item regular style={{ marginTop : 10 }}>
-                            <Input placeholder='Username'/>
+                            <Input placeholder='E-mail Address'/>
                         </Item>
                         <Item regular style={{ marginTop : 10 }}>
                             <Input placeholder='Password'/>
@@ -173,13 +185,31 @@ export default class LoginScreen extends Component {
                                 <Text style={
                                     {...styles.textStyle,
                                         ...{fontSize: 18, fontFamily: 'webly-sleek', color:'white'}}}>
-                                    Sign In
+                                    { this.state.register ? "Register" : "Sign In" }
                                 </Text>
                             </Button>
                         </View>
                         <View style={{ marginTop : 10, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ color: 'black' }}> Create an Account </Text>
-                            <Text style={{ color: 'black' }}> Forgot Password </Text>
+                            <TouchableOpacity>
+                            {
+                                !this.state.register ?
+                                <Text
+                                    onPress={() => {
+                                        this.setState({register: true})
+                                    }}
+                                    style={{color: 'black', textDecorationLine: 'underline'}}>
+                                    Create an Account
+                                </Text> :
+                                <Text
+                                    onPress={() => {
+                                        this.setState({register: false})
+                                    }}
+                                    style={{color: 'black', textDecorationLine: 'underline'}}>
+                                    Sign In
+                                </Text>
+                            }
+                            </TouchableOpacity>
+                            {/*<Text style={{ color: 'black' }}> Forgot Password </Text>*/}
                         </View>
                     </View>
                     <View style={{ flex : 1 }}>
