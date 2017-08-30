@@ -15,12 +15,20 @@ export default class LoginScreen extends Component {
 
     state = {
         loading  : false,
-        register : false
+        register : false,
+        email : "",
+        password: "",
+        name : ""
     };
 
     _loginWithWhatsAround = async () => {
+        try {
+            let result = await ApiHelper.post('login', { email : this.state.email, password : this.state.password })
 
-
+            console.log(result)
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     _loginWithFacebook = async () => {
@@ -94,6 +102,9 @@ export default class LoginScreen extends Component {
                 result = await this._loginWithGoogle();
                 break;
 
+            case 'whatsaround' :
+                result = await this._loginWithWhatsAround();
+                break;
             default:
                 break;
         }
@@ -175,13 +186,19 @@ export default class LoginScreen extends Component {
                             </Item>
                         }
                         <Item regular style={{ marginTop : 10 }}>
-                            <Input placeholder='E-mail Address'/>
+                            <Input placeholder='E-mail Address'
+                                   value={this.state.email}
+                                   autoCapitalize="none"
+                                   onChangeText={(email) => this.setState({ email }) } />
                         </Item>
                         <Item regular style={{ marginTop : 10 }}>
-                            <Input placeholder='Password'/>
+                            <Input placeholder='Password'
+                                   value={this.state.password}
+                                   secureTextEntry
+                                   onChangeText={(password) => this.setState({ password }) } />
                         </Item>
                         <View style={{ marginTop : 10 }}>
-                            <Button full success onPress={() => {}}>
+                            <Button full success onPress={() => { this.state.register ? {} : this._loginWithWhatsAround() }}>
                                 <Text style={
                                     {...styles.textStyle,
                                         ...{fontSize: 18, fontFamily: 'webly-sleek', color:'white'}}}>
