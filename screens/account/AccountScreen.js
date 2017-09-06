@@ -74,9 +74,19 @@ export default class AccountScreen extends Component {
         user: null
     };
 
-    _setUser = (user) => {
-        this.setState({user})
+    _setUser = async (user) => {
+        let activeListings   = await ApiHelper.get(`api/user/${ user.id }/listing/active`),
+            pastListings     = await ApiHelper.get(`api/user/${ user.id }/listing/inactive`);
+
+        this.setState({
+            user,
+            listings : {
+                active : activeListings,
+                past   : pastListings
+            }
+        })
     };
+
 
     _logoutUser = async () => {
         await AsyncStorage.clear();
@@ -191,8 +201,20 @@ export default class AccountScreen extends Component {
                                 marginTop: 25,
                                 backgroundColor: "white"
                             }}>
-                                { this._renderListing(ACTIVE_LISTNG) }
-                                { this._renderListing(PAST_LISTINGS) }
+                                {
+                                    this._renderListing({
+                                        type     : 'active',
+                                        heading  : 'Active Listings',
+                                        listings : this.state.listings.active
+                                    })
+                                }
+                                {
+                                    this._renderListing({
+                                        type     : 'past',
+                                        heading  : 'Past Listings',
+                                        listings : this.state.listings.past
+                                    })
+                                }
                             </List>
                     }
                     <List style={{

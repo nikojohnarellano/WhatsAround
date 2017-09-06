@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c67effe6-d59f-426f-9ee1-e0213b2706c7" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/account/AccountScreen.js" afterPath="$PROJECT_DIR$/screens/account/AccountScreen.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/login/LoginScreen.js" afterPath="$PROJECT_DIR$/screens/login/LoginScreen.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -71,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountScreen.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AccountScreen.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/screens/account/AccountScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1281">
-              <caret line="115" column="27" lean-forward="true" selection-start-line="115" selection-start-column="27" selection-end-line="115" selection-end-column="27" />
+            <state relative-caret-position="2955">
+              <caret line="199" column="52" lean-forward="true" selection-start-line="199" selection-start-column="52" selection-end-line="199" selection-end-column="52" />
               <folding>
                 <element signature="e#50#88#0" expanded="true" />
               </folding>
@@ -95,26 +96,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginScreen.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginScreen.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/login/LoginScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="106" column="22" lean-forward="false" selection-start-line="106" selection-start-column="22" selection-end-line="106" selection-end-column="22" />
+            <state relative-caret-position="359">
+              <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#50#88#0" expanded="true" />
-                <marker date="1504078135000" expanded="true" signature="5082:9296" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="5170:5243" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="5319:8354" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="5877:6180" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="6246:6546" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="6604:7132" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="6777:6904" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="8430:9243" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="8467:9236" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="8648:8663" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="8855:9236" ph="..." />
-                <marker date="1504078135000" expanded="true" signature="9034:9049" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="5416:9628" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="5504:5577" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="5653:8686" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="6211:6514" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="6580:6880" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="6938:7464" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="7109:7236" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="8762:9575" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="8799:9568" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="8980:8995" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="9187:9568" ph="..." />
+                <marker date="1504670184000" expanded="true" signature="9366:9381" ph="..." />
               </folding>
             </state>
           </provider>
@@ -151,11 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>@e</find>
-      <find>@ex</find>
-      <find>@expo</find>
-      <find>@expo/S</find>
-      <find>@expo/</find>
       <find>@expo/sam</find>
       <find>@expo/samp</find>
       <find>@expo/sampl</find>
@@ -180,6 +176,11 @@
       <find>e</find>
       <find>email=</find>
       <find>user</find>
+      <find>re</find>
+      <find>registe</find>
+      <find>in</find>
+      <find>inside regi</find>
+      <find>register</find>
       <find>this.state.</find>
     </findStrings>
     <replaceStrings>
@@ -236,8 +237,8 @@
         <option value="$PROJECT_DIR$/screens/post/AddListingScreen.js" />
         <option value="$PROJECT_DIR$/screens/listing/BrowseScreen.js" />
         <option value="$PROJECT_DIR$/constants/WhatsAroundUrl.js" />
-        <option value="$PROJECT_DIR$/screens/account/AccountScreen.js" />
         <option value="$PROJECT_DIR$/screens/login/LoginScreen.js" />
+        <option value="$PROJECT_DIR$/screens/account/AccountScreen.js" />
       </list>
     </option>
   </component>
@@ -611,12 +612,12 @@
       <workItem from="1502865629868" duration="46866000" />
       <workItem from="1503478350332" duration="19000" />
       <workItem from="1503552388170" duration="4289000" />
-      <workItem from="1503727989345" duration="22748000" />
+      <workItem from="1503727989345" duration="28203000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="269576000" />
+    <option name="totallyTimeSpent" value="275031000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="14" y="23" width="1426" height="877" extended-state="0" />
@@ -999,35 +1000,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/account/AccountScreen.js">
+    <entry file="file://$PROJECT_DIR$/screens/login/LoginScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1281">
-          <caret line="115" column="27" lean-forward="true" selection-start-line="115" selection-start-column="27" selection-end-line="115" selection-end-column="27" />
+        <state relative-caret-position="359">
+          <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
           <folding>
+            <element signature="n#!!doc" expanded="true" />
             <element signature="e#50#88#0" expanded="true" />
+            <marker date="1504670184000" expanded="true" signature="5416:9628" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="5504:5577" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="5653:8686" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="6211:6514" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="6580:6880" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="6938:7464" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="7109:7236" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="8762:9575" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="8799:9568" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="8980:8995" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="9187:9568" ph="..." />
+            <marker date="1504670184000" expanded="true" signature="9366:9381" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/login/LoginScreen.js">
+    <entry file="file://$PROJECT_DIR$/screens/account/AccountScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="106" column="22" lean-forward="false" selection-start-line="106" selection-start-column="22" selection-end-line="106" selection-end-column="22" />
+        <state relative-caret-position="2955">
+          <caret line="199" column="52" lean-forward="true" selection-start-line="199" selection-start-column="52" selection-end-line="199" selection-end-column="52" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
             <element signature="e#50#88#0" expanded="true" />
-            <marker date="1504078135000" expanded="true" signature="5082:9296" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="5170:5243" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="5319:8354" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="5877:6180" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="6246:6546" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="6604:7132" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="6777:6904" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="8430:9243" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="8467:9236" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="8648:8663" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="8855:9236" ph="..." />
-            <marker date="1504078135000" expanded="true" signature="9034:9049" ph="..." />
           </folding>
         </state>
       </provider>
