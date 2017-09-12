@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Animated, Dimensions, View, Image, Text, Alert} from 'react-native';
+import {AsyncStorage, Dimensions, View, Text, Alert} from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Button} from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
@@ -57,13 +57,41 @@ export default class AddListingScreen extends React.Component {
      * @private
      */
     _addListing = async () => {
-        let geocodeResult, response, listingToBePosted;
+        let geocodeResult,
+            response,
+            listingToBePosted,
+            userInfoString,
+            userInfo;
 
         if(this._validateFields()) {
-            geocodeResult = await geocodeLocation(this.state.fields.location);
+            userInfoString    = await AsyncStorage.getItem('UserInfo');
+            userInfo          = JSON.parse(userInfoString);
+            geocodeResult     = await geocodeLocation(this.state.fields.location);
 
+            listingToBePosted = new FormData();
+            listingToBePosted.append('seller', userInfo.id);
+            listingToBePosted.append('title', this.state.fields.title);
+            listingToBePosted.append('location', this.state.fields.location);
+            listingToBePosted.append('latitude', geocodeResult.results[0].geometry.location.lat);
+            listingToBePosted.append('longitude', geocodeResult.results[0].geometry.location.lng);
+            listingToBePosted.append('description', this.state.fields.description);
+            listingToBePosted.append('startDate', this.state.fields.startDate);
+            listingToBePosted.append('startTime', this.state.fields.startTime);
+            listingToBePosted.append('endTime', this.state.fields.endTime);
+            listingToBePosted.append('thumbnail', this.state.products[0].image.uri);
+            listingToBePosted.append('products', JSON.stringify(this.state.products.map((prod) => {
+                return {
+                    image      : prod.image.uri,
+                    name       : prod.title || "",
+                    description: prod.description || "",
+                    price      : prod.price !== "" ? parseFloat(prod.price) : 0,
+                    sold       : false
+                }
+            })));
+
+            /*
             listingToBePosted = {
-                seller      : 1,
+                seller      : userInfo.id,
                 title       : this.state.fields.title,
                 location    : this.state.fields.location,
                 latitude    : geocodeResult.results[0].geometry.location.lat,
@@ -82,7 +110,7 @@ export default class AddListingScreen extends React.Component {
                         sold       : false
                     }
                 })
-            };
+            };*/
 
             this.setState({ loading : true });
             response = await ApiHelper.post('api/listing', listingToBePosted);

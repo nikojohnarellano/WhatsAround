@@ -32,7 +32,6 @@ export default class LoginScreen extends Component {
             let result = await ApiHelper.post('login', { email : this.state.email, password : this.state.password });
 
             if(result.status === 'success') {
-                console.log(result)
 
                 return {
                     id      : result.user.id,
@@ -48,6 +47,11 @@ export default class LoginScreen extends Component {
         }
     };
 
+    /**
+     *
+     * @returns {Promise.<*>}
+     * @private
+     */
     _loginWithFacebook = async () => {
         try{
             const { type, token } = await Facebook.logInWithReadPermissionsAsync('265626027286007',
@@ -76,6 +80,11 @@ export default class LoginScreen extends Component {
         }
     };
 
+    /**
+     *
+     * @returns {Promise.<*>}
+     * @private
+     */
     _loginWithGoogle = async () => {
 
         try {
@@ -101,12 +110,16 @@ export default class LoginScreen extends Component {
         }
     };
 
+    /**
+     *
+     * @param method
+     * @returns {Promise.<void>}
+     * @private
+     */
     _login = async (method) => {
         let result;
 
         this.setState({ loading : true });
-
-        console.log('im here')
 
         switch(method) {
             case 'facebook':
@@ -127,16 +140,22 @@ export default class LoginScreen extends Component {
 
         // Exit the method when login method has been failed or cancelled
         if(result.cancelled) {
-            Alert.alert(
-                'Log in Cancelled',
-                `You have cancelled ${ result.method } log-in.`,
-            );
-        } else if (result.failed) {
-            Alert.alert(
-                'Log in Failed',
-                `Login failed with ${ result.method }.`,
-            );
+            this.setState({ loading  : false });
 
+            setTimeout(() => {
+                Alert.alert(
+                    'Log in Cancelled',
+                    `You have cancelled ${ result.method } log-in.`,
+                );
+            }, 100);
+        } else if (result.failed) {
+            this.setState({ loading  : false });
+            setTimeout(() => {
+                Alert.alert(
+                    'Log in Failed',
+                    `Login failed with ${ result.method }.`,
+                );
+            }, 100);
         } else {
             // Register user in WhatsAround Back end if not yet registered
             let user = await this._registerUserIfNotExist(result);
@@ -144,28 +163,64 @@ export default class LoginScreen extends Component {
             // Save the info in the AsyncStorage for future use.
             await AsyncStorage.setItem('UserInfo', JSON.stringify(user));
 
+            this.setState({ loading  : false });
+
             this.props.navigation.state.params.setUser(user);
             this.props.navigation.goBack();
         }
-
-
-        this.setState({ loading : false });
     };
 
     /**
      *
+     * @returns {Promise.<void>}
+     * @private
+     */
+    _registerUser = async () => {
+        this.setState({ loading : true });
+
+        let user = await this._checkIfUserExistsInDb(this.state);
+
+        if(!_.isEmpty(user)) {
+
+            this.setState({ loading : false })
+
+            setTimeout(() => {
+                Alert.alert(
+                    'Registration Failed',
+                    'A user with the same e-mail already exists.'
+                );
+            }, 100);
+
+        } else {
+
+            user = await ApiHelper.post('register', {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password || Math.random().toString(36).substring(7)
+            });
+
+            await AsyncStorage.setItem('UserInfo', JSON.stringify(user));
+
+            this.setState({loading: false});
+
+            this.props.navigation.state.params.setUser(user);
+            this.props.navigation.goBack();
+        }
+    };
+
+    /**
+     * A method that registers user if it doesn't exist in WhatsAround server.
+     * Mainly used by facebook and google login where we register their credentials to the server.
      */
     _registerUserIfNotExist = async (credentials) => {
         let user = await this._checkIfUserExistsInDb(credentials);
 
-        // TODO
-        // Set the id as the password into WhatsAround server
         if(_.isEmpty(user)) {
 
             user = await ApiHelper.post('register', {
                     name     : credentials.name,
                     email    : credentials.email,
-                    password : credentials.id
+                    password : credentials.password || Math.random().toString(36).substring(7)
             });
 
         }
@@ -182,6 +237,9 @@ export default class LoginScreen extends Component {
         return user;
     };
 
+    /**
+     *
+     */
     render() {
         return (
             <Container>
@@ -198,7 +256,11 @@ export default class LoginScreen extends Component {
                         {
                             this.state.register &&
                             <Item regular style={{ marginTop : 10 }}>
-                                <Input placeholder='Name'/>
+                                <Input placeholder='Name'
+                                       value={this.state.name}
+                                       autoCapitalize="none"
+                                       onChangeText={(name) => this.setState({ name })}
+                                />
                             </Item>
                         }
                         <Item regular style={{ marginTop : 10 }}>
@@ -214,7 +276,14 @@ export default class LoginScreen extends Component {
                                    onChangeText={(password) => this.setState({ password }) } />
                         </Item>
                         <View style={{ marginTop : 10 }}>
-                            <Button full success onPress={() => { this.state.register ? {} : this._login('whatsaround') }}>
+                            <Button
+                                full
+                                success
+                                onPress={async () => {
+                                    this.state.register
+                                     ? await this._registerUser()
+                                     : await this._login('whatsaround')
+                                }}>
                                 <Text style={
                                     {...styles.textStyle,
                                         ...{fontSize: 18, fontFamily: 'webly-sleek', color:'white'}}}>
@@ -228,7 +297,12 @@ export default class LoginScreen extends Component {
                                 !this.state.register ?
                                 <Text
                                     onPress={() => {
-                                        this.setState({register: true})
+                                        this.setState({
+                                            register : true,
+                                            email    : "",
+                                            password : "",
+                                            name     : ""
+                                        })
                                     }}
                                     style={{color: 'black', textDecorationLine: 'underline'}}>
                                     Create an Account

@@ -41,37 +41,40 @@ export default class WhatsAroundMap extends React.Component {
             <MapView
                 ref={selectListingFacade.refMap}
                 initialRegion={region}
-                style={styles.mapContainer}>
-                {listings.map((listing, index) => {
-                    return (
-                        <MapView.Marker onPress={() => {
-                            !selectListingFacade.focusedListing ?
-                                selectListingFacade.focusListing(listing) :
-                                selectListingFacade.closeListing()
-                        }}
-                                        key={ index }
-                                        coordinate={{
-                                            latitude: listing.latitude,
-                                            longitude: listing.longitude
-                                        }}>
-                            <View>
-                                <Image style={{
-                                    width: selectListingFacade.focusedListing  === listing ? 70 : 50,
-                                    height: selectListingFacade.focusedListing === listing ? 70 : 50,
-                                }}
-                                       source={ require('../../../assets/icons/marker.png') }/>
-                                <Thumbnail
-                                    small={ !(selectListingFacade.focusedListing  === listing) }
-                                    style={{
-                                        position: "absolute",
-                                        left: 7,
-                                        top: selectListingFacade.focusedListing  === listing ? 0.7 : 2.5,
+                style={styles.mapContainer}
+                >
+                {
+                    listings.map((listing, index) => {
+                        return (
+                            <MapView.Marker onPress={() => {
+                                !selectListingFacade.focusedListing ?
+                                    selectListingFacade.focusListing(listing) :
+                                    selectListingFacade.closeListing()
+                            }}
+                                            key={ index }
+                                            coordinate={{
+                                                latitude: listing.latitude,
+                                                longitude: listing.longitude
+                                            }}>
+                                <View>
+                                    <Image style={{
+                                        width: selectListingFacade.focusedListing  === listing ? 70 : 50,
+                                        height: selectListingFacade.focusedListing === listing ? 70 : 50,
                                     }}
-                                    source={{uri: listing.thumbnail}}/>
-                            </View>
-                        </MapView.Marker>
-                    );
-                })}
+                                           source={ require('../../../assets/icons/marker.png') }/>
+                                    <Thumbnail
+                                        small={ !(selectListingFacade.focusedListing === listing) }
+                                        style={{
+                                            position: "absolute",
+                                            left: 7,
+                                            top: selectListingFacade.focusedListing === listing ? 0.7 : 2.5,
+                                        }}
+                                        source={{uri: listing.thumbnail}}/>
+                                </View>
+                            </MapView.Marker>
+                        );
+                    })
+                }
             </MapView>
         );
     }
@@ -102,9 +105,12 @@ const styles = {
     container: {
         flex: 1,
     },
+
     mapContainer: {
-        flex: 1
+        width: width,
+        height: height
     },
+
     scrollView: {
         position: "absolute",
         bottom: 30,
@@ -112,6 +118,7 @@ const styles = {
         right: 0,
         paddingVertical: 10,
     },
+
     card: {
         padding: 10,
         elevation: 2,
@@ -125,28 +132,34 @@ const styles = {
         width: CARD_WIDTH,
         overflow: "hidden",
     },
+
     cardImage: {
         flex: 3,
         width: "100%",
         height: "100%",
         alignSelf: "center",
     },
+
     locationAutocomplete: {
         flex: 1,
     },
+
     cardtitle: {
         fontSize: 12,
         marginTop: 5,
         fontWeight: "bold",
     },
+
     cardDescription: {
         fontSize: 12,
         color: "#444",
     },
+
     markerWrap: {
         alignItems: "center",
         justifyContent: "center",
     },
+
     marker: {
         width: 8,
         height: 8,

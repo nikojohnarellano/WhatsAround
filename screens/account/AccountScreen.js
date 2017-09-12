@@ -139,7 +139,10 @@ export default class AccountScreen extends Component {
         this.setState({loading: true});
 
         let user = await AsyncStorage.getItem('UserInfo');
-        this._setUser(JSON.parse(user));
+
+        if (user) {
+            await this._setUser(JSON.parse(user));
+        }
 
         this.setState({loading: false})
     }

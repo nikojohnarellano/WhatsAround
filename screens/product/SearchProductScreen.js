@@ -11,7 +11,15 @@ const imageWidth = width /2 ;
 
 export default class SearchProductScreen extends React.Component {
     state = {
+        searchQuery : "",
         products : []
+    };
+
+    searchProduct = async () => {
+        let products = await ApiHelper.get(`api/products?query=${ this.state.searchQuery }`);
+
+        console.log(products);
+        this.setState({ products })
     };
 
     async componentWillMount() {
@@ -37,10 +45,15 @@ export default class SearchProductScreen extends React.Component {
                 <Header style={ styles.searchProductHeader } searchBar rounded>
                     <Item>
                         <Icon name="ios-search" />
-                        <Input placeholder="Search Products" />
+                        <Input
+                            autoCapitalize="none"
+                            onChangeText={(searchQuery) => this.setState({ searchQuery })}
+                            value={ this.state.searchQuery }
+                            placeholder="Search Products" />
                         <Icon name="ios-people" />
                     </Item>
-                    <Button transparent>
+                    <Button onPress={async () => await this.searchProduct() }
+                            transparent>
                         <Text>Search</Text>
                     </Button>
                 </Header>
@@ -56,7 +69,7 @@ export default class SearchProductScreen extends React.Component {
                                             </Col>
                                         );
                                     }) :
-                                    <ProductCard item={i}/>
+                                    <ProductCard item={item}/>
                                 }
                             </Row>
                         )

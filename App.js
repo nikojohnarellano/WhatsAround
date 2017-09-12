@@ -15,6 +15,10 @@ export default class AppContainer extends React.Component {
 
     async componentWillMount() {
         //await AsyncStorage.clear();
+
+        let result = await AsyncStorage.getItem('UserInfo');
+
+        console.log(result)
         await this._loadAssetsAsync();
     }
 

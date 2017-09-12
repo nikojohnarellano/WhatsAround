@@ -1,4 +1,5 @@
 import React from 'react';
+import {MapView} from 'expo';
 import {
     Image,
     Text,
@@ -102,7 +103,7 @@ export default class HomeScreen extends React.Component {
             }
         }
 
-        this._recenterCurrent(currentRegion);
+        //this._recenterCurrent(currentRegion);
     }
 
     /*
@@ -145,12 +146,13 @@ export default class HomeScreen extends React.Component {
                         <MapHeader focusedListing={ this.state.focusedListing }/> :
                         <WhatsAroundHeader title="WhatsAround"/>
                 }
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1, width, height}}>
+                    {
                     <WhatsAroundMap
                         listings={this.state.listings}
                         region={this.state.region}
                         selectListingFacade={selectListingFacade}
-                    />
+                    />}
                     {
                         /* TODO change products */
                         this.state.showItems &&
@@ -199,6 +201,8 @@ export default class HomeScreen extends React.Component {
 const styles = {
     container: {
         flex: 1,
+        width: width,
+        height: height
     },
     mapContainer: {
         flex: 1
