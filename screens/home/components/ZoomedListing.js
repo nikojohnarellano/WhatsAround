@@ -28,12 +28,13 @@ const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
-const delta = { latitudeDelta: 0.01, longitudeDelta: 0.001,};
+const delta = {latitudeDelta: 0.01, longitudeDelta: 0.001,};
 
 export default class HomeScreen extends React.Component {
 
     render() {
         const {selectListingFacade, navigate, products} = this.props;
+
         return (
             <View>
                 <View style={ styles.headerButtons }>
@@ -41,10 +42,10 @@ export default class HomeScreen extends React.Component {
                             onPress={() => {
                                 selectListingFacade.recenterCurrent(
                                     {
-                                        latitude       : selectListingFacade.focusedListing.latitude,
-                                        longitude      : selectListingFacade.focusedListing.longitude,
-                                        latitudeDelta  : delta.latitudeDelta,
-                                        longitudeDelta : delta.longitudeDelta
+                                        latitude: selectListingFacade.focusedListing.latitude,
+                                        longitude: selectListingFacade.focusedListing.longitude,
+                                        latitudeDelta: delta.latitudeDelta,
+                                        longitudeDelta: delta.longitudeDelta
                                     }
                                 )
                             }}>
@@ -68,31 +69,32 @@ export default class HomeScreen extends React.Component {
                     snapToInterval={CARD_WIDTH}
                     style={styles.scrollView}
                     contentContainerStyle={styles.endPadding}>
-                    { /* TODO remove and change with products*/}
-                    {products.map((product, index) => (
-                        <TouchableHighlight
-                            key={index}
-                            underlayColor={ "white" }
-                            onPress={() => {}}>
-                            <View style={styles.card}>
-                                <Image
-                                    source={{uri: product.image}}
-                                    style={styles.cardImage}
-                                    resizeMode="cover"
-                                />
-                                {
-                                    (product.name && product.price) &&
-                                    <View style={styles.locationAutocomplete}>
-                                        <Text numberOfLines={1}
-                                              style={styles.cardtitle}>{product.name}</Text>
-                                        <Text numberOfLines={1} style={styles.cardDescription}>
-                                            {product.price}
-                                        </Text>
-                                    </View>
-                                }
-                            </View>
-                        </TouchableHighlight>
-                    ))}
+                    {
+                        /* TODO remove and change with products*/
+                        products.map((product, index) => (
+                            <TouchableHighlight
+                                key={index}
+                                underlayColor={ "white" }
+                                onPress={() => {
+                                }}>
+                                <View style={styles.card}>
+                                    <Image
+                                        source={{uri: product.image}}
+                                        style={styles.cardImage}
+                                        resizeMode="cover"
+                                    />
+                                    {
+                                        (product.name !== ""  && product.price !== null) &&
+                                        <View style={styles.locationAutocomplete}>
+                                            <Text numberOfLines={1}
+                                                  style={styles.cardtitle}>{product.name}</Text>
+                                                  <Text numberOfLines={1} style={styles.cardDescription}>{product.price}</Text>
+                                        </View>
+                                    }
+                                </View>
+                            </TouchableHighlight>
+                        ))
+                    }
                 </Animated.ScrollView>
             </View>
         )

@@ -25,6 +25,8 @@ import {FontAwesome} from '@expo/vector-icons';
 import {Location, Permissions} from 'expo';
 const {width, height} = Dimensions.get("window");
 
+import WhatsAroundUrl from '../../../constants/WhatsAroundUrl';
+
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
@@ -69,7 +71,7 @@ export default class WhatsAroundMap extends React.Component {
                                             left: 7,
                                             top: selectListingFacade.focusedListing === listing ? 0.7 : 2.5,
                                         }}
-                                        source={{uri: listing.thumbnail}}/>
+                                        source={{uri: WhatsAroundUrl.url +  listing.thumbnail}}/>
                                 </View>
                             </MapView.Marker>
                         );

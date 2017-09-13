@@ -1,12 +1,8 @@
 import React from 'react';
 import {MapView} from 'expo';
 import {
-    Image,
-    Text,
-    TouchableHighlight,
     View,
     Dimensions,
-    Animated,
 } from 'react-native';
 import {
     Thumbnail,
@@ -146,15 +142,13 @@ export default class HomeScreen extends React.Component {
                         <MapHeader focusedListing={ this.state.focusedListing }/> :
                         <WhatsAroundHeader title="WhatsAround"/>
                 }
-                <View style={{ flex: 1, width, height}}>
-                    {
+                <View>
                     <WhatsAroundMap
                         listings={this.state.listings}
                         region={this.state.region}
                         selectListingFacade={selectListingFacade}
-                    />}
+                    />
                     {
-                        /* TODO change products */
                         this.state.showItems &&
                         <ZoomedListing
                             products={this.state.focusedListing.products}
@@ -200,9 +194,7 @@ export default class HomeScreen extends React.Component {
 
 const styles = {
     container: {
-        flex: 1,
-        width: width,
-        height: height
+        flex: 1
     },
     mapContainer: {
         flex: 1

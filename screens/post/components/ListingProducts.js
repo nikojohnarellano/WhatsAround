@@ -32,6 +32,7 @@ export default class ListingProducts extends React.Component {
     _pickImage = async (index) => {
         let options = {
             aspect: [4, 3],
+            base64 : true
         }, result = null;
 
 

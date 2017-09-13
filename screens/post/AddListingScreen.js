@@ -53,6 +53,24 @@ export default class AddListingScreen extends React.Component {
 
     /**
      *
+     * @private
+     */
+    _resetFields = () => {
+        this.setState({
+            products: [],
+            fields : {
+                title : "",
+                location: "",
+                startDate: "",
+                startTime: "",
+                endTime: "",
+                description: "",
+            },
+        });
+    };
+
+    /**
+     *
      * @returns {Promise.<void>}
      * @private
      */
@@ -78,7 +96,12 @@ export default class AddListingScreen extends React.Component {
             listingToBePosted.append('startDate', this.state.fields.startDate);
             listingToBePosted.append('startTime', this.state.fields.startTime);
             listingToBePosted.append('endTime', this.state.fields.endTime);
-            listingToBePosted.append('thumbnail', this.state.products[0].image.uri);
+            listingToBePosted.append('thumbnail', JSON.stringify({
+                uri :  this.state.products[0].image.uri,
+                name: `thumbnail.${ this.state.products[0].image.uri.slice(-3) }`,
+                type: `image/${ this.state.products[0].image.uri.slice(-3) }`,
+                file: this.state.products[0].image.base64
+            }));
             listingToBePosted.append('products', JSON.stringify(this.state.products.map((prod) => {
                 return {
                     image      : prod.image.uri,
@@ -89,34 +112,9 @@ export default class AddListingScreen extends React.Component {
                 }
             })));
 
-            /*
-            listingToBePosted = {
-                seller      : userInfo.id,
-                title       : this.state.fields.title,
-                location    : this.state.fields.location,
-                latitude    : geocodeResult.results[0].geometry.location.lat,
-                longitude   : geocodeResult.results[0].geometry.location.lng,
-                description : this.state.fields.description,
-                startDate   : this.state.fields.startDate,
-                startTime   : this.state.fields.startTime,
-                endTime     : this.state.fields.endTime,
-                thumbnail   : this.state.products[0].image.uri,
-                products    : this.state.products.map((prod) => {
-                    return {
-                        image      : prod.image.uri,
-                        name       : prod.title || "",
-                        description: prod.description || "",
-                        price      : prod.price !== "" ? parseFloat(prod.price) : 0,
-                        sold       : false
-                    }
-                })
-            };*/
-
             this.setState({ loading : true });
             response = await ApiHelper.post('api/listing', listingToBePosted);
             this.setState({ loading : false });
-
-            console.log(response);
 
             if(response) {
                 // Redirect to home screen and show listing
@@ -128,7 +126,7 @@ export default class AddListingScreen extends React.Component {
                             {
                                 text: "OK",
                                 onPress : () => {
-                                    this.setState({ fields : {}, products : [] }),
+                                    this._resetFields();
                                     this.props.navigation.navigate('Home')
                                 }
                             }
