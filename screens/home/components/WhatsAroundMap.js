@@ -109,8 +109,7 @@ const styles = {
     },
 
     mapContainer: {
-        width: width,
-        height: height
+        flex: 1
     },
 
     scrollView: {

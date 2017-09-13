@@ -97,14 +97,15 @@ export default class AddListingScreen extends React.Component {
             listingToBePosted.append('startTime', this.state.fields.startTime);
             listingToBePosted.append('endTime', this.state.fields.endTime);
             listingToBePosted.append('thumbnail', JSON.stringify({
-                uri :  this.state.products[0].image.uri,
-                name: `thumbnail.${ this.state.products[0].image.uri.slice(-3) }`,
                 type: `image/${ this.state.products[0].image.uri.slice(-3) }`,
                 file: this.state.products[0].image.base64
             }));
             listingToBePosted.append('products', JSON.stringify(this.state.products.map((prod) => {
                 return {
-                    image      : prod.image.uri,
+                    image      : {
+                        type : `image/${ prod.image.uri }`,
+                        file : prod.image.base64
+                    },
                     name       : prod.title || "",
                     description: prod.description || "",
                     price      : prod.price !== "" ? parseFloat(prod.price) : 0,

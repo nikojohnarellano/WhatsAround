@@ -28,12 +28,16 @@ const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
+import WhatsAroundUrl from '../../../constants/WhatsAroundUrl';
+
 const delta = {latitudeDelta: 0.01, longitudeDelta: 0.001,};
 
 export default class HomeScreen extends React.Component {
 
     render() {
         const {selectListingFacade, navigate, products} = this.props;
+
+        console.log(products)
 
         return (
             <View>
@@ -72,28 +76,30 @@ export default class HomeScreen extends React.Component {
                     {
                         /* TODO remove and change with products*/
                         products.map((product, index) => (
-                            <TouchableHighlight
-                                key={index}
-                                underlayColor={ "white" }
-                                onPress={() => {
-                                }}>
-                                <View style={styles.card}>
-                                    <Image
-                                        source={{uri: product.image}}
-                                        style={styles.cardImage}
-                                        resizeMode="cover"
-                                    />
-                                    {
-                                        (product.name !== ""  && product.price !== null) &&
-                                        <View style={styles.locationAutocomplete}>
-                                            <Text numberOfLines={1}
-                                                  style={styles.cardtitle}>{product.name}</Text>
-                                                  <Text numberOfLines={1} style={styles.cardDescription}>{product.price}</Text>
-                                        </View>
-                                    }
-                                </View>
-                            </TouchableHighlight>
-                        ))
+                                <TouchableHighlight
+                                    key={index}
+                                    underlayColor={ "white" }
+                                    onPress={() => {
+                                    }}>
+                                    <View style={styles.card}>
+                                        <Image
+                                            source={{uri: WhatsAroundUrl.url + product.image}}
+                                            style={styles.cardImage}
+                                            resizeMode="cover"
+                                        />
+                                        {
+                                            (product.name !== "" && product.price !== null) &&
+                                            <View style={styles.locationAutocomplete}>
+                                                <Text numberOfLines={1}
+                                                      style={styles.cardtitle}>{product.name}</Text>
+                                                <Text numberOfLines={1}
+                                                      style={styles.cardDescription}>{product.price}</Text>
+                                            </View>
+                                        }
+                                    </View>
+                                </TouchableHighlight>
+                            )
+                        )
                     }
                 </Animated.ScrollView>
             </View>

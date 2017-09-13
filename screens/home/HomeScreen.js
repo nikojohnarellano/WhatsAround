@@ -31,8 +31,6 @@ const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 const delta = { latitudeDelta: 0.01, longitudeDelta: 0.001,};
 
-//const listings = Listings;
-
 export default class HomeScreen extends React.Component {
     state = {
         region: {
@@ -121,17 +119,39 @@ export default class HomeScreen extends React.Component {
     }
     */
 
+    _getCurrentLocationAsync = async () => {
+        let {status} = await Permissions.askAsync(Permissions.LOCATION),
+            options  = { enableHighAccuracy: true, timeInterval: 3000 };
+
+        if (status !== 'granted') {
+            this.setState({
+                errorMessage: 'Permission to access location was denied'
+            });
+
+            return null;
+        }
+
+        let location = await Location.getCurrentPositionAsync(options);
+
+        return {
+            latitude : location.coords.latitude,
+            longitude : location.coords.longitude,
+            latitudeDelta : delta.latitudeDelta,
+            longitudeDelta : delta.longitudeDelta
+        }
+    }
+
 
     render() {
         const {navigate} = this.props.navigation;
 
         let selectListingFacade = {
-            refMap : this._refMap.bind(this),
-            focusedListing : this.state.focusedListing,
-            showItems : this.state.showItems,
-            focusListing : this._focusListing.bind(this),
-            closeListing : this._closeListing.bind(this),
-            recenterCurrent : this._recenterCurrent.bind(this)
+            refMap: this._refMap.bind(this),
+            focusedListing: this.state.focusedListing,
+            showItems: this.state.showItems,
+            focusListing: this._focusListing.bind(this),
+            closeListing: this._closeListing.bind(this),
+            recenterCurrent: this._recenterCurrent.bind(this)
         };
 
 
@@ -142,7 +162,7 @@ export default class HomeScreen extends React.Component {
                         <MapHeader focusedListing={ this.state.focusedListing }/> :
                         <WhatsAroundHeader title="WhatsAround"/>
                 }
-                <View>
+                <View style={{ flex: 1 }}>
                     <WhatsAroundMap
                         listings={this.state.listings}
                         region={this.state.region}
@@ -160,35 +180,6 @@ export default class HomeScreen extends React.Component {
             </Container>
         )
     }
-
-    _getCurrentLocationAsync = async () => {
-        let {status} = await Permissions.askAsync(Permissions.LOCATION),
-            options  = { enableHighAccuracy: true, timeInterval: 3000 };
-
-        if (status !== 'granted') {
-            this.setState({
-                errorMessage: 'Permission to access location was denied'
-            });
-
-            return null;
-        }
-
-        let location = await Location.getCurrentPositionAsync(options);
-
-        const { latitude, longitude } = location.coords;
-
-        /*
-        return Object.assign({}, { latitude, longitude },  { longitudeDelta : delta.longitudeDelta, latitudeDelta : delta.latitudeDelta });
-        */
-
-        return {
-            latitude : location.coords.latitude,
-            longitude : location.coords.longitude,
-            latitudeDelta : delta.latitudeDelta,
-            longitudeDelta : delta.longitudeDelta
-        }
-    }
-
 }
 
 
