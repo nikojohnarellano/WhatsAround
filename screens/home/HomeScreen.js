@@ -14,7 +14,6 @@ import {
     Title,
     Subtitle,
     Button,
-    Body
 } from 'native-base';
 import ApiHelper from '../../api/ApiHelper'
 import {FontAwesome} from '@expo/vector-icons';
@@ -45,10 +44,31 @@ export default class HomeScreen extends React.Component {
         showMap : false
     };
 
+    /**
+     *
+     * @param map
+     * @private
+     */
     _refMap = (map) => {
         this.map = map
     };
 
+    /**
+     *
+     * @param listing
+     * @private
+     */
+    _addListing = (listing) => {
+        this.setState({
+            listings : [...this.state.listings, listing]
+        });
+    };
+
+    /**
+     *
+     * @param listing
+     * @private
+     */
     _focusListing = (listing) => {
         this.state.showItems = true;
         this.state.focusedListing = listing;
@@ -63,6 +83,10 @@ export default class HomeScreen extends React.Component {
         });
     };
 
+    /**
+     *
+     * @private
+     */
     _closeListing = () => {
         this.state.showItems = false;
         this.state.focusedListing = null;
@@ -70,19 +94,37 @@ export default class HomeScreen extends React.Component {
         this.setState(this.state);
     };
 
+    /**
+     *
+     * @param region
+     * @private
+     */
     _recenterCurrent = (region) => {
         this.map.animateToRegion(region);
     };
 
+    /**
+     *
+     * @returns {Promise.<void>}
+     * @private
+     */
     _loadListings = async () => {
         let listingResults = await ApiHelper.get('api/listing');
         this.setState({ listings : listingResults })
     };
 
+    /**
+     *
+     * @returns {Promise.<void>}
+     */
     async componentWillMount() {
         await this._loadListings()
     }
 
+    /**
+     *
+     * @returns {Promise.<void>}
+     */
     async componentDidMount() {
 
         //let currentRegion = await this._getCurrentLocationAsync();
@@ -100,24 +142,17 @@ export default class HomeScreen extends React.Component {
         //this._recenterCurrent(currentRegion);
     }
 
-    /*
-    componentWillUpdate() {
-        const {params} = this.props.navigation.state;
+    /**
+     * Implementing this component lifecycle when a new listing is posted
+     * @param nextProps
+     */
+    componentWillReceiveProps(nextProps) {
+        if(this.props.navigation.state.params !== nextProps.navigation.state.params) {
+            const {newListing} = nextProps.navigation.state.params;
 
-        console.log('im here')
-
-        console.log(this.props.navigation)
-
-        if(params) {
-            const { latitude, longitude } = params.focusedListing;
-
-            currentRegion = Object.assign({}, { latitude, longitude }, { delta });
-
-            console.log('hey update');
-            this._recenterCurrent(currentRegion)
+            this._addListing(newListing);
         }
     }
-    */
 
     _getCurrentLocationAsync = async () => {
         let {status} = await Permissions.askAsync(Permissions.LOCATION),
@@ -139,7 +174,7 @@ export default class HomeScreen extends React.Component {
             latitudeDelta : delta.latitudeDelta,
             longitudeDelta : delta.longitudeDelta
         }
-    }
+    };
 
 
     render() {
@@ -153,7 +188,6 @@ export default class HomeScreen extends React.Component {
             closeListing: this._closeListing.bind(this),
             recenterCurrent: this._recenterCurrent.bind(this)
         };
-
 
         return (
             <Container style={styles.container}>

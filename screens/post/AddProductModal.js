@@ -21,7 +21,7 @@ export default class AddProductModal extends React.Component {
             this.props.addProduct({
                 image       : this.props.productImage,
                 name        : this.state.title,
-                price       : this.state.price,
+                price       : this.state.price.substr(1),
                 description : this.state.description
             });
 

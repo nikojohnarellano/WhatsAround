@@ -37,7 +37,7 @@ export default class HomeScreen extends React.Component {
     render() {
         const {selectListingFacade, navigate, products} = this.props;
 
-        console.log(products)
+        console.log(products);
 
         return (
             <View>

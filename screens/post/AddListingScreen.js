@@ -101,21 +101,29 @@ export default class AddListingScreen extends React.Component {
                 file: this.state.products[0].image.base64
             }));
             listingToBePosted.append('products', JSON.stringify(this.state.products.map((prod) => {
-                return {
+                console.log(prod)
+
+                let hello = {
                     image      : {
                         type : `image/${ prod.image.uri }`,
                         file : prod.image.base64
                     },
-                    name       : prod.title || "",
+                    name       : prod.name || "",
                     description: prod.description || "",
                     price      : prod.price !== "" ? parseFloat(prod.price) : 0,
                     sold       : false
-                }
+                };
+
+                console.log(hello);
+
+                return hello;
             })));
 
             this.setState({ loading : true });
             response = await ApiHelper.post('api/listing', listingToBePosted);
             this.setState({ loading : false });
+
+            console.log(response);
 
             if(response) {
                 // Redirect to home screen and show listing
@@ -128,7 +136,7 @@ export default class AddListingScreen extends React.Component {
                                 text: "OK",
                                 onPress : () => {
                                     this._resetFields();
-                                    this.props.navigation.navigate('Home')
+                                    this.props.navigation.navigate('Home', { newListing : response.listing })
                                 }
                             }
                         ]

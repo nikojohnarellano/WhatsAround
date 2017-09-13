@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c67effe6-d59f-426f-9ee1-e0213b2706c7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/home/HomeScreen.js" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js" afterPath="$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/home/components/ZoomedListing.js" afterPath="$PROJECT_DIR$/screens/home/components/ZoomedListing.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/post/AddListingScreen.js" afterPath="$PROJECT_DIR$/screens/post/AddListingScreen.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/post/AddProductModal.js" afterPath="$PROJECT_DIR$/screens/post/AddProductModal.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,8 +23,8 @@
       <file leaf-file-name="HomeScreen.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/home/HomeScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="61" lean-forward="false" selection-start-line="31" selection-start-column="61" selection-end-line="31" selection-end-column="61" />
+            <state relative-caret-position="519">
+              <caret line="189" column="10" lean-forward="false" selection-start-line="189" selection-start-column="10" selection-end-line="189" selection-end-column="10" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -40,25 +39,30 @@
               <caret line="11" column="36" lean-forward="false" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
-                <marker date="1505278446000" expanded="true" signature="2793:2829" ph="&lt;Row/&gt;" />
-                <marker date="1505278446000" expanded="true" signature="2793:2877" ph="{...}" />
-                <marker date="1505278446000" expanded="true" signature="2793:2907" ph="&lt;Content/&gt;" />
-                <marker date="1505278446000" expanded="true" signature="2793:2932" ph="&lt;Container/&gt;" />
-                <marker date="1505278446000" expanded="true" signature="2793:2949" ph="{...}" />
-                <marker date="1505278446000" expanded="true" signature="2793:2951" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ZoomedListing.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ZoomedListing.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/home/components/ZoomedListing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="87" column="28" lean-forward="false" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
+                <element signature="n#!!doc" expanded="true" />
                 <element signature="e#50#76#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ListingScreen.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/screens/listing/ListingScreen.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="60" column="189" lean-forward="false" selection-start-line="60" selection-start-column="81" selection-end-line="60" selection-end-column="189" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,7 +70,7 @@
       <file leaf-file-name="WhatsAroundMap.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
+            <state relative-caret-position="-571">
               <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="63" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -75,11 +79,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddListingScreen.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MapHeader.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/screens/home/components/MapHeader.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="39" column="6" lean-forward="true" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddListingScreen.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/screens/post/AddListingScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="112" column="17" lean-forward="true" selection-start-line="112" selection-start-column="17" selection-end-line="112" selection-end-column="17" />
+            <state relative-caret-position="166">
+              <caret line="103" column="32" lean-forward="false" selection-start-line="103" selection-start-column="32" selection-end-line="103" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddProductModal.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/screens/post/AddProductModal.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="358">
+              <caret line="32" column="61" lean-forward="false" selection-start-line="32" selection-start-column="61" selection-end-line="32" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -121,7 +145,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>this.state.listings.map</find>
       <find>us</find>
       <find>u</find>
       <find>user.</find>
@@ -149,8 +172,9 @@
       <find>&quot;</find>
       <find>&quot;&quot;</find>
       <find />
-      <find>height</find>
       <find>mapContainer</find>
+      <find>sample</find>
+      <find>height</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -183,7 +207,6 @@
         <option value="$PROJECT_DIR$/utilities/geocodeApi.js" />
         <option value="$PROJECT_DIR$/screens/home/components/MapHeader.js" />
         <option value="$PROJECT_DIR$/navigation/RootNavigation.js" />
-        <option value="$PROJECT_DIR$/screens/post/AddProductModal.js" />
         <option value="$PROJECT_DIR$/screens/listing/components/ListingProducts.js" />
         <option value="$PROJECT_DIR$/components/WutzAroundHeader.js" />
         <option value="$PROJECT_DIR$/screens/product/ProductScreen.js" />
@@ -205,9 +228,10 @@
         <option value="$PROJECT_DIR$/api/ApiHelper.js" />
         <option value="$PROJECT_DIR$/constants/WhatsAroundUrl.js" />
         <option value="$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js" />
-        <option value="$PROJECT_DIR$/screens/post/AddListingScreen.js" />
-        <option value="$PROJECT_DIR$/screens/home/HomeScreen.js" />
         <option value="$PROJECT_DIR$/screens/home/components/ZoomedListing.js" />
+        <option value="$PROJECT_DIR$/screens/home/HomeScreen.js" />
+        <option value="$PROJECT_DIR$/screens/post/AddProductModal.js" />
+        <option value="$PROJECT_DIR$/screens/post/AddListingScreen.js" />
       </list>
     </option>
   </component>
@@ -288,6 +312,64 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="post" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project-near" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project-near" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="screens" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="post" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project-near" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project-near" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="screens" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="login" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project-near" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project-near" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="screens" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="listing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -561,7 +643,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="304388000" />
+    <option name="totallyTimeSpent" value="306880000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -719,22 +801,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/home/components/MapHeader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="39" column="6" lean-forward="true" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/screens/post/EditListingScreen.js" />
     <entry file="file://$PROJECT_DIR$/screens/post/EditProductScreen.js" />
-    <entry file="file://$PROJECT_DIR$/screens/post/AddProductModal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="33" column="24" lean-forward="true" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/screens/listing/components/ListingProducts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -753,13 +821,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="535">
           <caret line="56" column="23" lean-forward="true" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screens/listing/ListingScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="60" column="189" lean-forward="false" selection-start-line="60" selection-start-column="81" selection-end-line="60" selection-end-column="189" />
         </state>
       </provider>
     </entry>
@@ -832,22 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/product/SearchProductScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-309">
-          <caret line="11" column="36" lean-forward="false" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <marker date="1505278446000" expanded="true" signature="2793:2829" ph="&lt;Row/&gt;" />
-            <marker date="1505278446000" expanded="true" signature="2793:2877" ph="{...}" />
-            <marker date="1505278446000" expanded="true" signature="2793:2907" ph="&lt;Content/&gt;" />
-            <marker date="1505278446000" expanded="true" signature="2793:2932" ph="&lt;Container/&gt;" />
-            <marker date="1505278446000" expanded="true" signature="2793:2949" ph="{...}" />
-            <marker date="1505278446000" expanded="true" signature="2793:2951" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -901,6 +946,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3375">
           <caret line="236" column="20" lean-forward="false" selection-start-line="236" selection-start-column="20" selection-end-line="236" selection-end-column="20" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#50#88#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -965,28 +1014,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/post/AddListingScreen.js">
+    <entry file="file://$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="112" column="17" lean-forward="true" selection-start-line="112" selection-start-column="17" selection-end-line="112" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screens/home/HomeScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="61" lean-forward="false" selection-start-line="31" selection-start-column="61" selection-end-line="31" selection-end-column="61" />
+        <state relative-caret-position="-571">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="63" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js">
+    <entry file="file://$PROJECT_DIR$/screens/home/components/MapHeader.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="63" />
+        <state relative-caret-position="435">
+          <caret line="39" column="6" lean-forward="true" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/product/SearchProductScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-309">
+          <caret line="11" column="36" lean-forward="false" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -995,11 +1044,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/screens/home/components/ZoomedListing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="87" column="28" lean-forward="false" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="n#!!doc" expanded="true" />
             <element signature="e#50#76#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/listing/ListingScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="60" column="189" lean-forward="false" selection-start-line="60" selection-start-column="81" selection-end-line="60" selection-end-column="189" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/home/HomeScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="189" column="10" lean-forward="false" selection-start-line="189" selection-start-column="10" selection-end-line="189" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/post/AddProductModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="32" column="61" lean-forward="false" selection-start-line="32" selection-start-column="61" selection-end-line="32" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/post/AddListingScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="103" column="32" lean-forward="false" selection-start-line="103" selection-start-column="32" selection-end-line="103" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
