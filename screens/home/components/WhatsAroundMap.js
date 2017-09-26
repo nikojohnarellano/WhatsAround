@@ -34,6 +34,7 @@ export default class WhatsAroundMap extends React.Component {
 
     render() {
         const {
+            onRegionChange,
             selectListingFacade,
             listings,
             region
@@ -43,6 +44,7 @@ export default class WhatsAroundMap extends React.Component {
             <MapView
                 ref={selectListingFacade.refMap}
                 initialRegion={region}
+                onRegionChange={onRegionChange}
                 style={styles.mapContainer}
                 >
                 {

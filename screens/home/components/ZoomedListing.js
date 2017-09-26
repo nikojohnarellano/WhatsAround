@@ -39,12 +39,13 @@ export default class ZoomedListing extends React.Component {
     render() {
         const {selectListingFacade, navigate, products} = this.props;
 
-        console.log(products);
-
         return (
             <View>
                 <View style={ styles.headerButtons }>
-                    <Button rounded success
+                    <Avatar medium
+                           rounded
+                           overlayContainerStyle={{ backgroundColor: "green" }}
+                           icon={{ name: "location-searching", type:"material" }}
                             onPress={() => {
                                 selectListingFacade.recenterCurrent(
                                     {
@@ -54,9 +55,7 @@ export default class ZoomedListing extends React.Component {
                                         longitudeDelta: delta.longitudeDelta
                                     }
                                 )
-                            }}>
-                        <Text style={ styles.recenterText }>Re-center</Text>
-                    </Button>
+                            }}/>
 
                     <Avatar medium
                             rounded

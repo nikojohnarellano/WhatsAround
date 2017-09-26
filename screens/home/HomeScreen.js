@@ -3,6 +3,7 @@ import {MapView} from 'expo';
 import {
     View,
     Dimensions,
+    ActivityIndicator
 } from 'react-native';
 import {
     Thumbnail,
@@ -42,7 +43,7 @@ export default class HomeScreen extends React.Component {
         listings : [],
         showItems: false,
         focusedListing: null,
-        showMap : false
+        mapIsReady : false
     };
 
     /**
@@ -91,24 +92,24 @@ export default class HomeScreen extends React.Component {
     _closeListing = async () => {
         this.state.showItems = false;
         this.state.focusedListing = null;
-        /*
-        this.state.region = {
-            latitude: 49.247140,
-            longitude: -123.064926,
-            latitudeDelta: 0.05,
-            longitudeDelta: 0.05,
-        };*/
-
-        let coords = await this._getCurrentLocationAsync();
 
         this._recenterCurrent({
-            latitude : coords.latitude,
-            longitude : coords.longitude,
+            latitude : this.state.region.latitude,
+            longitude : this.state.region.longitude,
             latitudeDelta : zoomoutDelta.latitudeDelta,
             longitudeDelta : zoomoutDelta.longitudeDelta
         });
 
         this.setState(this.state);
+    };
+
+    /**
+     *
+     * @param region
+     * @private
+     */
+    _onRegionChange = (region) => {
+        this.setState({ region });
     };
 
     /**
@@ -133,9 +134,30 @@ export default class HomeScreen extends React.Component {
     /**
      *
      * @returns {Promise.<void>}
+     * @private
+     */
+    _setInitialRegions = async () => {
+        let coords = await this._getCurrentLocationAsync();
+
+        this.setState({
+            region :  {
+                latitude : coords.latitude,
+                longitude : coords.longitude,
+                latitudeDelta : zoomoutDelta.latitudeDelta,
+                longitudeDelta : zoomoutDelta.longitudeDelta
+            }
+        })
+    };
+
+    /**
+     *
+     * @returns {Promise.<void>}
      */
     async componentWillMount() {
-        await this._loadListings()
+        await this._loadListings();
+        await this._setInitialRegions();
+
+        this.setState({ mapIsReady : true })
     }
 
     /**
@@ -192,9 +214,7 @@ export default class HomeScreen extends React.Component {
 
         return {
             latitude : location.coords.latitude,
-            longitude : location.coords.longitude,
-            latitudeDelta : delta.latitudeDelta,
-            longitudeDelta : delta.longitudeDelta
+            longitude : location.coords.longitude
         }
     };
 
@@ -223,21 +243,29 @@ export default class HomeScreen extends React.Component {
                                    focusedListing={ this.state.focusedListing }/> :
                         <WhatsAroundHeader title="WhatsAround"/>
                 }
-                <View style={{ flex: 1 }}>
-                    <WhatsAroundMap
-                        listings={this.state.listings}
-                        region={this.state.region}
-                        selectListingFacade={selectListingFacade}
-                    />
-                    {
-                        this.state.showItems &&
-                        <ZoomedListing
-                            products={this.state.focusedListing.products}
-                            navigate={navigate}
+                {
+                    this.state.mapIsReady ?
+                    (
+                    <View style={{ flex: 1 }}>
+                        <WhatsAroundMap
+                            listings={this.state.listings}
+                            region={this.state.region}
                             selectListingFacade={selectListingFacade}
+                            onRegionChange={this._onRegionChange.bind(this)}
                         />
-                    }
-                </View>
+                        {
+                            this.state.showItems &&
+                            <ZoomedListing
+                                products={this.state.focusedListing.products}
+                                navigate={navigate}
+                                selectListingFacade={selectListingFacade}
+                            />
+                        }
+                    </View>) :
+                    <View style={{ flex : 1, justifyContent : "center", alignItems: "center" }}>
+                        <ActivityIndicator/>
+                    </View>
+                }
             </Container>
         )
     }

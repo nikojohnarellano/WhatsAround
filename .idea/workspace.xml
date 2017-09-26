@@ -2,24 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c67effe6-d59f-426f-9ee1-e0213b2706c7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/constants/WhatsAroundUrl.js" afterPath="$PROJECT_DIR$/constants/WhatsAroundUrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/navigation/MainTabNavigator.js" afterPath="$PROJECT_DIR$/navigation/MainTabNavigator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/navigation/RootNavigation.js" afterPath="$PROJECT_DIR$/navigation/RootNavigation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/account/AccountScreen.js" afterPath="$PROJECT_DIR$/screens/account/AccountScreen.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/home/HomeScreen.js" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/home/components/MapHeader.js" afterPath="$PROJECT_DIR$/screens/home/components/MapHeader.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js" afterPath="$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/home/components/ZoomedListing.js" afterPath="$PROJECT_DIR$/screens/home/components/ZoomedListing.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/listing/BrowseScreen.js" afterPath="$PROJECT_DIR$/screens/listing/BrowseScreen.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/listing/ListingScreen.js" afterPath="$PROJECT_DIR$/screens/listing/ListingScreen.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/listing/components/ListingCard.js" afterPath="$PROJECT_DIR$/screens/listing/components/ListingCard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/listing/components/ListingProducts.js" afterPath="$PROJECT_DIR$/screens/listing/components/ListingProducts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/login/LoginScreen.js" afterPath="$PROJECT_DIR$/screens/login/LoginScreen.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/post/AddListingScreen.js" afterPath="$PROJECT_DIR$/screens/post/AddListingScreen.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/product/ProductModal.js" afterPath="$PROJECT_DIR$/screens/product/ProductModal.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/product/ProductScreen.js" afterPath="$PROJECT_DIR$/screens/product/ProductScreen.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screens/product/components/ProductCard.js" afterPath="$PROJECT_DIR$/screens/product/components/ProductCard.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,11 +19,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HomeScreen.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HomeScreen.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/home/HomeScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="64" lean-forward="false" selection-start-line="31" selection-start-column="64" selection-end-line="31" selection-end-column="64" />
+            <state relative-caret-position="582">
+              <caret line="257" column="42" lean-forward="false" selection-start-line="257" selection-start-column="29" selection-end-line="257" selection-end-column="42" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -61,18 +46,18 @@
       <file leaf-file-name="WhatsAroundMap.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="52" column="46" lean-forward="true" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
+            <state relative-caret-position="15">
+              <caret line="32" column="21" lean-forward="false" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ZoomedListing.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ZoomedListing.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/screens/home/components/ZoomedListing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="47" column="29" lean-forward="true" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
+            <state relative-caret-position="381">
+              <caret line="47" column="60" lean-forward="false" selection-start-line="47" selection-start-column="60" selection-end-line="47" selection-end-column="60" />
               <folding>
                 <element signature="e#50#76#0" expanded="true" />
               </folding>
@@ -157,8 +142,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>container</find>
-      <find>listings</find>
       <find>AsyncSto</find>
       <find>;</find>
       <find>&quot;</find>
@@ -187,6 +170,8 @@
       <find>c</find>
       <find>closeL</find>
       <find>closeListing</find>
+      <find>showMAp</find>
+      <find>showMap</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -237,13 +222,13 @@
         <option value="$PROJECT_DIR$/navigation/MainTabNavigator.js" />
         <option value="$PROJECT_DIR$/screens/product/ProductScreen.js" />
         <option value="$PROJECT_DIR$/screens/account/AccountScreen.js" />
-        <option value="$PROJECT_DIR$/screens/home/components/ZoomedListing.js" />
         <option value="$PROJECT_DIR$/screens/listing/components/ListingProducts.js" />
         <option value="$PROJECT_DIR$/screens/product/ProductModal.js" />
         <option value="$PROJECT_DIR$/screens/listing/ListingScreen.js" />
         <option value="$PROJECT_DIR$/screens/home/components/MapHeader.js" />
         <option value="$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js" />
         <option value="$PROJECT_DIR$/screens/home/HomeScreen.js" />
+        <option value="$PROJECT_DIR$/screens/home/components/ZoomedListing.js" />
       </list>
     </option>
   </component>
@@ -650,12 +635,12 @@
       <workItem from="1505350115802" duration="391000" />
       <workItem from="1505616879942" duration="6134000" />
       <workItem from="1505786188799" duration="1370000" />
-      <workItem from="1506398479562" duration="10558000" />
+      <workItem from="1506398479562" duration="12429000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="325452000" />
+    <option name="totallyTimeSpent" value="327323000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -996,16 +981,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/screens/home/components/ZoomedListing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="47" column="29" lean-forward="true" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
-          <folding>
-            <element signature="e#50#76#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/screens/product/components/ProductCard.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1054,18 +1029,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/screens/home/components/WhatsAroundMap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="52" column="46" lean-forward="true" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
+        <state relative-caret-position="15">
+          <caret line="32" column="21" lean-forward="false" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/screens/home/HomeScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="64" lean-forward="false" selection-start-line="31" selection-start-column="64" selection-end-line="31" selection-end-column="64" />
+        <state relative-caret-position="582">
+          <caret line="257" column="42" lean-forward="false" selection-start-line="257" selection-start-column="29" selection-end-line="257" selection-end-column="42" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/home/components/ZoomedListing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="47" column="60" lean-forward="false" selection-start-line="47" selection-start-column="60" selection-end-line="47" selection-end-column="60" />
+          <folding>
+            <element signature="e#50#76#0" expanded="true" />
           </folding>
         </state>
       </provider>
