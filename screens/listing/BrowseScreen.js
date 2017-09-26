@@ -16,15 +16,41 @@ export default class BrowseScreen extends React.Component {
         listings : []
     };
 
+    /**
+     *
+     * @returns {Promise.<void>}
+     * @private
+     */
     _loadListings = async () => {
         let listingResults = await ApiHelper.get('api/listing');
         this.setState({ listings : listingResults })
     };
 
+    /**
+     *
+     * @returns {Promise.<void>}
+     */
     async componentWillMount() {
         await this._loadListings()
     }
 
+    /**
+     *
+     * @param nextProps
+     * @returns {Promise.<void>}
+     */
+    async componentWillReceiveProps(nextProps) {
+        console.log('im getting here');
+        // TODO
+        if(nextProps.navigation.state.params.update) {
+            await this._loadListings()
+        }
+    }
+
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
 
         return (
@@ -34,7 +60,7 @@ export default class BrowseScreen extends React.Component {
                     { this.state.listings.map((listing, index) => {
                         return (
                             <TouchableOpacity onPress={() => {
-                                    this.props.navigation.navigate('Listing', { listing : listing})
+                                    this.props.navigation.navigate('Listing', { listing })
                                 }} key={index}>
                                 <ListingCard listing={listing}/>
                             </TouchableOpacity>

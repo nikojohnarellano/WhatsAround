@@ -165,8 +165,13 @@ export default class LoginScreen extends Component {
 
             this.setState({ loading  : false });
 
-            this.props.navigation.state.params.setUser(user);
+            if(this.props.navigation.state.params) {
+                this.props.navigation.state.params.setUser(user);
+            }
+
+            this.props.navigation.setParams({ update : true });
             this.props.navigation.goBack();
+
         }
     };
 
@@ -182,7 +187,7 @@ export default class LoginScreen extends Component {
 
         if(!_.isEmpty(user)) {
 
-            this.setState({ loading : false })
+            this.setState({ loading : false });
 
             setTimeout(() => {
                 Alert.alert(

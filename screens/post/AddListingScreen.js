@@ -16,6 +16,17 @@ const {width, height} = Dimensions.get("window");
 
 
 export default class AddListingScreen extends React.Component {
+
+    /**
+     *
+     * @type {{}}
+     */
+    userInfoJson = {};
+
+    /**
+     *
+     * @type {{products: Array, fields: {title: string, location: string, startDate: string, startTime: string, endTime: string, description: string}, loading: boolean}}
+     */
     state = {
         products: [],
         fields : {
@@ -69,20 +80,61 @@ export default class AddListingScreen extends React.Component {
         });
     };
 
+    _signInIfNoUser = async () => {
+        // If no user is logged in
+        // Show an alert with sign in and cancel option
+        // If sign in
+        // Redirect to sign in and return
+    };
+
+
+    /**
+     *
+     * @param nextProps
+     */
+    async componentWillReceiveProps(nextProps) {
+        if(this.props.navigation.state.params !== nextProps.navigation.state.params) {
+            console.log('props will get updated')
+            await this._postListing()
+        }
+    }
+
     /**
      *
      * @returns {Promise.<void>}
      * @private
      */
-    _addListing = async () => {
+    _postListing = async () => {
         let geocodeResult,
             response,
             listingToBePosted,
             userInfoString,
             userInfo;
 
+        userInfoString = await AsyncStorage.getItem('UserInfo');
+
+        if(userInfoString === null) {
+            Alert.alert(
+                'Sign in Required',
+                'You need to sign in before you can post a listing.',
+                [
+                    {
+                        text: "Sign In",
+                        onPress : () =>
+                        {
+                            this.props.navigation.navigate('Signin')
+                        }
+                    },
+                    {
+                        text: "Cancel"
+                    }
+                ]
+            );
+
+            return;
+        }
+
         if(this._validateFields()) {
-            userInfoString    = await AsyncStorage.getItem('UserInfo');
             userInfo          = JSON.parse(userInfoString);
             geocodeResult     = await geocodeLocation(this.state.fields.location);
 
@@ -101,9 +153,7 @@ export default class AddListingScreen extends React.Component {
                 file: this.state.products[0].image.base64
             }));
             listingToBePosted.append('products', JSON.stringify(this.state.products.map((prod) => {
-                console.log(prod)
-
-                let hello = {
+                return {
                     image      : {
                         type : `image/${ prod.image.uri }`,
                         file : prod.image.base64
@@ -113,17 +163,11 @@ export default class AddListingScreen extends React.Component {
                     price      : prod.price !== "" ? parseFloat(prod.price) : 0,
                     sold       : false
                 };
-
-                console.log(hello);
-
-                return hello;
             })));
 
             this.setState({ loading : true });
             response = await ApiHelper.post('api/listing', listingToBePosted);
-            this.setState({ loading : false });
-
-            console.log(response);
+            this.setState({ loading : false })
 
             if(response) {
                 // Redirect to home screen and show listing
@@ -136,6 +180,7 @@ export default class AddListingScreen extends React.Component {
                                 text: "OK",
                                 onPress : () => {
                                     this._resetFields();
+                                    this.props.navigation.setParams({ update : true });
                                     this.props.navigation.navigate('Home', { newListing : response.listing })
                                 }
                             }
@@ -215,7 +260,7 @@ export default class AddListingScreen extends React.Component {
                     <ListingProducts setProductFacade={ setProductFacade }/>
                     <ListingFields   setFieldFacade={ setFieldFacade } />
                     <View style={ styles.postButtonContainer }>
-                        <Button style={ styles.postButton } full success onPress={async () => { await this._addListing() }}>
+                        <Button style={ styles.postButton } full success onPress={async () => { await this._postListing() }}>
                             <Text style={ styles.recenterText }>Post</Text>
                         </Button>
                     </View>

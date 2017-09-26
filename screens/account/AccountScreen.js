@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity, AsyncStorage} from 'react-native'
-import {SocialIcon} from 'react-native-elements'
+import {Avatar} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
 import {
     Container,
@@ -23,42 +23,6 @@ import ApiHelper from '../../api/ApiHelper'
 import WhatsAroundHeader from '../../components/WhatsAroundHeader'
 import {FontAwesome} from '@expo/vector-icons';
 import Collapsible from "react-native-collapsible";
-
-
-const ACTIVE_LISTNG = {
-    type: 'active',
-    heading: 'Active Listing',
-    listings: [{
-        title: "Moving sale august 1!!",
-        // TODO add other info
-    }]
-};
-
-const PAST_LISTINGS = {
-    type: 'past',
-    heading: 'Past Listings',
-    listings: [
-        {
-            title: "Garage sale december"
-        },
-        {
-            title: "Yard sale march"
-        },
-        {
-            title: "Moving sale april"
-        },
-        {
-            title: "Whats up"
-        },
-        {
-            title: "Hello"
-        },
-        {
-            title: "WEEEE"
-        }
-    ]
-}
-
 
 export default class AccountScreen extends Component {
 
@@ -135,7 +99,12 @@ export default class AccountScreen extends Component {
         )
     };
 
-    async componentWillMount() {
+    /**
+     *
+     * @returns {Promise.<void>}
+     * @private
+     */
+    _fetchUser = async () => {
         this.setState({loading: true});
 
         let user = await AsyncStorage.getItem('UserInfo');
@@ -145,19 +114,51 @@ export default class AccountScreen extends Component {
         }
 
         this.setState({loading: false})
+    };
+
+    /**
+     *
+     * @returns {Promise.<void>}
+     */
+    async componentWillMount() {
+        await this._fetchUser()
     }
 
+    /**
+     *
+     * @param nextProps
+     * @returns {Promise.<void>}
+     */
+    async componentWillReceiveProps(nextProps) {
+        //TODO
+        if(nextProps.navigation.state.params.update) {
+            await this._fetchUser();
+        }
+    }
+
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
         return (
             <Container>
                 <WhatsAroundHeader/>
                 {
                     (this.state.user !== null) &&
-                    <Header style={{backgroundColor: "white"}}>
+                    <Header
+                        style={{
+                            backgroundColor: "white"
+                        }}>
                         <Left style={{flex: 1}}>
-                            <FontAwesome
-                                name="user-circle"
-                                size={40}
+                            <Avatar
+                                small
+                                rounded
+                                title={ this.state.user.name.substr(0, 1) }
+                                overlayContainerStyle={{ backgroundColor: "skyblue" }}
+                                activeOpacity={1}
+                                avatarStyle={{ color: "blue", backgroundColor : "blue" }}
+                                icon={{color : "blue", iconStyle : { backgroundColor : "blue" }}}
                             />
                         </Left>
                         <Body  style={{flex: 2, alignItems: "flex-start"}}>

@@ -29,14 +29,15 @@ const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 const delta = { latitudeDelta: 0.01, longitudeDelta: 0.001,};
+const zoomoutDelta = { latitudeDelta: 0.07, longitudeDelta: 0.05, };
 
 export default class HomeScreen extends React.Component {
     state = {
         region: {
             latitude: 49.247140,
             longitude: -123.064926,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.001,
+            latitudeDelta: zoomoutDelta.latitudeDelta,
+            longitudeDelta: zoomoutDelta.longitudeDelta,
         },
         listings : [],
         showItems: false,
@@ -87,9 +88,25 @@ export default class HomeScreen extends React.Component {
      *
      * @private
      */
-    _closeListing = () => {
+    _closeListing = async () => {
         this.state.showItems = false;
         this.state.focusedListing = null;
+        /*
+        this.state.region = {
+            latitude: 49.247140,
+            longitude: -123.064926,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+        };*/
+
+        let coords = await this._getCurrentLocationAsync();
+
+        this._recenterCurrent({
+            latitude : coords.latitude,
+            longitude : coords.longitude,
+            latitudeDelta : zoomoutDelta.latitudeDelta,
+            longitudeDelta : zoomoutDelta.longitudeDelta
+        });
 
         this.setState(this.state);
     };
@@ -134,7 +151,7 @@ export default class HomeScreen extends React.Component {
             currentRegion = {
                 latitude: 49.247140,
                 longitude: -123.064926,
-                latitudeDelta: 0.01,
+                latitudeDelta: 0.001,
                 longitudeDelta: 0.001,
             }
         }
@@ -154,6 +171,11 @@ export default class HomeScreen extends React.Component {
         }
     }
 
+    /**
+     *
+     * @returns {Promise.<*>}
+     * @private
+     */
     _getCurrentLocationAsync = async () => {
         let {status} = await Permissions.askAsync(Permissions.LOCATION),
             options  = { enableHighAccuracy: true, timeInterval: 3000 };
@@ -177,15 +199,19 @@ export default class HomeScreen extends React.Component {
     };
 
 
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
         const {navigate} = this.props.navigation;
 
         let selectListingFacade = {
-            refMap: this._refMap.bind(this),
-            focusedListing: this.state.focusedListing,
-            showItems: this.state.showItems,
-            focusListing: this._focusListing.bind(this),
-            closeListing: this._closeListing.bind(this),
+            refMap         : this._refMap.bind(this),
+            focusedListing : this.state.focusedListing,
+            showItems      : this.state.showItems,
+            focusListing   : this._focusListing.bind(this),
+            closeListing   : this._closeListing.bind(this),
             recenterCurrent: this._recenterCurrent.bind(this)
         };
 
@@ -193,7 +219,8 @@ export default class HomeScreen extends React.Component {
             <Container style={styles.container}>
                 {
                     this.state.showItems ?
-                        <MapHeader focusedListing={ this.state.focusedListing }/> :
+                        <MapHeader selectListingFacade={selectListingFacade}
+                                   focusedListing={ this.state.focusedListing }/> :
                         <WhatsAroundHeader title="WhatsAround"/>
                 }
                 <View style={{ flex: 1 }}>

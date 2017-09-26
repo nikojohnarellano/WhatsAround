@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text, TouchableOpacity} from 'react-native'
 import {FontAwesome} from '@expo/vector-icons';
 import {
     Header,
@@ -14,14 +15,25 @@ import {
 export default class MapHeader extends React.Component {
 
     render() {
-        const { focusedListing } = this.props;
+        const { selectListingFacade } = this.props;
 
         return (
             <Header style={ styles.header }>
-                <Body style={ styles.body }>
-                    <Title style={ styles.title }>{ focusedListing.title }</Title>
-                    <Subtitle  style={ styles.subtitle }>{ focusedListing.location }</Subtitle>
-                </Body>
+                <Left style={ styles.body }>
+                    <Text style={ styles.title }>{ selectListingFacade.focusedListing.title }</Text>
+                    <Text  style={ styles.subtitle }>{ selectListingFacade.focusedListing.location }</Text>
+                </Left>
+                <Right>
+                    <TouchableOpacity
+                        onPress={ async () => await selectListingFacade.closeListing() }
+                        >
+                        <FontAwesome
+                            name="close"
+                            size={32}
+                            color="white"
+                        />
+                    </TouchableOpacity>
+                </Right>
             </Header>
         );
     }
@@ -29,16 +41,17 @@ export default class MapHeader extends React.Component {
 
 const styles = {
     header: {
+
         backgroundColor: "skyblue",
         height : 80
     },
 
     body: {
-        flex : 1,
-        justifyContent: "center",
-        alignItems: "center",
+        flex : 3,
     },
-
+    close : {
+        flex : 1
+    },
     title : {
         fontSize: 25,
         fontWeight: "bold",

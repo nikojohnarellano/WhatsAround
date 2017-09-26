@@ -7,6 +7,7 @@ import {Container, Content, Thumbnail, Left, Text, Right, Body, Title, Subtitle,
 import WhatsAroundHeader from '../../components/WhatsAroundHeader'
 import ProductModal from '../product/ProductModal'
 import ListingProducts from './components/ListingProducts'
+import WhatsAroundUrl from '../../constants/WhatsAroundUrl';
 import moment from 'moment'
 
 export default class ListingScreen extends Component {
@@ -15,6 +16,11 @@ export default class ListingScreen extends Component {
         showModal : false,
     };
 
+    /**
+     *
+     * @returns {XML}
+     * @private
+     */
     _renderBackButton = () => {
         return (
             <Button transparent onPress={() => { this.props.navigation.goBack() }}>
@@ -23,14 +29,27 @@ export default class ListingScreen extends Component {
         )
     };
 
+    /**
+     *
+     * @param focusedProduct
+     * @private
+     */
     _showProductModal = (focusedProduct) => {
         this.setState({ showModal : true, focusedProduct })
     };
 
+    /**
+     *
+     * @private
+     */
     _hideProductModal = () => {
         this.setState({ showModal : false })
     };
 
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
         const { listing } = this.props.navigation.state.params;
 
@@ -46,7 +65,7 @@ export default class ListingScreen extends Component {
                 <Content>
                     <Card>
                         <CardItem cardBody>
-                            <Image source={{uri: listing.thumbnail }}
+                            <Image source={{uri: WhatsAroundUrl.url + listing.thumbnail }}
                                    style={{
                                        height: 200,
                                        width: null,
@@ -58,7 +77,13 @@ export default class ListingScreen extends Component {
                                 <Text note style={ styles.fieldContent }>{ listing.location }</Text>
                                     {
                                         listing.start_date &&
-                                        <Text note style={ styles.fieldContent }>{ moment(listing.start_date).format('MMMM Do YYYY') + ", " + listing.start_time + " - " + listing.end_time }</Text>
+                                        <Text note style={ styles.fieldContent }>
+                                            { moment(listing.start_date).format('MMMM Do YYYY') }
+                                            {
+                                                listing.start_time && listing.end_time &&
+                                                ", " + listing.start_time + " - " + listing.end_time
+                                            }
+                                        </Text>
                                     }
                             </Body>
                         </CardItem>

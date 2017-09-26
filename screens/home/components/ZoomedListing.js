@@ -22,17 +22,19 @@ import {
     Button,
     Body
 } from 'native-base';
+import {Avatar} from 'react-native-elements'
 import {FontAwesome} from '@expo/vector-icons';
 
 const {width, height} = Dimensions.get("window");
 const CARD_HEIGHT = height / 4.5;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
+
 import WhatsAroundUrl from '../../../constants/WhatsAroundUrl';
 
 const delta = {latitudeDelta: 0.01, longitudeDelta: 0.001,};
 
-export default class HomeScreen extends React.Component {
+export default class ZoomedListing extends React.Component {
 
     render() {
         const {selectListingFacade, navigate, products} = this.props;
@@ -55,16 +57,14 @@ export default class HomeScreen extends React.Component {
                             }}>
                         <Text style={ styles.recenterText }>Re-center</Text>
                     </Button>
-                    <Button rounded danger
+
+                    <Avatar medium
+                            rounded
+                            overlayContainerStyle={{ backgroundColor: "red" }}
+                            icon={{ name: "arrow-right", type:"font-awesome" }}
                             onPress={() => {
-                                selectListingFacade.closeListing()
-                            }}>
-                        <FontAwesome
-                            name="close"
-                            size={25}
-                            color="white"
-                        />
-                    </Button>
+                                navigate("ListingDetails", { listing : selectListingFacade.focusedListing })
+                            }}/>
                 </View>
                 <Animated.ScrollView
                     horizontal
@@ -80,6 +80,7 @@ export default class HomeScreen extends React.Component {
                                     key={index}
                                     underlayColor={ "white" }
                                     onPress={() => {
+                                        navigate('ProductDetails', { product })
                                     }}>
                                     <View style={styles.card}>
                                         <Image
@@ -93,7 +94,7 @@ export default class HomeScreen extends React.Component {
                                                 <Text numberOfLines={1}
                                                       style={styles.cardtitle}>{product.name}</Text>
                                                 <Text numberOfLines={1}
-                                                      style={styles.cardDescription}>{product.price}</Text>
+                                                      style={styles.cardDescription}>{"$" + Number(product.price).toFixed(2)}</Text>
                                             </View>
                                         }
                                     </View>

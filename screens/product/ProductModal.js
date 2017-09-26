@@ -6,6 +6,7 @@ import { Dimensions, View, Image, Text, Alert, Modal, TouchableOpacity } from 'r
 import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Right, Button, Body, Title} from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
 import WhatsAroundHeader from '../../components/WhatsAroundHeader'
+import WhatsAroundUrl from '../../constants/WhatsAroundUrl'
 
 const {width, height} = Dimensions.get("window");
 
@@ -46,10 +47,11 @@ export default class ProductModal extends React.Component {
                         <Image
                             resizeMode="stretch"
                             style = {hasDetails ? styles.productImage : styles.productFullImage }
-                            source={{ uri : focusedProduct.image }}
+                            source={{ uri : WhatsAroundUrl.url + focusedProduct.image }}
                         />
                         {
-                            (focusedProduct.name && focusedProduct.price) &&
+                            ((focusedProduct.name != null || focusedProduct.name != "")
+                                && (focusedProduct.price != null)) &&
                             <Form>
                                 <Item stackedLabel last style={ styles.productField }>
                                     <Label>Item Name</Label>

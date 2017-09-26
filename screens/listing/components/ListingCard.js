@@ -18,6 +18,7 @@ import {
 import moment from 'moment';
 
 const {width} = Dimensions.get("window");
+import WhatsAroundUrl from '../../../constants/WhatsAroundUrl';
 
 export default class ListingCard extends React.Component {
 
@@ -29,7 +30,7 @@ export default class ListingCard extends React.Component {
                 <CardItem cardBody>
                     <Image
                         resizeMode="stretch"
-                        source={{uri: listing.thumbnail}}
+                        source={{uri: WhatsAroundUrl.url + listing.thumbnail}}
                         style={{
                             height: 200,
                             width: width,

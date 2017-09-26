@@ -19,6 +19,10 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export default class ListingProducts extends Component {
 
+    /**
+     *
+     * @returns {XML}
+     */
     render() {
         const { listing, productModalFacade } = this.props;
 

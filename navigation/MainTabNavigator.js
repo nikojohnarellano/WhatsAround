@@ -58,10 +58,26 @@ const AccountTab = StackNavigator({
     }
 });
 
+const HomeTab = StackNavigator({
+    Home : {
+        screen : HomeScreen
+    },
+    ListingDetails : {
+        screen : ListingScreen
+    },
+    ProductDetails : {
+        screen : ProductScreen
+    }
+}, {
+    navigationOptions : {
+        header : null
+    }
+});
+
 export default TabNavigator(
     {
         Home: {
-            screen: HomeScreen
+            screen: HomeTab
         },
         Browse: {
             screen: ListingTab

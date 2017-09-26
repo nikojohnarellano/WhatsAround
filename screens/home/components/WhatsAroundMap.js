@@ -48,10 +48,10 @@ export default class WhatsAroundMap extends React.Component {
                 {
                     listings.map((listing, index) => {
                         return (
-                            <MapView.Marker onPress={() => {
+                            <MapView.Marker onPress={ async () => {
                                 !selectListingFacade.focusedListing ?
                                     selectListingFacade.focusListing(listing) :
-                                    selectListingFacade.closeListing()
+                                    await selectListingFacade.closeListing()
                             }}
                                             key={ index }
                                             coordinate={{
