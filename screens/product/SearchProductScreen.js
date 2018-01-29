@@ -50,7 +50,6 @@ export default class SearchProductScreen extends React.Component {
                             onChangeText={(searchQuery) => this.setState({ searchQuery })}
                             value={ this.state.searchQuery }
                             placeholder="Search Products" />
-                        <Icon name="ios-people" />
                     </Item>
                     <Button onPress={async () => await this.searchProduct() }
                             transparent>

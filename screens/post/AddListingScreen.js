@@ -11,11 +11,13 @@ import ListingProducts from './components/ListingProducts'
 import ListingFields from "./components/ListingFields";
 import ApiHelper from '../../api/ApiHelper'
 import geocodeLocation from '../../utilities/geocodeApi'
+import { connect } from 'react-redux'
+import { addListing } from '../../actions'
 
 const {width, height} = Dimensions.get("window");
 
 
-export default class AddListingScreen extends React.Component {
+class AddListingScreen extends React.Component {
 
     /**
      *
@@ -138,50 +140,36 @@ export default class AddListingScreen extends React.Component {
             userInfo          = JSON.parse(userInfoString);
             geocodeResult     = await geocodeLocation(this.state.fields.location);
 
-            listingToBePosted = new FormData();
-            listingToBePosted.append('seller', userInfo.id);
-            listingToBePosted.append('title', this.state.fields.title);
-            listingToBePosted.append('location', this.state.fields.location);
-            listingToBePosted.append('latitude', geocodeResult.results[0].geometry.location.lat);
-            listingToBePosted.append('longitude', geocodeResult.results[0].geometry.location.lng);
-            listingToBePosted.append('description', this.state.fields.description);
-            listingToBePosted.append('startDate', this.state.fields.startDate);
-            listingToBePosted.append('startTime', this.state.fields.startTime);
-            listingToBePosted.append('endTime', this.state.fields.endTime);
-            listingToBePosted.append('thumbnail', JSON.stringify({
-                type: `image/${ this.state.products[0].image.uri.slice(-3) }`,
-                file: this.state.products[0].image.base64
-            }));
-            listingToBePosted.append('products', JSON.stringify(this.state.products.map((prod) => {
-                return {
-                    image      : {
-                        type : `image/${ prod.image.uri }`,
-                        file : prod.image.base64
-                    },
-                    name       : prod.name || "",
-                    description: prod.description || "",
-                    price      : prod.price !== "" ? parseFloat(prod.price) : 0,
-                    sold       : false
-                };
-            })));
+            let newListing = {
+                seller      : userInfo.id,
+                title       : this.state.fields.title,
+                location    : this.state.fields.location,
+                latitude    : geocodeResult.results[0].geometry.location.lat,
+                longitude   : geocodeResult.results[0].geometry.location.lng,
+                description : this.state.fields.description,
+                startDate   : this.state.fields.startDate,
+                startTime   : this.state.fields.startTime,
+                endTime     : this.state.fields.endtime,
+                products    : this.state.products
+            }
 
+            
             this.setState({ loading : true });
-            response = await ApiHelper.post('api/listing', listingToBePosted);
-            this.setState({ loading : false })
+            await this.props.addListing(newListing)
+            this.setState({ loading : false });
 
-            if(response) {
+            if(this.props.addListingSuccess) {
                 // Redirect to home screen and show listing
                 setTimeout(() => {
                     Alert.alert(
                         'Success',
-                        response.message,
+                        'Listing was successfully posted.'
                         [
                             {
                                 text: "OK",
                                 onPress : () => {
                                     this._resetFields();
-                                    this.props.navigation.setParams({ update : true });
-                                    this.props.navigation.navigate('Home', { newListing : response.listing })
+                                    this.props.navigation.navigate('Home')
                                 }
                             }
                         ]
@@ -269,6 +257,18 @@ export default class AddListingScreen extends React.Component {
         );
     }
 }
+
+const mapStateToProps = ({ listingReducer }) => {
+    const { addListingSuccess } = listingReducer
+
+    return { addListingSuccess }
+}
+
+const mapDispatchToProps = ({
+    addListing
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddListingScreen)
 
 const styles = {
     container: {

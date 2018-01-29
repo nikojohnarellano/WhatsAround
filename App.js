@@ -3,7 +3,10 @@ import {Platform, StatusBar, StyleSheet, View, AsyncStorage} from 'react-native'
 import {AppLoading} from 'expo';
 import {FontAwesome} from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
-
+import { Provider } from 'react-redux'
+import ReduxThunk from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux'
+import reducers from './reducers'
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 
 import listings from './screens/home/Listings.json'
@@ -46,13 +49,18 @@ export default class AppContainer extends React.Component {
     }
 
     render() {
+        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
+
         if (this.state.appIsReady) {
             return (
-                <View style={styles.container}>
+                <Provider store={store}>
+                    <View style={styles.container}>
                     {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
 
                     <RootNavigation />
-                </View>
+                    </View>
+                </Provider>
+                
             );
         } else {
             return <AppLoading />;

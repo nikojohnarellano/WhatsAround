@@ -24,6 +24,9 @@ import MapHeader from './components/MapHeader';
 import WhatsAroundMap from './components/WhatsAroundMap'
 import ZoomedListing from './components/ZoomedListing'
 import WhatsAroundHeader from '../../components/WhatsAroundHeader'
+import { getListings } from '../../actions/index'
+
+import { connect } from 'react-redux'
 
 const {width, height} = Dimensions.get("window");
 
@@ -32,11 +35,11 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 const delta = { latitudeDelta: 0.01, longitudeDelta: 0.001,};
 const zoomoutDelta = { latitudeDelta: 0.07, longitudeDelta: 0.05, };
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
     state = {
         region: {
-            latitude: 49.247140,
-            longitude: -123.064926,
+            latitude: 0,
+            longitude: 0,
             latitudeDelta: zoomoutDelta.latitudeDelta,
             longitudeDelta: zoomoutDelta.longitudeDelta,
         },
@@ -154,31 +157,10 @@ export default class HomeScreen extends React.Component {
      * @returns {Promise.<void>}
      */
     async componentWillMount() {
-        await this._loadListings();
+        await this.props.getListings()
         await this._setInitialRegions();
 
         this.setState({ mapIsReady : true })
-    }
-
-    /**
-     *
-     * @returns {Promise.<void>}
-     */
-    async componentDidMount() {
-
-        //let currentRegion = await this._getCurrentLocationAsync();
-        let currentRegion = null;
-
-        if(currentRegion === null) {
-            currentRegion = {
-                latitude: 49.247140,
-                longitude: -123.064926,
-                latitudeDelta: 0.001,
-                longitudeDelta: 0.001,
-            }
-        }
-
-        //this._recenterCurrent(currentRegion);
     }
 
     /**
@@ -186,11 +168,12 @@ export default class HomeScreen extends React.Component {
      * @param nextProps
      */
     componentWillReceiveProps(nextProps) {
+        /*
         if(this.props.navigation.state.params !== nextProps.navigation.state.params) {
             const {newListing} = nextProps.navigation.state.params;
 
             this._addListing(newListing);
-        }
+        }*/
     }
 
     /**
@@ -246,22 +229,23 @@ export default class HomeScreen extends React.Component {
                 {
                     this.state.mapIsReady ?
                     (
-                    <View style={{ flex: 1 }}>
-                        <WhatsAroundMap
-                            listings={this.state.listings}
-                            region={this.state.region}
-                            selectListingFacade={selectListingFacade}
-                            onRegionChange={this._onRegionChange.bind(this)}
-                        />
-                        {
-                            this.state.showItems &&
-                            <ZoomedListing
-                                products={this.state.focusedListing.products}
-                                navigate={navigate}
+                        <View style={{ flex: 1 }}>
+                            <WhatsAroundMap
+                                listings={this.props.listings}
+                                region={this.state.region}
                                 selectListingFacade={selectListingFacade}
+                                onRegionChange={this._onRegionChange.bind(this)}
                             />
-                        }
-                    </View>) :
+                            {
+                                this.state.showItems &&
+                                <ZoomedListing
+                                    products={this.state.focusedListing.products}
+                                    navigate={navigate}
+                                    selectListingFacade={selectListingFacade}
+                                />
+                            }
+                        </View>
+                    ) :
                     <View style={{ flex : 1, justifyContent : "center", alignItems: "center" }}>
                         <ActivityIndicator/>
                     </View>
@@ -271,6 +255,16 @@ export default class HomeScreen extends React.Component {
     }
 }
 
+const mapStateToProps = ({ listingReducer }) => {
+    const { listings } = listingReducer
+    return { listings }
+}
+
+const mapDispatchToProps = ({
+    getListings
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 const styles = {
     container: {

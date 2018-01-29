@@ -48,7 +48,7 @@ export default class WhatsAroundMap extends React.Component {
                 style={styles.mapContainer}
                 >
                 {
-                    listings.map((listing, index) => {
+                    listings && listings.map((listing, index) => {
                         return (
                             <MapView.Marker onPress={ async () => {
                                 !selectListingFacade.focusedListing ?

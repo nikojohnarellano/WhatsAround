@@ -1,0 +1,6 @@
+export const GET_LISTINGS = 'get_listings' 
+export const ADD_LISTING  = 'add_listing'
+export const ADD_LISTING_SUCCESS = 'add_listing_success'
+export const ADD_LISTING_FAIL = 'add_listing_fail'
+export const UPDATE_LISTING = 'update_listing'
+export const DELETE_LISTING = 'delete_listing'
