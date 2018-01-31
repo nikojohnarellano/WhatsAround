@@ -1,5 +1,5 @@
 import React from 'react';
-import {AsyncStorage, Dimensions, View, Text, Alert} from 'react-native';
+import {AsyncStorage, Dimensions, View, Text, Alert, Keyboard} from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Button} from 'native-base';
 import {FontAwesome} from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import ListingProducts from './components/ListingProducts'
 import ListingFields from "./components/ListingFields";
 import ApiHelper from '../../api/ApiHelper'
 import geocodeLocation from '../../utilities/geocodeApi'
+import safeExecute from '../../utilities/safeExecute'
 import { connect } from 'react-redux'
 import { addListing } from '../../actions'
 
@@ -115,30 +116,27 @@ class AddListingScreen extends React.Component {
 
         userInfoString = await AsyncStorage.getItem('UserInfo');
 
-        if(userInfoString === null) {
-            Alert.alert(
-                'Sign in Required',
-                'You need to sign in before you can post a listing.',
-                [
-                    {
-                        text: "Sign In",
-                        onPress : () =>
-                        {
-                            this.props.navigation.navigate('Signin')
-                        }
-                    },
-                    {
-                        text: "Cancel"
-                    }
-                ]
-            );
-
-            return;
-        }
-
         if(this._validateFields()) {
             userInfo          = JSON.parse(userInfoString);
             geocodeResult     = await geocodeLocation(this.state.fields.location);
+
+            if(userInfoString === null) {
+                Alert.alert(
+                    'Sign in Required',
+                    'You need to sign in before you can post a listing.',
+                    [
+                        {
+                            text: "Sign In",
+                            onPress : () => this.props.navigation.navigate('Profile')
+                        },
+                        {
+                            text: "Cancel"
+                        }
+                    ]
+                );
+    
+                return;
+            }
 
             let newListing = {
                 seller      : userInfo.id,
@@ -157,13 +155,13 @@ class AddListingScreen extends React.Component {
             this.setState({ loading : true });
             await this.props.addListing(newListing)
             this.setState({ loading : false });
-
+        
             if(this.props.addListingSuccess) {
                 // Redirect to home screen and show listing
                 setTimeout(() => {
                     Alert.alert(
                         'Success',
-                        'Listing was successfully posted.'
+                        'Listing was successfully posted.',
                         [
                             {
                                 text: "OK",
@@ -242,13 +240,12 @@ class AddListingScreen extends React.Component {
             <Container>
                 <WhatsAroundHeader title="Add Listing"/>
                 <Content
-                    keyboardShouldPersistTaps='always'
                     contentContainerStyle={ styles.container }>
                     <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}}/>
                     <ListingProducts setProductFacade={ setProductFacade }/>
                     <ListingFields   setFieldFacade={ setFieldFacade } />
                     <View style={ styles.postButtonContainer }>
-                        <Button style={ styles.postButton } full success onPress={async () => { await this._postListing() }}>
+                        <Button style={ styles.postButton } full success onPress={() => safeExecute(async () => { await this._postListing() })}>
                             <Text style={ styles.recenterText }>Post</Text>
                         </Button>
                     </View>

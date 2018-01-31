@@ -9,14 +9,6 @@ import {FontAwesome} from '@expo/vector-icons';
 import {ImagePicker} from 'expo';
 import AddProductModal from "../AddProductModal"
 
-
-const Images = [
-    {uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnfY6fOkFdeSYVrDxxiSjNnTOjpbdi-iZ97CCAsG2pbTv8734RuQ"},
-    {uri: "https://rukminim1.flixcart.com/image/312/312/hand-messenger-bag/g/s/g/fd-handbag-0028-fair-deals-hand-held-bag-texture-original-imaencs3dm3hqmen.jpeg?q=70"},
-    {uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/LGwashingmachine.jpg"},
-    {uri: "http://multimedia.bbycastatic.ca/multimedia/products/1500x1500/104/10486/10486204_2.jpg"}
-]
-
 const {width, height} = Dimensions.get("window");
 
 const CARD_HEIGHT = height / 4;

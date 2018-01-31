@@ -7,12 +7,18 @@ import {
     DELETE_LISTING
 } from '../actions/types'
 
-
+/**
+ * 
+ */
 export const getListings = () => async (dispatch) => {
     const listings = await ApiHelper.get('api/listing')
     dispatch({ type : GET_LISTINGS, listings })    
 }
 
+/**
+ * 
+ * @param {*} listing 
+ */
 export const addListing = (listing) => async (dispatch) => {
     let listingToBePosted = new FormData()
     listingToBePosted.append('seller', listing.seller)

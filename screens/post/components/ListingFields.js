@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Picker, Text,} from 'react-native';
+import {TouchableOpacity, Picker, Text, Keyboard} from 'react-native';
 import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Button} from 'native-base';
 import Colors from '../../../constants/Colors';
 import {FontAwesome} from '@expo/vector-icons';
@@ -15,6 +15,9 @@ export default class ListingFields extends React.Component {
         hideResults : false,
     };
 
+    /**
+     * 
+     */
     _autoCompletePlaces = async (query, location) => {
         let result = await fetchPlaces(query, location),
             places;
@@ -26,6 +29,9 @@ export default class ListingFields extends React.Component {
         }
     };
 
+    /**
+     * 
+     */
     _getLocationAsync = async () => {
         let {status} = await Permissions.askAsync(Permissions.LOCATION);
 
@@ -36,11 +42,16 @@ export default class ListingFields extends React.Component {
         }
     };
 
-
+    /**
+     * 
+     */
     async componentWillMount() {
         await this._getLocationAsync()
     }
 
+    /**
+     * 
+     */
     render() {
         const {places}           = this.state;
         const { setFieldFacade } = this.props;
@@ -50,11 +61,15 @@ export default class ListingFields extends React.Component {
                 <Item style={ styles.field } regular>
                     <Input
                         placeholderTextColor="#c9c9c9"
-                        value={ setFieldFacade.fields.title }
+                        value={ setFieldFacade.fields.title && setFieldFacade.fields.title }
                         placeholder="Title"
                         onChangeText={title =>  setFieldFacade.setField('title', title)}
-                        onEndEditing={() => setFieldFacade.setField('title', setFieldFacade.fields.title)}
-                        onSubmitEditing={() => setFieldFacade.setField('title', setFieldFacade.fields.title)}/>
+                        onEndEditing={() => { 
+                            setFieldFacade.setField('title', setFieldFacade.fields.title)
+                        }}
+                        onSubmitEditing={() => {
+                            setFieldFacade.setField('title', setFieldFacade.fields.title)
+                        }}/>
                 </Item>
                 { /* Added z-index for automplete places field */ }
                 <Item style={ {...styles.field, ...{zIndex: 1}}} regular>
@@ -75,12 +90,14 @@ export default class ListingFields extends React.Component {
                         }}
                         onBlur={() => { this.setState({hideResults : true}) }}
                         placeholder="Location"
-                        value={ setFieldFacade.fields.location }
+                        value={ setFieldFacade.fields.location && setFieldFacade.fields.location }
                         hideResults={ this.state.hideResults }
                         containerStyle={ styles.locationAutocomplete }
                         inputContainerStyle={{borderWidth: 0}}
                         renderItem={(location) => (
                             <TouchableOpacity onPress={() => {
+                                console.log("called")
+                                console.log(location)
                                 setFieldFacade.setField('location', location);
                                 this.setState({ hideResults : true })
                             }}>
@@ -104,7 +121,7 @@ export default class ListingFields extends React.Component {
                         mode="date"
                         format="MMM Do YYYY"
                         style={{ flex : 1  }}
-                        date={  setFieldFacade.fields.startDate }
+                        date={  setFieldFacade.fields.startDate && setFieldFacade.fields.startDate }
                         placeholder={"Start Date (Optional)"}
                         confirmBtnText={"Confirm"}
                         cancelBtnText={"Cancel"}
@@ -159,7 +176,7 @@ export default class ListingFields extends React.Component {
                         <DatePicker
                             showIcon={false}
                             style={{flex: 1}}
-                            date={  setFieldFacade.fields.endTime }
+                            date={setFieldFacade.fields.endTime }
                             format="hh:mm a"
                             mode="time"
                             placeholder={"End Time"}
@@ -186,8 +203,9 @@ export default class ListingFields extends React.Component {
                         placeholderTextColor="#c9c9c9"
                         multiline
                         style={{ height: 100, justifyContent: "flex-start" }}
-                        value={  setFieldFacade.fields.description }
+                        value={ setFieldFacade.fields.description && setFieldFacade.fields.description }
                         placeholder="Description (Optional)"
+                        onEndEditing={Keyboard.dismiss}
                         onChangeText={description => setFieldFacade.setField('description', description) }/>
                 </Item>
             </Form>

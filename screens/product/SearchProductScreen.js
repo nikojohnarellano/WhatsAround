@@ -18,13 +18,11 @@ export default class SearchProductScreen extends React.Component {
     searchProduct = async () => {
         let products = await ApiHelper.get(`api/products?query=${ this.state.searchQuery }`);
 
-        console.log(products);
         this.setState({ products })
     };
 
     async componentWillMount() {
         let products = await ApiHelper.get('api/products');
-
         this.setState({ products })
     }
 
@@ -58,17 +56,24 @@ export default class SearchProductScreen extends React.Component {
                 </Header>
                 <Content>
                     { groups.map((item, indexRow) => {
+
                         return (
+                            item.length === 1 ?
                             <Row key={indexRow}>
-                                { item.length > 1 ?
+                                <Col>
+                                    <ProductCard navigation={navigation} item={item[0]}/>
+                                </Col>
+                                <Col/>
+                            </Row> :
+                            <Row key={indexRow}>
+                                {   
                                     item.map((i, indexCol) => {
                                         return (
                                             <Col key={indexCol}>
                                                 <ProductCard navigation={navigation} item={i}/>
                                             </Col>
                                         );
-                                    }) :
-                                    <ProductCard item={item}/>
+                                    })
                                 }
                             </Row>
                         )

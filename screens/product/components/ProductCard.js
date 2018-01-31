@@ -9,7 +9,7 @@ export default class ProductCard extends React.Component {
 
     render() {
         const { item, productModalFacade, navigation } = this.props;
-
+        
         return (
             <TouchableOpacity onPress={() =>{
                     productModalFacade ?

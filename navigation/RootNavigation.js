@@ -13,9 +13,6 @@ const RootStackNavigator = StackNavigator(
         Main: {
             screen: MainTabNavigator,
         },
-        Signin: {
-            screen: LoginScreen
-        }
     },
     {
         navigationOptions: () => ({
