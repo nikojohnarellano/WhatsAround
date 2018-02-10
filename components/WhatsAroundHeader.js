@@ -18,15 +18,11 @@ export default class WhatsAroundHeader extends React.Component {
 
         return (
             <Header style={ styles.homeScreenHeader }>
-                {
-                    renderLeft ? (<Left style={ styles.leftStyle }>{ renderLeft() }</Left>) : null
-                }
+               <Left style={ styles.leftStyle }>{ renderLeft && renderLeft() }</Left>
                 <Body style={ styles.bodyStyle }>
                     <Title style={ styles.homeScreenHeaderText }> { title } </Title>
                 </Body>
-                {
-                    renderRight ? (<Right style={ styles.rightStyle }>{ renderRight() }</Right>): (renderLeft ?  (<Right style={ styles.rightStyle }/>): null)
-                }
+                <Right style={ styles.rightStyle }>{ renderRight && renderRight() }</Right>
             </Header>
         );
     }
@@ -52,6 +48,7 @@ const styles = {
     homeScreenHeaderText : {
         fontFamily: "webly-sleek",
         fontSize : 23,
-        color: "white"
+        color: "white",
+        lineHeight : 27
     }
 };

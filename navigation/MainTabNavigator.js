@@ -76,17 +76,11 @@ const HomeTab = StackNavigator({
 
 export default TabNavigator(
     {
-        Home: {
-            screen: HomeTab
-        },
         Browse: {
             screen: ListingTab
         },
-        AddListing: {
-            screen: AddListingScreen,
-        },
-        Search : {
-            screen: SearchProductTab
+        Home: {
+            screen: HomeTab
         },
         Profile: {
             screen: AccountTab
@@ -107,9 +101,6 @@ export default TabNavigator(
                         break;
                     case 'AddListing':
                         iconName = 'plus-circle';
-                        break;
-                    case 'Search':
-                        iconName = 'search';
                         break;
                     case 'Profile':
                         iconName = 'navicon';
@@ -148,7 +139,6 @@ export default TabNavigator(
         tabBarPosition: 'bottom',
         // Disable animation so that iOS/Android have same behaviors
         animationEnabled: false,
-        // Don't show the labels
         tabBarOptions: {
             showLabel: true,
             style : {
@@ -158,6 +148,6 @@ export default TabNavigator(
                 color: "white"
             }
         },
-
+        initialRouteName : "Home"
     }
 );

@@ -164,19 +164,6 @@ class HomeScreen extends React.Component {
     }
 
     /**
-     * Implementing this component lifecycle when a new listing is posted
-     * @param nextProps
-     */
-    componentWillReceiveProps(nextProps) {
-        /*
-        if(this.props.navigation.state.params !== nextProps.navigation.state.params) {
-            const {newListing} = nextProps.navigation.state.params;
-
-            this._addListing(newListing);
-        }*/
-    }
-
-    /**
      *
      * @returns {Promise.<*>}
      * @private
@@ -202,6 +189,17 @@ class HomeScreen extends React.Component {
     };
 
 
+    _renderPostIcon = () => {
+        return (
+            <FontAwesome
+                name={"pencil-square-o"}
+                size={27}
+                color="white"
+                onPress={() => this.props.navigation.navigate('Post')}
+            />
+        )
+    }
+
     /**
      *
      * @returns {XML}
@@ -224,7 +222,7 @@ class HomeScreen extends React.Component {
                     this.state.showItems ?
                         <MapHeader selectListingFacade={selectListingFacade}
                                    focusedListing={ this.state.focusedListing }/> :
-                        <WhatsAroundHeader title="WhatsAround"/>
+                        <WhatsAroundHeader title="WhatsAround" renderRight={this._renderPostIcon}/>
                 }
                 {
                     this.state.mapIsReady ?

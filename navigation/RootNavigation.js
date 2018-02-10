@@ -2,10 +2,10 @@ import {Notifications} from 'expo';
 import {Root} from "native-base";
 import React from 'react';
 import {StackNavigator} from 'react-navigation';
-
 import MainTabNavigator from './MainTabNavigator';
 import ProductScreen from '../screens/product/ProductScreen';
 import LoginScreen from '../screens/login/LoginScreen'
+import AddListingScreen from '../screens/post/AddListingScreen'
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
 const RootStackNavigator = StackNavigator(
@@ -13,12 +13,16 @@ const RootStackNavigator = StackNavigator(
         Main: {
             screen: MainTabNavigator,
         },
+        Post: {
+            screen: AddListingScreen,
+        },
     },
     {
         navigationOptions: () => ({
             headerTitleStyle: {
                 fontWeight: 'normal',
             },
+            header : null
         }),
     }
 );

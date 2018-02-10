@@ -222,6 +222,20 @@ class AddListingScreen extends React.Component {
     };
 
     /**
+     * 
+     */
+    _renderBackButton = () => {
+        return (
+            <FontAwesome
+                name={"chevron-left"}
+                size={27}
+                color="white"
+                onPress={() => this.props.navigation.goBack()}
+            />
+        )
+    }    
+
+    /**
      *
      * @returns {XML}
      */
@@ -238,7 +252,7 @@ class AddListingScreen extends React.Component {
 
         return (
             <Container>
-                <WhatsAroundHeader title="Add Listing"/>
+                <WhatsAroundHeader title="Add Listing" renderLeft={this._renderBackButton}/>
                 <Content
                     contentContainerStyle={ styles.container }>
                     <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}}/>

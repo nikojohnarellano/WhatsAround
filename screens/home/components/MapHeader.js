@@ -13,7 +13,6 @@ import {
 
 
 export default class MapHeader extends React.Component {
-
     render() {
         const { selectListingFacade } = this.props;
 
@@ -41,7 +40,6 @@ export default class MapHeader extends React.Component {
 
 const styles = {
     header: {
-
         backgroundColor: "skyblue",
         height : 80
     },
