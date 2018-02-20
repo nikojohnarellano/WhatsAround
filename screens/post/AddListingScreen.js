@@ -54,6 +54,16 @@ class AddListingScreen extends React.Component {
         });
     };
 
+    _addProducts = (products) => {
+        console.log(products)
+
+        this.setState({
+            products: [...this.state.products, ...products]
+        });
+
+        console.log(this.state.products)
+    }
+
     /**
      *
      * @param index
@@ -97,7 +107,6 @@ class AddListingScreen extends React.Component {
      */
     async componentWillReceiveProps(nextProps) {
         if(this.props.navigation.state.params !== nextProps.navigation.state.params) {
-            console.log('props will get updated')
             await this._postListing()
         }
     }
@@ -167,7 +176,7 @@ class AddListingScreen extends React.Component {
                                 text: "OK",
                                 onPress : () => {
                                     this._resetFields();
-                                    this.props.navigation.navigate('Home')
+                                    this.props.navigation.goBack()
                                 }
                             }
                         ]
@@ -240,13 +249,14 @@ class AddListingScreen extends React.Component {
      * @returns {XML}
      */
     render() {
-
+        // TODO Convert to REDUX
         let setFieldFacade = {
             setField : this._setField.bind(this),
             fields   : this.state.fields
         }, setProductFacade = {
             products   : this.state.products,
             addProduct : this._addProduct.bind(this),
+            addProducts : this._addProducts.bind(this),
             removeProduct : this._removeProduct.bind(this)
         };
 
@@ -254,6 +264,7 @@ class AddListingScreen extends React.Component {
             <Container>
                 <WhatsAroundHeader title="Add Listing" renderLeft={this._renderBackButton}/>
                 <Content
+                    keyboardShouldPersistTaps="always"
                     contentContainerStyle={ styles.container }>
                     <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}}/>
                     <ListingProducts setProductFacade={ setProductFacade }/>
@@ -275,9 +286,7 @@ const mapStateToProps = ({ listingReducer }) => {
     return { addListingSuccess }
 }
 
-const mapDispatchToProps = ({
-    addListing
-})
+const mapDispatchToProps = ({ addListing })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddListingScreen)
 

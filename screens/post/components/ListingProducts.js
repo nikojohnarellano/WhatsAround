@@ -2,12 +2,13 @@
  * Created by nikoarellano on 2017-07-31.
  */
 import React from 'react';
-import {TouchableOpacity, Animated, Dimensions, View, Image, Text, Alert} from 'react-native';
+import {TouchableOpacity, Animated, Dimensions, View, Image, Text, Alert, Modal} from 'react-native';
 import {Container, Content, Form, Item, Input, Label, ActionSheet, Header, Button} from 'native-base';
 import Colors from '../../../constants/Colors';
 import {FontAwesome} from '@expo/vector-icons';
-import {ImagePicker} from 'expo';
+import {ImagePicker as CameraPicker} from 'expo';
 import AddProductModal from "../AddProductModal"
+import ImagePicker  from './ImagePicker';
 
 const {width, height} = Dimensions.get("window");
 
@@ -16,6 +17,7 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export default class ListingProducts extends React.Component {
     state = {
+        imagePickerModalVisible : false,
         modalVisible: false,
         modalImage: null,
         places: []
@@ -30,15 +32,16 @@ export default class ListingProducts extends React.Component {
 
         switch (index) {
             case 0:
-                result = await ImagePicker.launchCameraAsync(options);
+                result = await CameraPicker.launchCameraAsync(options);
                 break;
             case 1:
-                result = await ImagePicker.launchImageLibraryAsync(options);
+                this.setState({ imagePickerModalVisible : true })
                 break;
             default:
                 return;
         }
 
+        /*
         if (!result.cancelled) {
             Alert.alert(
                 'Add Details',
@@ -59,7 +62,7 @@ export default class ListingProducts extends React.Component {
                     },
                 ],
             )
-        }
+        }*/
     };
 
     _cameraAction = () => {
@@ -73,9 +76,13 @@ export default class ListingProducts extends React.Component {
         });
     };
 
-    _closeModal = () => {
+    _closeProductModal = () => {
         this.setState({modalVisible: false})
     };
+
+    _closeImagePickerModal = () => {
+        this.setState({ imagePickerModalVisible : false })
+    }
 
 
     render() {
@@ -104,6 +111,7 @@ export default class ListingProducts extends React.Component {
                 </View>
                 {
                     products.map((product, index) => {
+                        console.log(product)
                         return (
                             <View style={styles.card} key={index}>
                                 <TouchableOpacity
@@ -115,7 +123,7 @@ export default class ListingProducts extends React.Component {
                                     />
                                 </TouchableOpacity>
                                 <Image
-                                    source={ product.image }
+                                    source={ product.uri }
                                     style={styles.cardImage}
                                     resizeMode="cover"
                                 />
@@ -133,10 +141,13 @@ export default class ListingProducts extends React.Component {
                     })
                 }
             </Animated.ScrollView>
-            <AddProductModal  closeModal={this._closeModal.bind(this)}
+            <AddProductModal  closeModal={this._closeProductModal}
                               modalVisible={this.state.modalVisible}
                               productImage={this.state.modalImage}
                               addProduct={this.props.setProductFacade.addProduct}/>
+            <ImagePicker closeModal={this._closeImagePickerModal}
+                         addProducts={this.props.setProductFacade.addProducts}
+                         visible={this.state.imagePickerModalVisible} />
         </View>
     )
 

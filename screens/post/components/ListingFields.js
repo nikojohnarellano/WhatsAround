@@ -94,18 +94,22 @@ export default class ListingFields extends React.Component {
                         hideResults={ this.state.hideResults }
                         containerStyle={ styles.locationAutocomplete }
                         inputContainerStyle={{borderWidth: 0}}
-                        renderItem={(location) => (
-                            <TouchableOpacity onPress={() => {
-                                console.log("called")
-                                console.log(location)
-                                setFieldFacade.setField('location', location);
-                                this.setState({ hideResults : true })
-                            }}>
-                                <Text style={styles.itemText}>
-                                    { location }
-                                </Text>
-                            </TouchableOpacity>
-                        )}
+                        renderItem={(location) => {
+                            
+                            
+                            return (
+                                <TouchableOpacity onPress={() => {
+                                    console.log("called")
+                                    console.log(location)
+                                    setFieldFacade.setField('location', location);
+                                    this.setState({ hideResults : true })
+                                }}>
+                                    <Text style={styles.itemText}>
+                                        { location }
+                                    </Text>
+                                </TouchableOpacity>
+                            )
+                        }}
                     />
                 </Item>
                 <Item style={ styles.field } regular>

@@ -13,6 +13,9 @@ import {
 
 export default class WhatsAroundHeader extends React.Component {
 
+    /**
+     * 
+     */
     render() {
         const { title, renderRight, renderLeft } = this.props;
 
@@ -34,11 +37,11 @@ const styles = {
     },
 
     leftStyle: {
-        flex: 1,
+        flex: 2,
     },
 
     rightStyle : {
-        flex: 1
+        flex: 2
     },
 
     homeScreenHeader : {
