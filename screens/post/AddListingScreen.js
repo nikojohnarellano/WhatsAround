@@ -54,11 +54,11 @@ class AddListingScreen extends React.Component {
         });
     };
 
-    _addProducts = (products) => {
-        console.log(products)
+    _addProducts = async (products) => {
+        let productsResult = await Promise.all(products);
 
         this.setState({
-            products: [...this.state.products, ...products]
+            products: [...this.state.products, ...productsResult]
         });
 
         console.log(this.state.products)

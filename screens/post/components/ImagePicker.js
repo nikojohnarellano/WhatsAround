@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { FlatList, View, Text, CameraRoll, Dimensions, StyleSheet, Modal, Button, Platform } from 'react-native';
 import WhatsAroundHeader from '../../../components/WhatsAroundHeader'
-import ImageTile from './ImageTile'
-const { width } = Dimensions.get('window')
+import ImageTile from './ImageTile';
+import { FileSystem } from 'expo';
+const { width } = Dimensions.get('window');
 
 export default class ImagePicker extends Component {
     
@@ -85,6 +86,12 @@ export default class ImagePicker extends Component {
         )
     }
 
+    _loadImages = async () => {
+        const { selected } = this.state;
+        const files = Object.values(selected).map(i => FileSystem.getInfoAsync(i.uri, { md5 : true }));
+        await this.props.addProducts(files);
+    }
+
     /**
      * 
      */
@@ -96,10 +103,8 @@ export default class ImagePicker extends Component {
                                            onPress={() => this.props.closeModal()}/>) 
         let renderLeft    = () => (<Button style={{ color: "white" }} 
                                         title="Choose" 
-                                        onPress={() => { 
-                                            console.log(this.state.selected)
-                                            console.log(Object.values(this.state.selected))
-                                            this.props.addProducts(Object.values(this.state.selected));
+                                        onPress={async () => { 
+                                            await this._loadImages();
                                             this.setState({ selected : {} }) 
                                             this.props.closeModal(); }} />)
 

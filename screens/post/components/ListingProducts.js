@@ -65,6 +65,9 @@ export default class ListingProducts extends React.Component {
         }*/
     };
 
+    /**
+     * 
+     */
     _cameraAction = () => {
         let config = {
             options: ["Take Photo", "Choose From Library", "Cancel"],
@@ -76,15 +79,23 @@ export default class ListingProducts extends React.Component {
         });
     };
 
+    /**
+     * 
+     */
     _closeProductModal = () => {
         this.setState({modalVisible: false})
     };
 
+    /**
+     * 
+     */
     _closeImagePickerModal = () => {
         this.setState({ imagePickerModalVisible : false })
     }
 
-
+    /**
+     * 
+     */
     render() {
         const {products} = this.props.setProductFacade;
 
